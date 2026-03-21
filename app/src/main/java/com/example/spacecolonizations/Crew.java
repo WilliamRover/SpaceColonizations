@@ -6,7 +6,7 @@ abstract class CrewMember {
     private int level;
     private float levelMultiplier;
     private Float exp;
-    private final String job;
+    private String job;
 
     CrewMember(String name, int healthPoints, int level, int levelMultiplier, String job){
         this.name = name;
@@ -73,6 +73,10 @@ abstract class CrewMember {
 
     String getJob(){
         return job;
+    }
+
+    void changeJob(String n){
+        job = n;
     }
 
 }
