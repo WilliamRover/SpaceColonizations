@@ -1,6 +1,7 @@
 package com.example.spacecolonizations.model.station;
 
-import com.example.spacecolonizations.Crew;
+
+import com.example.spacecolonizations.model.crewmate.Crew;
 
 public class Turret extends Station{
     public Turret(int stationStrength, int energyLevel, int maxCrew) {
