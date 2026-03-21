@@ -1,6 +1,6 @@
 package com.example.spacecolonizations;
 
-abstract class Crew {
+public abstract class Crew {
     private String name;
     private int healthPoints;
     private int level;
