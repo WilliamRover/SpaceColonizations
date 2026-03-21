@@ -1,4 +1,4 @@
-package com.example.spacecolonizations;
+package com.example.spacecolonizations.model.crewmate;
 
 public abstract class Crew {
     private String name;
