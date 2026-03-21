@@ -1,6 +1,6 @@
 package com.example.spacecolonizations;
 
-abstract class CrewMember {
+abstract class Crew {
     private String name;
     private int healthPoints;
     private int level;
@@ -8,7 +8,7 @@ abstract class CrewMember {
     private Float exp;
     private String job;
 
-    CrewMember(String name, int healthPoints, int level, int levelMultiplier, String job){
+    Crew(String name, int healthPoints, int level, int levelMultiplier, String job){
         this.name = name;
         this.healthPoints = healthPoints;
         this.level = level;
