@@ -1,6 +1,7 @@
 package com.example.spacecolonizations.model.station;
 
-import com.example.spacecolonizations.Crew;
+
+import com.example.spacecolonizations.model.crewmate.Crew;
 
 public class Barracks extends Station{
     public Barracks(int stationStrength, int energyLevel, int maxCrew) {
@@ -9,12 +10,14 @@ public class Barracks extends Station{
 
     @Override
     public void setEfficiency() {
-        if (this.crewMembers.isEmpty()) {
-            this.efficiency = 1;
-        }
+        this.efficiency = 1;
+    }
 
-        for (Crew crew: this.crewMembers){
+    public void deployCrew(Crew crew){
+        //TODO deploycrew
+    }
 
-        }
+    public void reserveCrew(Crew crew) {
+        //TODO reserve crew
     }
 }

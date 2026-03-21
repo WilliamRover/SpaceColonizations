@@ -1,6 +1,11 @@
 package com.example.spacecolonizations.model.station;
 
-import com.example.spacecolonizations.Crew;
+
+
+import android.util.Log;
+import android.widget.Toast;
+
+import com.example.spacecolonizations.model.crewmate.Crew;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +26,19 @@ public abstract class Station {
     }
 
     public void assignCrew(Crew crew){
-        crewMembers.add(crew);
+        if (this.crewMembers.size() < this.maxCrew) {
+            crewMembers.add(crew);
+            this.setEfficiency();
+            return;
+        }
+
+    }
+
+    public void removeCrew(Crew crew){
+        this.crewMembers.remove(crew);
+        this.setEfficiency();
     }
 
     public abstract void setEfficiency();
-
-    public  float getEfficiency(){
-        return  this.efficiency;
-    }
 
 }

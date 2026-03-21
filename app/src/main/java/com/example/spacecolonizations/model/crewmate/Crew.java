@@ -23,7 +23,7 @@ public abstract class Crew {
     int getHealthPoints(){
         return healthPoints;
     }
-    void increaseHealthPoints(int n){
+    public void increaseHealthPoints(int n){
         healthPoints = healthPoints+n;
     }
     void reduceHealthPoints(int n){
