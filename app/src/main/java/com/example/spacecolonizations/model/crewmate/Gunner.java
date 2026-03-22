@@ -5,8 +5,5 @@ public class Gunner extends Crew{
         super(name,healthPoints,level,levelMultiplier);
     }
 
-    @Override
-    public void loseHealth(int damage) {
 
-    }
 }
