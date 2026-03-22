@@ -61,13 +61,19 @@ public abstract class Station {
             return;
         }
         if (stationHealth<maxStationHealth){
-            repairRate = repairRate + eff;
-            for (Crew repairMan: this.crewMembers){
+            for (Crew repairMan: this.repairMan){
+                repairRate = repairRate + eff;
                 if (repairMan instanceof Technician){
                     repairRate += 0.15F;
                 }
+                eff /= 2;
             }
-            eff /= 2;
+            stationHealth = (int) (stationHealth + 10*repairRate);
+            if (stationHealth>maxStationHealth){
+                stationHealth = maxStationHealth;
+            }
+
+
         }
     }
 
