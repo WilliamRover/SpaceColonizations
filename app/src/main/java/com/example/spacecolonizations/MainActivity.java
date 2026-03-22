@@ -2,9 +2,7 @@ package com.example.spacecolonizations;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ImageView;
 
@@ -21,11 +19,11 @@ public class MainActivity extends AppCompatActivity {
     // Ship attributes
     private FriendlyShip friendlyShip;
     private EnemyShip enemyShip;
-    private TextView friendlyHpTextView;
-    private TextView friendlyEnergyTextView;
+    private ProgressBar friendlyHpBar;
+    private ProgressBar friendlyEnergyBar;
     private ImageView enemyShipImage;
     private ImageView friendlyShipImage;
-    private TextView enemyHpTextView;
+    private ProgressBar enemyHpBar;
     private TextView friendlyExplode;
     private TextView enemyExplode;
 
@@ -48,21 +46,21 @@ public class MainActivity extends AppCompatActivity {
         friendlyShip = new FriendlyShip(100, 110);
         enemyShip = new EnemyShip(120);
 
-        friendlyHpTextView = findViewById(R.id.friendlyShipHP);
-        friendlyEnergyTextView = findViewById(R.id.friendlyShipEnergy);
-        enemyHpTextView = findViewById(R.id.enemyShipHP);
+        friendlyHpBar = findViewById(R.id.friendlyShipHp);
+        friendlyEnergyBar = findViewById(R.id.friendlyShipEnergy);
+        enemyHpBar = findViewById(R.id.enemyShipHp);
         friendlyShipImage = findViewById(R.id.friendlyShipModel);
         enemyShipImage = findViewById(R.id.enemyShipModel);
         friendlyExplode = findViewById(R.id.friendlyExplode);
         enemyExplode = findViewById(R.id.enemyExplode);
 
         // Initial set
-        friendlyEnergyTextView.setText(String.valueOf(friendlyShip.getEnergy()));
-        enemyHpTextView.setText(String.valueOf(enemyShip.getHullStrength()));
+        friendlyEnergyBar.setProgress(friendlyShip.getEnergy());
+        enemyHpBar.setProgress(enemyShip.getHullStrength());
 
         // Enemy ship attack
-        enemyShip.attackShip(friendlyShip, friendlyShipImage, friendlyExplode, friendlyHpTextView, 6);
-        friendlyShip.attackShip(enemyShip, enemyShipImage, enemyExplode, enemyHpTextView, 12);
+        enemyShip.attackShip(friendlyShip, friendlyShipImage, friendlyExplode, friendlyHpBar, 6);
+        friendlyShip.attackShip(enemyShip, enemyShipImage, enemyExplode, enemyHpBar, 12);
     }
 
 }

@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 abstract class Ship {
@@ -20,12 +21,11 @@ abstract class Ship {
             this.hullStrength = 0;
         }
     }
-    public void attackShip(Ship ship, View shipModel, View kaboom, TextView hp, int shipDps) {
+    public void attackShip(Ship ship, View shipModel, View kaboom, ProgressBar hp, int shipDps) {
         Handler handler = new Handler(Looper.getMainLooper());
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                // If the attacker is destroyed, stop attacking
                 if (Ship.this.getHullStrength() <= 0) {
                     handler.removeCallbacks(this);
                     return;
@@ -43,7 +43,7 @@ abstract class Ship {
 
                 if (curHull > 0) {
                     ship.setHullStrength(curHull - shipDps);
-                    hp.setText(String.valueOf(ship.getHullStrength()));
+                    hp.setProgress(ship.getHullStrength());
                     handler.postDelayed(this, 1000);
                 }
             }
