@@ -1,5 +1,5 @@
 package com.example.spacecolonizations.reuse;
 
 public interface Damagable {
-    public int loseHealth();
+    void loseHealth(int damage);
 }
