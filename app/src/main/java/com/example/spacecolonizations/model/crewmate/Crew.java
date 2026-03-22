@@ -9,15 +9,17 @@ public abstract class Crew implements Damagable {
     private int level;
     private float levelMultiplier;
     private Float exp;
+    private int maxHealthPoints;
 
 
     //TODO implement Damageable
-    public Crew(String name, int healthPoints, int level, float levelMultiplier){
+    public Crew(String name, int healthPoints, int level, float levelMultiplier, int maxHealthPoints){
         this.name = name;
         this.healthPoints = healthPoints;
         this.level = level;
         this.levelMultiplier = levelMultiplier;
         this.exp = (float) 0;
+        this.maxHealthPoints = maxHealthPoints;
     }
 
     public String getName(){
@@ -29,7 +31,15 @@ public abstract class Crew implements Damagable {
     }
     public void increaseHealthPoints(int n){
         healthPoints = healthPoints+n;
+        if (healthPoints>maxHealthPoints){
+            healthPoints = maxHealthPoints;
+        }
     }
+
+    public int getMaxHealthPoints(){
+        return maxHealthPoints;
+    }
+
 
     @Override
     public void loseHealth(int damage) {
@@ -62,6 +72,7 @@ public abstract class Crew implements Damagable {
 
             exp -= (float)requiredExp;
             levelUp();
+            maxHealthPoints = (int)(maxHealthPoints*1.1);
         }
     }
 
