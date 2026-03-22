@@ -10,14 +10,14 @@ public abstract class Crew implements Damagable {
     private float levelMultiplier;
     private Float exp;
 
-<<<<<<< HEAD
+
 //TODO implement Damageable
     Crew(String name, int healthPoints, int level, int levelMultiplier){
-=======
+
 
     //TODO implement Damageable
     public Crew(String name, int healthPoints, int level, float levelMultiplier){
->>>>>>> main
+
         this.name = name;
         this.healthPoints = healthPoints;
         this.level = level;
@@ -35,7 +35,7 @@ public abstract class Crew implements Damagable {
     public void increaseHealthPoints(int n){
         healthPoints = healthPoints+n;
     }
-<<<<<<< HEAD
+
 
     //TODO remove reduce health points.
 
@@ -45,8 +45,7 @@ public abstract class Crew implements Damagable {
             healthPoints = 0;
         }
     }
-=======
->>>>>>> main
+
 
     @Override
     public void loseHealth(int damage) {
