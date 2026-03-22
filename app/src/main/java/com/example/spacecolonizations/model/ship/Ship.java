@@ -50,7 +50,7 @@ public abstract class Ship implements Damagable {
                 }
 
                 if (curHull > 0) {
-                    ship.setHullStrength(curHull - shipDps);
+                    ship.loseHealth(shipDps);
                     hpTxt.setText(ship.getHullStrength() + "/" + ship.getInnitHullStrength());
                     hpProgress.setProgress(ship.getHullStrength());
                     handler.postDelayed(this, 1000);
