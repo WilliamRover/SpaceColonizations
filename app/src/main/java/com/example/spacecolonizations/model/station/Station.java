@@ -2,23 +2,20 @@ package com.example.spacecolonizations.model.station;
 
 
 
-import android.util.Log;
-import android.widget.Toast;
-
 import com.example.spacecolonizations.model.crewmate.Crew;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Station {
-    private int stationStrength;
+    private int stationHealth;
     protected List<Crew> crewMembers;
     private int energyLevel;
     private int maxCrew;
     protected float efficiency;
 
-    public Station(int stationStrength, int energyLevel, int maxCrew){
-        this.stationStrength = stationStrength;
+    public Station(int stationHealth, int energyLevel, int maxCrew){
+        this.stationHealth = stationHealth;
         this.energyLevel = energyLevel;
         this.maxCrew = maxCrew;
         this.efficiency = 0;
@@ -35,6 +32,9 @@ public abstract class Station {
     }
 
     public void removeCrew(Crew crew){
+        if (this.crewMembers.isEmpty()){
+            return;
+        }
         this.crewMembers.remove(crew);
         this.setEfficiency();
     }

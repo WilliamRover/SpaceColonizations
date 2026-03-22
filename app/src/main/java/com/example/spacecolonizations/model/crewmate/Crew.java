@@ -7,7 +7,7 @@ public abstract class Crew {
     private float levelMultiplier;
     private Float exp;
 
-
+//TODO implement Damageable
     Crew(String name, int healthPoints, int level, int levelMultiplier){
         this.name = name;
         this.healthPoints = healthPoints;
@@ -26,6 +26,9 @@ public abstract class Crew {
     public void increaseHealthPoints(int n){
         healthPoints = healthPoints+n;
     }
+
+    //TODO remove reduce health points.
+
     void reduceHealthPoints(int n){
         healthPoints = healthPoints - n;
         if (healthPoints<0){

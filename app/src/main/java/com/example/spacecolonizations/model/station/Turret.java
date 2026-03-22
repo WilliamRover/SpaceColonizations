@@ -3,6 +3,7 @@ package com.example.spacecolonizations.model.station;
 
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.Gunner;
+import com.example.spacecolonizations.model.ship.EnemyShip;
 
 public class Turret extends Station{
     private float damage;
@@ -22,12 +23,9 @@ public class Turret extends Station{
         //something related to energy needs to be input to this function
     }
 
-    public void decreasseDamage(){
-        //TODO implement decrease dps epending on damage received or whatever
-    }
 
-    public void dealDamage(){
-
+    public void dealDamage(EnemyShip ship){
+        ship.setHullStrength((int) (ship.getHullStrength() - this.damage));
     }
 
     @Override

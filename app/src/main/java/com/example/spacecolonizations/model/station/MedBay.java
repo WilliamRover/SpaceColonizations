@@ -1,5 +1,8 @@
 package com.example.spacecolonizations.model.station;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.Medic;
 
@@ -9,6 +12,21 @@ import java.util.List;
 public class MedBay extends Station{
     private List<Crew> patients;
     private int baseHeal;
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private final Runnable healRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (crewMembers.isEmpty() || patients.isEmpty()) {
+                return;
+            }
+
+            for (Crew patient : patients) {
+                patient.increaseHealthPoints((int) (baseHeal * efficiency));
+            }
+            handler.postDelayed(this, 1000);
+        }
+    };
+
     public MedBay(int stationStrength, int energyLevel, int maxCrew) {
         super(stationStrength, energyLevel, maxCrew);
         this.patients = new ArrayList<>();
@@ -16,16 +34,13 @@ public class MedBay extends Station{
     }
 
     public void heal(){
-
-        for (Crew crew: this.crewMembers){
-            float multiplier = this.efficiency;
-
-            crew.increaseHealthPoints((int) (baseHeal * this.efficiency));
-        }
+        handler.removeCallbacks(healRunnable);
+        handler.post(healRunnable);
     }
 
     public void addPatient(Crew crew) {
         patients.add(crew);
+        heal();
     }
 
     public void removePatient(Crew crew) {
@@ -41,6 +56,7 @@ public class MedBay extends Station{
             return;
         }
 
+        this.efficiency = 0;
         for (Crew crew: this.crewMembers){
             this.efficiency += eff;
 
@@ -49,7 +65,7 @@ public class MedBay extends Station{
             }
 
             eff /= 2;
-
         }
+        heal();
     }
 }
