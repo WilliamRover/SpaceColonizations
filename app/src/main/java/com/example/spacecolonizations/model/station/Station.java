@@ -49,6 +49,9 @@ public abstract class Station {
     }
 
     public void removeRepairMan(Crew crew) {
+        if (this.crewMembers.isEmpty()){
+            return;
+        }
         this.repairMan.remove(crew);
     }
 
