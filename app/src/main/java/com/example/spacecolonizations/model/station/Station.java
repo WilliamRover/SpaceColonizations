@@ -3,14 +3,12 @@ package com.example.spacecolonizations.model.station;
 
 
 import com.example.spacecolonizations.model.crewmate.Crew;
-import com.example.spacecolonizations.reuse.Damagable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Station  {
-    protected int stationHealth;
-    protected boolean isUseable;
+public abstract class Station {
+    private int stationHealth;
     protected List<Crew> crewMembers;
     private int energyLevel;
     private int maxCrew;
@@ -22,7 +20,6 @@ public abstract class Station  {
         this.maxCrew = maxCrew;
         this.efficiency = 0;
         this.crewMembers = new ArrayList<>();
-        this.isUseable = true;
     }
 
     public void assignCrew(Crew crew){
@@ -41,7 +38,6 @@ public abstract class Station  {
         this.crewMembers.remove(crew);
         this.setEfficiency();
     }
-
 
     public abstract void setEfficiency();
 
