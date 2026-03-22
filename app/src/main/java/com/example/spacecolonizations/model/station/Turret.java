@@ -26,6 +26,10 @@ public class Turret extends Station{
         //TODO implement decrease dps epending on damage received or whatever
     }
 
+    public void dealDamage(){
+
+    }
+
     @Override
     public void setEfficiency() {
         float eff = 1;
