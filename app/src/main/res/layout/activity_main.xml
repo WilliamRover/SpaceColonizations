@@ -12,20 +12,20 @@
 
     <ImageView
         android:id="@+id/friendlyShipModel"
-        android:layout_width="443dp"
-        android:layout_height="181dp"
-        android:layout_marginStart="280dp"
-        android:layout_marginTop="104dp"
+        android:layout_width="540dp"
+        android:layout_height="205dp"
+        android:layout_marginStart="372dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/friendlyship" />
 
     <ImageView
         android:id="@+id/enemyShipModel"
-        android:layout_width="281dp"
-        android:layout_height="143dp"
-        android:layout_marginTop="136dp"
-        android:layout_marginEnd="680dp"
+        android:layout_width="454dp"
+        android:layout_height="257dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="604dp"
         android:rotation="180"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -161,18 +161,19 @@
         android:layout_marginStart="40dp"
         android:layout_marginBottom="-2dp"
         android:text="num/100"
-        android:textColor="#711919"
+        android:textColor="#754343"
         android:textSize="8sp"
         app:layout_constraintBottom_toBottomOf="@+id/enemyShipHp"
         app:layout_constraintStart_toStartOf="@+id/enemyShipHp" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/donutButton"
+        android:id="@+id/trainingCenterBtn"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="223dp"
-        android:alpha="0.4"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="4dp"
+        android:alpha="0.3"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:text=""
@@ -180,19 +181,199 @@
         app:layout_constraintTop_toTopOf="@+id/friendlyShipModel"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
         app:strokeColor="#979797"
-        app:strokeWidth="8dp" />
+        app:strokeWidth="6dp" />
 
     <TextView
-        android:id="@+id/donutButtonLabel"
+        android:id="@+id/trainingCenterBtnLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Training center"
         android:textColor="#4A4A4A"
         android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/donutButton"
-        app:layout_constraintEnd_toEndOf="@+id/donutButton"
-        app:layout_constraintStart_toStartOf="@+id/donutButton"
-        app:layout_constraintTop_toTopOf="@+id/donutButton" />
+        app:layout_constraintBottom_toBottomOf="@+id/trainingCenterBtn"
+        app:layout_constraintEnd_toEndOf="@+id/trainingCenterBtn"
+        app:layout_constraintStart_toStartOf="@+id/trainingCenterBtn"
+        app:layout_constraintTop_toTopOf="@+id/trainingCenterBtn" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/energyBtn"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="212dp"
+        android:layout_marginTop="80dp"
+        android:alpha="0.3"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@+id/friendlyShipModel"
+        app:layout_constraintTop_toTopOf="@+id/friendlyShipModel"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+        app:strokeColor="#979797"
+        app:strokeWidth="6dp" />
+
+    <TextView
+        android:id="@+id/energyBtnLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Energy"
+        android:textColor="#4A4A4A"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/energyBtn"
+        app:layout_constraintEnd_toEndOf="@+id/energyBtn"
+        app:layout_constraintStart_toStartOf="@+id/energyBtn"
+        app:layout_constraintTop_toTopOf="@+id/energyBtn" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/commandBtn"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="312dp"
+        android:layout_marginTop="84dp"
+        android:alpha="0.3"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@+id/friendlyShipModel"
+        app:layout_constraintTop_toTopOf="@+id/friendlyShipModel"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+        app:strokeColor="#979797"
+        app:strokeWidth="6dp" />
+
+    <TextView
+        android:id="@+id/commandBtnLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Command"
+        android:textColor="#4A4A4A"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/commandBtn"
+        app:layout_constraintEnd_toEndOf="@+id/commandBtn"
+        app:layout_constraintStart_toStartOf="@+id/commandBtn"
+        app:layout_constraintTop_toTopOf="@+id/commandBtn" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/barracksBtn"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="80dp"
+        android:alpha="0.3"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@+id/friendlyShipModel"
+        app:layout_constraintTop_toTopOf="@+id/friendlyShipModel"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+        app:strokeColor="#979797"
+        app:strokeWidth="6dp" />
+
+    <TextView
+        android:id="@+id/barracksBtnLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Barracks"
+        android:textColor="#4A4A4A"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/barracksBtn"
+        app:layout_constraintEnd_toEndOf="@+id/barracksBtn"
+        app:layout_constraintStart_toStartOf="@+id/barracksBtn"
+        app:layout_constraintTop_toTopOf="@+id/barracksBtn" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mainHallBtn"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="260dp"
+        android:layout_marginTop="80dp"
+        android:alpha="0.3"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@+id/friendlyShipModel"
+        app:layout_constraintTop_toTopOf="@+id/friendlyShipModel"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+        app:strokeColor="#979797"
+        app:strokeWidth="6dp" />
+
+    <TextView
+        android:id="@+id/mainHallBtnLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Main hall"
+        android:textColor="#4A4A4A"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mainHallBtn"
+        app:layout_constraintEnd_toEndOf="@+id/mainHallBtn"
+        app:layout_constraintStart_toStartOf="@+id/mainHallBtn"
+        app:layout_constraintTop_toTopOf="@+id/mainHallBtn" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/turretBtn"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="80dp"
+        android:alpha="0.3"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@+id/friendlyShipModel"
+        app:layout_constraintTop_toTopOf="@+id/friendlyShipModel"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+        app:strokeColor="#979797"
+        app:strokeWidth="6dp" />
+
+    <TextView
+        android:id="@+id/turretBtnLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Turret"
+        android:textColor="#4A4A4A"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/turretBtn"
+        app:layout_constraintEnd_toEndOf="@+id/turretBtn"
+        app:layout_constraintStart_toStartOf="@+id/turretBtn"
+        app:layout_constraintTop_toTopOf="@+id/turretBtn" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/medBayBtn"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="160dp"
+        android:alpha="0.3"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@+id/friendlyShipModel"
+        app:layout_constraintTop_toTopOf="@+id/friendlyShipModel"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+        app:strokeColor="#979797"
+        app:strokeWidth="6dp" />
+
+    <TextView
+        android:id="@+id/medBayBtnLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Med bay"
+        android:textColor="#4A4A4A"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/medBayBtn"
+        app:layout_constraintEnd_toEndOf="@+id/medBayBtn"
+        app:layout_constraintStart_toStartOf="@+id/medBayBtn"
+        app:layout_constraintTop_toTopOf="@+id/medBayBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
