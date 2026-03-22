@@ -7,4 +7,8 @@ public class Technician extends Crew{
     void fixShip(){
 
     }
+    @Override
+    public void loseHealth(int damage) {
+
+    }
 }

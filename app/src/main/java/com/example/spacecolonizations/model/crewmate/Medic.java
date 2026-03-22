@@ -5,7 +5,9 @@ public class Medic extends Crew {
         super(name,healthPoints,level,levelMultiplier);
     }
 
-    void bringToMedbay(Crew c){
+
+    @Override
+    public void loseHealth(int damage) {
 
     }
 }
