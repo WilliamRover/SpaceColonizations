@@ -7,21 +7,27 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-abstract class Ship {
+public abstract class Ship {
     private int hullStrength;
-    public Ship(int hullStrength) {
-        this.hullStrength = hullStrength;
+    private int innitHullStrength;
+
+    public Ship(int innitHullStrength) {
+        this.innitHullStrength = innitHullStrength;
+        this.hullStrength = innitHullStrength;
     }
     public int getHullStrength() {
         return hullStrength;
     }
+    public int getInnitHullStrength() {
+        return innitHullStrength;
+    }
     public void setHullStrength(int hullStrength) {
         this.hullStrength = hullStrength;
-        if (hullStrength <= 0) {
+        if (this.hullStrength <= 0) {
             this.hullStrength = 0;
         }
     }
-    public void attackShip(Ship ship, View shipModel, View kaboom, ProgressBar hp, int shipDps) {
+    public void attackShip(Ship ship, View shipModel, View kaboom, ProgressBar hpProgress, TextView hpTxt, int shipDps) {
         Handler handler = new Handler(Looper.getMainLooper());
         Runnable runnable = new Runnable() {
             @Override
@@ -43,7 +49,8 @@ abstract class Ship {
 
                 if (curHull > 0) {
                     ship.setHullStrength(curHull - shipDps);
-                    hp.setProgress(ship.getHullStrength());
+                    hpTxt.setText(ship.getHullStrength() + "/" + ship.getInnitHullStrength());
+                    hpProgress.setProgress(ship.getHullStrength());
                     handler.postDelayed(this, 1000);
                 }
             }

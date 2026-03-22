@@ -9,21 +9,25 @@ import java.util.List;
 
 public class FriendlyShip extends Ship{
     private int energy;
+    private int innitEnergy;
     private List<Crew> crews;
     private int totalCrew;
 
     private TextView friendlyExplode;
 
-    public FriendlyShip(int hullStrength, int energy) {
-        super(hullStrength);
-        this.energy = energy;
+    public FriendlyShip(int innitHullStrength, int innitEnergy) {
+        super(innitHullStrength);
+        this.innitEnergy = innitEnergy;
+        this.energy = innitEnergy;
 
     }
 
     public int getEnergy() {
         return energy;
     }
-
+    public int getInnitEnergy(){
+        return innitEnergy;
+    }
     public void setEnergy(int energy) {
         this.energy = energy;
     }

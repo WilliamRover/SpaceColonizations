@@ -7,9 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class EnemyShip extends Ship{
-    private int hullStrength;
 
-    public EnemyShip(int hullStrength) {
-        super(hullStrength);
+    public EnemyShip(int innitHullStrength) {
+        super(innitHullStrength);
     }
 }

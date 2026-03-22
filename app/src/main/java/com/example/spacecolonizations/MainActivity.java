@@ -26,7 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar enemyHpBar;
     private TextView friendlyExplode;
     private TextView enemyExplode;
-
+    private TextView friendlyHpTxt;
+    private TextView enemyHpTxt;
+    private TextView friendlyEnergyTxt;
 
     private Runnable runnable;
 
@@ -53,14 +55,21 @@ public class MainActivity extends AppCompatActivity {
         enemyShipImage = findViewById(R.id.enemyShipModel);
         friendlyExplode = findViewById(R.id.friendlyExplode);
         enemyExplode = findViewById(R.id.enemyExplode);
+        friendlyHpTxt = findViewById(R.id.friendlyHpTxt);
+        enemyHpTxt = findViewById(R.id.enemyHpTxt);
+        friendlyEnergyTxt = findViewById(R.id.friendlyEnergyTxt);
 
         // Initial set
         friendlyEnergyBar.setProgress(friendlyShip.getEnergy());
         enemyHpBar.setProgress(enemyShip.getHullStrength());
+        friendlyHpBar.setProgress(friendlyShip.getHullStrength());
+        friendlyHpTxt.setText(friendlyShip.getHullStrength() + "/" + friendlyShip.getInnitHullStrength());
+        enemyHpTxt.setText(enemyShip.getHullStrength() + "/" + enemyShip.getInnitHullStrength());
+        friendlyEnergyTxt.setText(friendlyShip.getEnergy() + "/" + friendlyShip.getInnitEnergy());
 
         // Enemy ship attack
-        enemyShip.attackShip(friendlyShip, friendlyShipImage, friendlyExplode, friendlyHpBar, 6);
-        friendlyShip.attackShip(enemyShip, enemyShipImage, enemyExplode, enemyHpBar, 12);
+        enemyShip.attackShip(friendlyShip, friendlyShipImage, friendlyExplode, friendlyHpBar, friendlyHpTxt, 6);
+        friendlyShip.attackShip(enemyShip, enemyShipImage, enemyExplode, enemyHpBar, enemyHpTxt, 12);
     }
 
 }
