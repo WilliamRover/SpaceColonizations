@@ -48,6 +48,14 @@ public abstract class Crew implements Damagable {
 =======
 >>>>>>> main
 
+    @Override
+    public void loseHealth(int damage) {
+        healthPoints = healthPoints-damage;
+        if (healthPoints<0){
+            healthPoints = 0;
+        }
+    }
+
 
     public void setMultiplier(float n){
         levelMultiplier = n;

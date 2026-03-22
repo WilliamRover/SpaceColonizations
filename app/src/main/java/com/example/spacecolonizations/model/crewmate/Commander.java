@@ -9,8 +9,5 @@ public class Commander extends Crew {
     public void showShipStat(){}
 
 
-    @Override
-    public void loseHealth(int damage) {
 
-    }
 }

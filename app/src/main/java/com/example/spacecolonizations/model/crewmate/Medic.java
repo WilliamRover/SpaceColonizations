@@ -6,8 +6,5 @@ public class Medic extends Crew {
     }
 
 
-    @Override
-    public void loseHealth(int damage) {
 
-    }
 }
