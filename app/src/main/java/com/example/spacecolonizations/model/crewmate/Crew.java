@@ -1,14 +1,18 @@
 package com.example.spacecolonizations.model.crewmate;
 
-public abstract class Crew {
+
+import com.example.spacecolonizations.reuse.Damagable;
+
+public abstract class Crew implements Damagable {
     private String name;
     private int healthPoints;
     private int level;
     private float levelMultiplier;
     private Float exp;
 
+
     //TODO implement Damageable
-    public Crew(String name, int healthPoints, int level, int levelMultiplier){
+    public Crew(String name, int healthPoints, int level, float levelMultiplier){
         this.name = name;
         this.healthPoints = healthPoints;
         this.level = level;
@@ -27,14 +31,14 @@ public abstract class Crew {
         healthPoints = healthPoints+n;
     }
 
-    //TODO remove reduce health points.
-
-    public void reduceHealthPoints(int n){
-        healthPoints = healthPoints - n;
+    @Override
+    public void loseHealth(int damage) {
+        healthPoints = healthPoints-damage;
         if (healthPoints<0){
             healthPoints = 0;
         }
     }
+
 
     public void setMultiplier(float n){
         levelMultiplier = n;

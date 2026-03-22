@@ -5,7 +5,6 @@ public class Medic extends Crew {
         super(name,healthPoints,level,levelMultiplier);
     }
 
-    void bringToMedbay(Crew c){
 
-    }
+
 }
