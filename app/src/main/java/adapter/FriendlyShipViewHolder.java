@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spacecolonizations.R;
 
-import model.FriendlyShip;
+import com.example.spacecolonizations.model.ship.FriendlyShip;
 
 class FriendlyShipViewHolder {
     static class ItemShipViewHolder extends RecyclerView.ViewHolder {

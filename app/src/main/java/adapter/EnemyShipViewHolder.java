@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spacecolonizations.R;
 
-import model.EnemyShip;
+import com.example.spacecolonizations.model.ship.EnemyShip;
 
 class EnemyShipViewHolder{
 static class ItemViewHolder extends RecyclerView.ViewHolder {

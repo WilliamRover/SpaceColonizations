@@ -1,5 +1,6 @@
 package com.example.spacecolonizations;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,21 +14,25 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import model.EnemyShip;
-import model.FriendlyShip;
+import com.example.spacecolonizations.model.ship.EnemyShip;
+import com.example.spacecolonizations.model.ship.FriendlyShip;
 
 public class MainActivity extends AppCompatActivity {
-
+    // Ship attributes
     private FriendlyShip friendlyShip;
     private EnemyShip enemyShip;
     private TextView friendlyHpTextView;
-    private ImageView friendlyShipImage;
+    private TextView friendlyEnergyTextView;
     private ImageView enemyShipImage;
+    private ImageView friendlyShipImage;
+    private TextView enemyHpTextView;
     private TextView friendlyExplode;
+    private TextView enemyExplode;
 
-    private final Handler handler = new Handler(Looper.getMainLooper());
+
     private Runnable runnable;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,56 +49,20 @@ public class MainActivity extends AppCompatActivity {
         enemyShip = new EnemyShip(120);
 
         friendlyHpTextView = findViewById(R.id.friendlyShipHP);
-        TextView friendlyEnergyTextView = findViewById(R.id.friendlyShipEnergy);
-        TextView enemyHpTextView = findViewById(R.id.enemyShipHP);
+        friendlyEnergyTextView = findViewById(R.id.friendlyShipEnergy);
+        enemyHpTextView = findViewById(R.id.enemyShipHP);
         friendlyShipImage = findViewById(R.id.friendlyShipModel);
         enemyShipImage = findViewById(R.id.enemyShipModel);
         friendlyExplode = findViewById(R.id.friendlyExplode);
+        enemyExplode = findViewById(R.id.enemyExplode);
 
         // Initial set
-        updateUI();
         friendlyEnergyTextView.setText(String.valueOf(friendlyShip.getEnergy()));
         enemyHpTextView.setText(String.valueOf(enemyShip.getHullStrength()));
 
         // Enemy ship attack
-        enemyAttack();
+        enemyShip.attackShip(friendlyShip, friendlyShipImage, friendlyExplode, friendlyHpTextView, 6);
+        friendlyShip.attackShip(enemyShip, enemyShipImage, enemyExplode, enemyHpTextView, 12);
     }
 
-    private void enemyAttack() {
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                // Decrease hull strength
-                int curHull = friendlyShip.getHullStrength();
-                
-                if (curHull <= 0) {
-                    friendlyExplode.setVisibility(View.VISIBLE);
-                    friendlyExplode.setAlpha(1.0f);
-                    friendlyShipImage.setVisibility(View.INVISIBLE);
-                    // Stop the loop
-                    handler.removeCallbacks(this);
-                    return;
-                }
-
-                if (curHull > 0) {
-                    friendlyShip.setHullStrength(Math.max(0, curHull - 6));
-                    updateUI();
-                    handler.postDelayed(this, 1000);
-                }
-            }
-        };
-        handler.postDelayed(runnable, 1000);
-    }
-
-    private void updateUI() {
-        friendlyHpTextView.setText(String.valueOf(friendlyShip.getHullStrength()));
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (handler != null && runnable != null) {
-            handler.removeCallbacks(runnable);
-        }
-    }
 }

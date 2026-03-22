@@ -12,8 +12,8 @@
 //
 //import java.util.List;
 //
-//import model.EnemyShip;
-//import model.FriendlyShip;
+//import com.example.spacecolonizations.model.ship.EnemyShip;
+//import com.example.spacecolonizations.model.ship.FriendlyShip;
 //
 //public class ShipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //
