@@ -51,6 +51,9 @@ public abstract class Station implements Damagable {
     }
 
     public void removeRepairMan(Crew crew) {
+        if (this.crewMembers.isEmpty()){
+            return;
+        }
         this.repairMan.remove(crew);
     }
 
