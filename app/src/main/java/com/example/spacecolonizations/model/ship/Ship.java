@@ -7,7 +7,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public abstract class Ship {
+import com.example.spacecolonizations.reuse.Damagable;
+
+public abstract class Ship implements Damagable {
     private int hullStrength;
     private int innitHullStrength;
 
@@ -61,5 +63,9 @@ public abstract class Ship {
         kaboom.setVisibility(View.VISIBLE);
         kaboom.setAlpha(1.0f);
         shipModel.setVisibility(View.INVISIBLE);
+    }
+
+    public void loseHealth(int damage) {
+        this.hullStrength -= damage;
     }
 }
