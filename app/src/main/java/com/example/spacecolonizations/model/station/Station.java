@@ -4,12 +4,15 @@ package com.example.spacecolonizations.model.station;
 
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.Technician;
+import com.example.spacecolonizations.reuse.Damagable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Station {
-    private int stationHealth;
+public abstract class Station implements Damagable {
+    protected int stationHealth;
+
+    protected boolean isUseable;
     private int maxStationHealth;
     protected List<Crew> crewMembers;
     private int energyLevel;
@@ -17,7 +20,7 @@ public abstract class Station {
     protected float efficiency;
     protected List<Crew> repairMan;
 
-    public Station(int stationHealth, int energyLevel, int maxCrew){
+    public Station(int stationHealth, int energyLevel, int maxCrew) {
         this.stationHealth = stationHealth;
         this.maxStationHealth = stationHealth;
         this.energyLevel = energyLevel;
@@ -25,6 +28,7 @@ public abstract class Station {
         this.efficiency = 0;
         this.crewMembers = new ArrayList<>();
         this.repairMan = new ArrayList<>();
+        this.isUseable = true;
     }
 
     public void assignCrew(Crew crew){
@@ -36,12 +40,10 @@ public abstract class Station {
 
     }
 
-    public void removeCrew(Crew crew){
-        if (this.crewMembers.isEmpty()){
-            return;
+    public void removeCrew(Crew crew, Barracks barracks){
+        if (this.crewMembers.remove(crew)) {
+            this.setEfficiency();
         }
-        this.crewMembers.remove(crew);
-        this.setEfficiency();
     }
 
     public void addRepairMan(Crew crew) {
@@ -57,7 +59,6 @@ public abstract class Station {
         float repairRate = 0;
         float eff = 1;
         if (this.repairMan.isEmpty()){
-            this.efficiency = 0;
             return;
         }
         if (stationHealth<maxStationHealth){
@@ -72,7 +73,6 @@ public abstract class Station {
             if (stationHealth>maxStationHealth){
                 stationHealth = maxStationHealth;
             }
-
 
         }
     }

@@ -13,7 +13,7 @@ public class TrainingCenter extends Station{
     private final Runnable trainRunnable = new Runnable() {
         @Override
         public void run() {
-            if (crewMembers.isEmpty()) {
+            if (crewMembers.isEmpty() || !isUseable) {
                 return;
             }
 
@@ -33,6 +33,21 @@ public class TrainingCenter extends Station{
     }
 
     public void train(){
-        //TODO train crew periodically
+        handler.removeCallbacks(trainRunnable);
+        handler.post(trainRunnable);
+    }
+
+    @Override
+    public void loseHealth(int damage) {
+        this.stationHealth -= damage;
+        this.isUseable = false;
+
+        if (this.stationHealth <= 0) {
+            this.stationHealth = 0;
+
+            for (Crew crew : this.crewMembers) {
+                crew.loseHealth(crew.getMaxHealthPoints());
+            }
+        }
     }
 }

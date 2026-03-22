@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.example.spacecolonizations.model.crewmate.Crew;
+import com.example.spacecolonizations.model.crewmate.Gunner;
 import com.example.spacecolonizations.model.crewmate.Medic;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class MedBay extends Station{
     private final Runnable healRunnable = new Runnable() {
         @Override
         public void run() {
-            if (crewMembers.isEmpty() || patients.isEmpty()) {
+            if (crewMembers.isEmpty() || patients.isEmpty() || !isUseable) {
                 return;
             }
 
@@ -49,23 +50,46 @@ public class MedBay extends Station{
 
     @Override
     public void setEfficiency() {
-        float eff = 1;
+        float increment = 1;
+        float ttotalEfficiency =  0;
 
         if (this.crewMembers.isEmpty()){
             this.efficiency = 0;
             return;
         }
 
-        this.efficiency = 0;
         for (Crew crew: this.crewMembers){
-            this.efficiency += eff;
+            if (crew.getHealthPoints() == 0) {
+                continue;
+            }
+            ttotalEfficiency += increment;
 
             if (crew instanceof Medic) {
-                this.efficiency += 0.15F;
+                ttotalEfficiency += 0.15F;
             }
 
-            eff /= 2;
+            increment /= 2;
         }
+
+        this.efficiency = ttotalEfficiency;
         heal();
+    }
+
+    @Override
+    public void loseHealth(int damage) {
+        this.stationHealth -= damage;
+        this.isUseable = false;
+
+        if (this.stationHealth <= 0) {
+            this.stationHealth = 0;
+
+            for (Crew crew : this.crewMembers) {
+                crew.loseHealth(crew.getMaxHealthPoints());
+            }
+
+            for (Crew patient : patients) {
+                patient.loseHealth(patient.getMaxHealthPoints());
+            }
+        }
     }
 }

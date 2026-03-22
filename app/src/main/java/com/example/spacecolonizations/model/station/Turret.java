@@ -25,12 +25,16 @@ public class Turret extends Station{
 
 
     public void dealDamage(EnemyShip ship){
+        if (!this.isUseable){
+            return;
+        }
         ship.setHullStrength((int) (ship.getHullStrength() - this.damage));
     }
 
     @Override
     public void setEfficiency() {
-        float eff = 1;
+        float increment = 1;
+        float ttotalEfficiency =  0;
 
         if (this.crewMembers.isEmpty()){
             this.efficiency = 0;
@@ -38,13 +42,33 @@ public class Turret extends Station{
         }
 
         for (Crew crew: this.crewMembers){
-            this.efficiency += eff;
+            if (crew.getHealthPoints() == 0) {
+                continue;
+            }
+            ttotalEfficiency += increment;
 
             if (crew instanceof Gunner) {
-                this.efficiency += 0.15F;
+                ttotalEfficiency += 0.15F;
             }
 
-            eff /= 2;
+            increment /= 2;
+        }
+
+        this.efficiency = ttotalEfficiency;
+
+    }
+
+    @Override
+    public void loseHealth(int damage) {
+        this.stationHealth -= damage;
+
+        if (this.stationHealth <= 0) {
+            this.stationHealth = 0;
+            this.isUseable = false;
+
+            for (Crew crew : this.crewMembers) {
+                crew.loseHealth(crew.getMaxHealthPoints());
+            }
         }
     }
 }

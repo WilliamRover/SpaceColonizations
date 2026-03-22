@@ -20,4 +20,17 @@ public class Barracks extends Station{
     public void reserveCrew(Crew crew) {
         //TODO reserve crew
     }
+
+    @Override
+    public void loseHealth(int damage) {
+        this.stationHealth -= damage;
+
+        if (this.stationHealth <= 0) {
+            this.stationHealth = 0;
+
+            for (Crew crew : this.crewMembers) {
+                crew.loseHealth(crew.getMaxHealthPoints());
+            }
+        }
+    }
 }
