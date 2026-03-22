@@ -7,8 +7,8 @@ public abstract class Crew {
     private float levelMultiplier;
     private Float exp;
 
-
-    Crew(String name, int healthPoints, int level, int levelMultiplier){
+    //TODO implement Damageable
+    public Crew(String name, int healthPoints, int level, int levelMultiplier){
         this.name = name;
         this.healthPoints = healthPoints;
         this.level = level;
@@ -16,36 +16,39 @@ public abstract class Crew {
         this.exp = (float) 0;
     }
 
-    String getName(){
+    public String getName(){
         return name;
     }
 
-    int getHealthPoints(){
+    public int getHealthPoints(){
         return healthPoints;
     }
-    void increaseHealthPoints(int n){
+    public void increaseHealthPoints(int n){
         healthPoints = healthPoints+n;
     }
-    void reduceHealthPoints(int n){
+
+    //TODO remove reduce health points.
+
+    public void reduceHealthPoints(int n){
         healthPoints = healthPoints - n;
         if (healthPoints<0){
             healthPoints = 0;
         }
     }
 
-    void setMultiplier(float n){
+    public void setMultiplier(float n){
         levelMultiplier = n;
     }
 
-    Float getMultiplier(){
+    public Float getMultiplier(){
         return levelMultiplier;
     }
 
-    int getLevel(){
+    public int getLevel(){
         return level;
     }
 
-    void checkExp() {
+    public void checkExp() {
         while (true) {
             double requiredExp = 1000 * Math.exp(level);
 
@@ -58,15 +61,15 @@ public abstract class Crew {
         }
     }
 
-    void levelUp(){
+    public void levelUp(){
         level = level+1;
     }
 
-    Float getExp(){
+    public Float getExp(){
         return exp;
     }
 
-    void receiveExp(Float receiveAmount){
+    public void receiveExp(Float receiveAmount){
         exp = exp+ (receiveAmount * levelMultiplier);
     }
 
