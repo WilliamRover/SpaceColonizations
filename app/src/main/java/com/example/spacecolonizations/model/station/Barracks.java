@@ -21,6 +21,8 @@ public class Barracks extends Station{
         //TODO reserve crew
     }
 
+
+
     @Override
     public void loseHealth(int damage) {
         this.stationHealth -= damage;
@@ -30,6 +32,7 @@ public class Barracks extends Station{
 
             for (Crew crew : this.crewMembers) {
                 crew.loseHealth(crew.getMaxHealthPoints());
+
             }
         }
     }

@@ -7,8 +7,8 @@ import com.example.spacecolonizations.model.ship.EnemyShip;
 
 public class Turret extends Station{
     private float damage;
-    public Turret(int stationStrength, int energyLevel, int maxCrew) {
-        super(stationStrength, energyLevel, maxCrew);
+    public Turret(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
+        super(stationStrength, energyLevel, maxCrew, barracks);
         this.damage = 10;
     }
 
@@ -68,6 +68,7 @@ public class Turret extends Station{
 
             for (Crew crew : this.crewMembers) {
                 crew.loseHealth(crew.getMaxHealthPoints());
+                this.removeCrew(crew, this.barracks);
             }
         }
     }

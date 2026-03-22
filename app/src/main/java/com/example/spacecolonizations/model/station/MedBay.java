@@ -28,8 +28,8 @@ public class MedBay extends Station{
         }
     };
 
-    public MedBay(int stationStrength, int energyLevel, int maxCrew) {
-        super(stationStrength, energyLevel, maxCrew);
+    public MedBay(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
+        super(stationStrength, energyLevel, maxCrew, barracks);
         this.patients = new ArrayList<>();
         baseHeal = 10;
     }
@@ -85,10 +85,13 @@ public class MedBay extends Station{
 
             for (Crew crew : this.crewMembers) {
                 crew.loseHealth(crew.getMaxHealthPoints());
+                this.removeCrew(crew, this.barracks);
             }
 
             for (Crew patient : patients) {
                 patient.loseHealth(patient.getMaxHealthPoints());
+                this.patients.remove(patient);
+                barracks.assignCrew(patient);
             }
         }
     }

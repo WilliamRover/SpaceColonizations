@@ -22,8 +22,8 @@ public class TrainingCenter extends Station{
             }
         }
     };
-    public TrainingCenter(int stationStrength, int energyLevel, int maxCrew) {
-        super(stationStrength, energyLevel, maxCrew);
+    public TrainingCenter(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
+        super(stationStrength, energyLevel, maxCrew, barracks);
         this.multiplierIncrement = 20;
     }
 
@@ -47,6 +47,7 @@ public class TrainingCenter extends Station{
 
             for (Crew crew : this.crewMembers) {
                 crew.loseHealth(crew.getMaxHealthPoints());
+                this.removeCrew(crew, this.barracks);
             }
         }
     }

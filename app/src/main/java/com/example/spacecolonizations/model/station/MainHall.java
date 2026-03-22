@@ -3,8 +3,8 @@ package com.example.spacecolonizations.model.station;
 import com.example.spacecolonizations.model.crewmate.Crew;
 
 public class MainHall extends Station{
-    public MainHall(int stationStrength, int energyLevel, int maxCrew) {
-        super(stationStrength, energyLevel, maxCrew);
+    public MainHall(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
+        super(stationStrength, energyLevel, maxCrew, barracks);
     }
 
     @Override
@@ -21,6 +21,7 @@ public class MainHall extends Station{
 
             for (Crew crew : this.crewMembers) {
                 crew.loseHealth(crew.getMaxHealthPoints());
+                this.removeCrew(crew, this.barracks);
             }
         }
     }

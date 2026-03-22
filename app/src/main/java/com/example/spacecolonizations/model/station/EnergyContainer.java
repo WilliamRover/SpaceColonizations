@@ -6,8 +6,8 @@ import com.example.spacecolonizations.model.crewmate.Technician;
 
 public class EnergyContainer extends Station{
 
-    public EnergyContainer(int stationStrength, int energyLevel, int maxCrew) {
-        super(stationStrength, energyLevel, maxCrew);
+    public EnergyContainer(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
+        super(stationStrength, energyLevel, maxCrew, barracks);
     }
 
     public void depleteEnergy(){
@@ -49,6 +49,7 @@ public class EnergyContainer extends Station{
 
             for (Crew crew : this.crewMembers) {
                 crew.loseHealth(crew.getMaxHealthPoints());
+                this.removeCrew(crew, this.barracks);
             }
         }
     }

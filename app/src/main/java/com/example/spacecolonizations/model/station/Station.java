@@ -6,6 +6,8 @@ import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.Technician;
 import com.example.spacecolonizations.reuse.Damagable;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +21,21 @@ public abstract class Station implements Damagable {
     private int maxCrew;
     protected float efficiency;
     protected List<Crew> repairMan;
+    protected Barracks barracks;
 
-    public Station(int stationHealth, int energyLevel, int maxCrew) {
+    public Station(int stationHealth, int energyLevel, int maxCrew, Barracks barracks) {
+        this.stationHealth = stationHealth;
+        this.maxStationHealth = stationHealth;
+        this.energyLevel = energyLevel;
+        this.maxCrew = maxCrew;
+        this.efficiency = 0;
+        this.crewMembers = new ArrayList<>();
+        this.repairMan = new ArrayList<>();
+        this.isUseable = true;
+        this.barracks = barracks;
+    }
+
+    public Station(int stationStrength, int energyLevel, int maxCrew) {
         this.stationHealth = stationHealth;
         this.maxStationHealth = stationHealth;
         this.energyLevel = energyLevel;
@@ -35,14 +50,15 @@ public abstract class Station implements Damagable {
         if (this.crewMembers.size() < this.maxCrew) {
             crewMembers.add(crew);
             this.setEfficiency();
-            return;
         }
 
     }
 
-    public void removeCrew(Crew crew, Barracks barracks){
+    public void removeCrew(Crew crew, Station targetStation){
         if (this.crewMembers.remove(crew)) {
             this.setEfficiency();
+            targetStation.assignCrew(crew);
+
         }
     }
 
@@ -51,9 +67,7 @@ public abstract class Station implements Damagable {
     }
 
     public void removeRepairMan(Crew crew) {
-        if (this.crewMembers.isEmpty()){
-            return;
-        }
+
         this.repairMan.remove(crew);
     }
 
@@ -72,6 +86,7 @@ public abstract class Station implements Damagable {
                 }
                 eff /= 2;
             }
+
             stationHealth = (int) (stationHealth + 10*repairRate);
             if (stationHealth>maxStationHealth){
                 stationHealth = maxStationHealth;

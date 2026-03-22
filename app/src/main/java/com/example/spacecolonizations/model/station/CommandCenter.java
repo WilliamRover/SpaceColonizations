@@ -6,8 +6,8 @@ import com.example.spacecolonizations.model.crewmate.Gunner;
 import com.example.spacecolonizations.model.crewmate.Navigator;
 
 public class CommandCenter extends Station{
-    public CommandCenter(int stationStrength, int energyLevel, int maxCrew) {
-        super(stationStrength, energyLevel, maxCrew);
+    public CommandCenter(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
+        super(stationStrength, energyLevel, maxCrew, barracks);
     }
 
     @Override
@@ -45,6 +45,7 @@ public class CommandCenter extends Station{
 
             for (Crew crew : this.crewMembers) {
                 crew.loseHealth(crew.getMaxHealthPoints());
+                this.removeCrew(crew, this.barracks);
             }
         }
     }
