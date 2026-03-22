@@ -54,7 +54,7 @@ public abstract class Crew implements Damagable {
         levelMultiplier = n;
     }
 
-    public void reserMultiplier(){
+    public void resetMultiplier(){
         levelMultiplier = 1;
     }
 
