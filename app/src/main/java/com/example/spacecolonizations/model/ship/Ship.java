@@ -7,9 +7,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.spacecolonizations.reuse.Damagable;
+import com.example.spacecolonizations.reuse.ChangeHealth;
 
-public abstract class Ship implements Damagable {
+public abstract class Ship implements ChangeHealth {
     private int hullStrength;
     private int innitHullStrength;
 
@@ -67,5 +67,8 @@ public abstract class Ship implements Damagable {
 
     public void loseHealth(int damage) {
         this.hullStrength -= damage;
+    }
+    public void increaseHealth(int health) {
+        this.hullStrength += health;
     }
 }
