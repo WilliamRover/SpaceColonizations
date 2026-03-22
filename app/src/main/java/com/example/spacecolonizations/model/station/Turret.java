@@ -25,10 +25,6 @@ public class Turret extends Station{
 
 
     public void dealDamage(EnemyShip ship){
-        if (this.crewMembers.isEmpty() || !this.isUseable){
-            //TODO notify user that it is unuseable
-            return;
-        }
         ship.setHullStrength((int) (ship.getHullStrength() - this.damage));
     }
 
