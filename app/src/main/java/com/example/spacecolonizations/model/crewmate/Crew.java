@@ -95,5 +95,4 @@ public abstract class Crew implements Damagable {
         exp = exp+ (receiveAmount * levelMultiplier);
     }
 
-
 }

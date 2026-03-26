@@ -9,10 +9,8 @@ import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Station implements Damagable {
-    protected int stationHealth;
+public abstract class Station {
     protected boolean isUseable;
-    private int maxStationHealth;
     protected List<Crew> crewMembers;
     private int maxCrew;
     protected float efficiency;
@@ -20,9 +18,8 @@ public abstract class Station implements Damagable {
     protected Barracks barracks;
 
     //TODO remove health and tie it to isuseable
+    //TODO redo repairStation
     public Station(int stationHealth, int energyLevel, int maxCrew, Barracks barracks) {
-        this.stationHealth = stationHealth;
-        this.maxStationHealth = stationHealth;
         this.maxCrew = maxCrew;
         this.efficiency = 0;
         this.crewMembers = new ArrayList<>();
@@ -32,8 +29,6 @@ public abstract class Station implements Damagable {
     }
 
     public Station(int stationStrength, int energyLevel, int maxCrew) {
-        this.stationHealth = stationHealth;
-        this.maxStationHealth = stationHealth;
         this.maxCrew = maxCrew;
         this.efficiency = 0;
         this.crewMembers = new ArrayList<>();
@@ -68,25 +63,10 @@ public abstract class Station implements Damagable {
 
     public void repairStation(){
         float repairRate = 0;
-        float eff = 1;
-        if (this.repairMan.isEmpty()){
-            return;
-        }
-        if (stationHealth<maxStationHealth){
-            for (Crew repairMan: this.repairMan){
-                repairRate = repairRate + eff;
-                if (repairMan instanceof Technician){
-                    repairRate += 0.15F;
-                }
-                eff /= 2;
-            }
+        float repairEfficiency = 1;
 
-            stationHealth = (int) (stationHealth + 10*repairRate);
-            if (stationHealth>maxStationHealth){
-                stationHealth = maxStationHealth;
-            }
 
-        }
+
     }
 
     public abstract void setEfficiency();

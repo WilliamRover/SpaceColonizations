@@ -76,24 +76,5 @@ public class MedBay extends Station{
         heal();
     }
 
-    @Override
-    public void loseHealth(int damage) {
-        this.stationHealth -= damage;
-        this.isUseable = false;
 
-        if (this.stationHealth <= 0) {
-            this.stationHealth = 0;
-
-            for (Crew crew : this.crewMembers) {
-                crew.loseHealth(crew.getMaxHealthPoints());
-                this.removeCrew(crew, this.barracks);
-            }
-
-            for (Crew patient : patients) {
-                patient.loseHealth(patient.getMaxHealthPoints());
-                this.patients.remove(patient);
-                barracks.assignCrew(patient);
-            }
-        }
-    }
 }

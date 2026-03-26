@@ -60,18 +60,5 @@ public class Turret extends Station{
 
     }
 
-    @Override
-    public void loseHealth(int damage) {
-        this.stationHealth -= damage;
 
-        if (this.stationHealth <= 0) {
-            this.stationHealth = 0;
-            this.isUseable = false;
-
-            for (Crew crew : this.crewMembers) {
-                crew.loseHealth(crew.getMaxHealthPoints());
-                this.removeCrew(crew, this.barracks);
-            }
-        }
-    }
 }
