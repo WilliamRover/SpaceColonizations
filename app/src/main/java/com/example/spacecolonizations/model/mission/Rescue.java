@@ -3,7 +3,7 @@ package com.example.spacecolonizations.model.mission;
 import com.example.spacecolonizations.model.crewmate.Crew;
 import java.util.ArrayList;
 import java.util.List;
-public class Rescue extends mission {
+public class Rescue extends Mission {
     private List<Crew> crewMembers;
     public Rescue(String missionName, int numCrew){
         super(missionName, numCrew);

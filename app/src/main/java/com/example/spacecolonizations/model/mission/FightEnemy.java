@@ -5,7 +5,7 @@ package com.example.spacecolonizations.model.mission;
  * missionName -> name of the mission in string
  * numCrew -> number of crew members require in the mission
  */
-public class FightEnemy extends mission{
+public class FightEnemy extends Mission {
     public FightEnemy(String missionName, int numCrew){
         super(missionName, numCrew);
     }

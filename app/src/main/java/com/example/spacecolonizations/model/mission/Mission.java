@@ -1,10 +1,10 @@
 package com.example.spacecolonizations.model.mission;
 
-public class mission {
+public class Mission {
     String missionName;
     int numCrew;
     Boolean Complete;
-    public mission(String missionName, int numCrew){
+    public Mission(String missionName, int numCrew){
         this.missionName = missionName;
         this.numCrew = numCrew;
         this.Complete = false;
