@@ -16,7 +16,7 @@ public class Turret extends Station{
         return this.damage;
     }
 
-    public void setDamage(){
+    private void setDamage(){
         this.damage *= this.efficiency;
         //TODO increase damage depending on energy system
 
@@ -33,6 +33,7 @@ public class Turret extends Station{
 
     @Override
     public void setEfficiency() {
+        //TODO make damage scale with crew member level too
         float increment = 1;
         float ttotalEfficiency =  0;
 
@@ -55,6 +56,7 @@ public class Turret extends Station{
         }
 
         this.efficiency = ttotalEfficiency;
+        this.setDamage();
 
     }
 

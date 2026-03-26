@@ -19,6 +19,7 @@ public abstract class Station implements Damagable {
     protected List<Crew> repairMan;
     protected Barracks barracks;
 
+    //TODO remove health and tie it to isuseable
     public Station(int stationHealth, int energyLevel, int maxCrew, Barracks barracks) {
         this.stationHealth = stationHealth;
         this.maxStationHealth = stationHealth;
@@ -61,7 +62,6 @@ public abstract class Station implements Damagable {
     }
 
     public void removeRepairMan(Crew crew) {
-
         this.repairMan.remove(crew);
     }
 

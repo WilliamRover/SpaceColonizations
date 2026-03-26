@@ -5,6 +5,8 @@ import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.Gunner;
 import com.example.spacecolonizations.model.crewmate.Navigator;
 
+//TODO showStatistic function
+//TODO getMission function
 public class CommandCenter extends Station{
     public CommandCenter(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
         super(stationStrength, energyLevel, maxCrew, barracks);
@@ -35,6 +37,8 @@ public class CommandCenter extends Station{
 
         this.efficiency = ttotalEfficiency;
     }
+
+
 
     @Override
     public void loseHealth(int damage) {

@@ -8,6 +8,7 @@ import com.example.spacecolonizations.model.crewmate.Crew;
 
 
 public class TrainingCenter extends Station{
+    //TODO remove multiplier stuff and implement xp
     private int multiplierIncrement;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Runnable trainRunnable = new Runnable() {
