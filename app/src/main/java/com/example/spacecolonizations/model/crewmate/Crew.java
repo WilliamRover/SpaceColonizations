@@ -1,6 +1,7 @@
 package com.example.spacecolonizations.model.crewmate;
 
 
+import com.example.spacecolonizations.model.station.Station;
 import com.example.spacecolonizations.reuse.Damagable;
 
 public abstract class Crew implements Damagable {
@@ -10,6 +11,7 @@ public abstract class Crew implements Damagable {
     private float levelMultiplier;
     private Float exp;
     private int maxHealthPoints;
+    private Station currentStation;
 
 
     //TODO figure out a way to temporarily remove the crew from ship into rescue missions
@@ -20,9 +22,9 @@ public abstract class Crew implements Damagable {
         this.name = name;
         this.healthPoints = healthPoints;
         this.level = level;
-        this.levelMultiplier = levelMultiplier;
         this.exp = (float) 0;
         this.maxHealthPoints = maxHealthPoints;
+        this.levelMultiplier = levelMultiplier;
     }
 
     public String getName(){
@@ -53,18 +55,6 @@ public abstract class Crew implements Damagable {
     }
 
 
-    public void setMultiplier(float n){
-        levelMultiplier = n;
-    }
-
-    public void resetMultiplier(){
-        levelMultiplier = 1;
-    }
-
-    public Float getMultiplier(){
-        return levelMultiplier;
-    }
-
     public int getLevel(){
         return level;
     }
@@ -93,6 +83,34 @@ public abstract class Crew implements Damagable {
 
     public void receiveExp(Float receiveAmount){
         exp = exp+ (receiveAmount * levelMultiplier);
+    }
+
+    public Station getCurrentStation(){
+        return this.currentStation;
+    }
+
+    /**
+     * Sets the current station of the crew.
+     * Do not call this function in main
+     * @param station The station to set the crew to
+     */
+    public void setCurrentStation(Station station){
+        this.currentStation = station;
+    }
+
+
+
+    //TODO Possible future implementations
+    public void setMultiplier(float n){
+        levelMultiplier = n;
+    }
+
+    public void resetMultiplier(){
+        levelMultiplier = 1;
+    }
+
+    public Float getMultiplier(){
+        return levelMultiplier;
     }
 
 }

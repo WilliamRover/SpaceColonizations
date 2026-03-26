@@ -8,7 +8,7 @@ import com.example.spacecolonizations.model.ship.EnemyShip;
 public class Turret extends Station{
     private float damage;
     public Turret(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
-        super(stationStrength, energyLevel, maxCrew, barracks);
+        super(stationStrength, energyLevel, maxCrew);
         this.damage = 10;
     }
 

@@ -30,7 +30,7 @@ public class MedBay extends Station{
     };
 
     public MedBay(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
-        super(stationStrength, energyLevel, maxCrew, barracks);
+        super(stationStrength, energyLevel, maxCrew);
         this.patients = new ArrayList<>();
         baseHeal = 10;
     }

@@ -24,7 +24,7 @@ public class TrainingCenter extends Station{
         }
     };
     public TrainingCenter(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
-        super(stationStrength, energyLevel, maxCrew, barracks);
+        super(stationStrength, energyLevel, maxCrew);
         this.multiplierIncrement = 20;
     }
 
