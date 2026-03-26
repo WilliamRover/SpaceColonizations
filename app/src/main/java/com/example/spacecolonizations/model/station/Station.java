@@ -1,7 +1,5 @@
 package com.example.spacecolonizations.model.station;
 
-
-
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.Technician;
 import com.example.spacecolonizations.reuse.Damagable;
@@ -13,11 +11,9 @@ import java.util.List;
 
 public abstract class Station implements Damagable {
     protected int stationHealth;
-
     protected boolean isUseable;
     private int maxStationHealth;
     protected List<Crew> crewMembers;
-    private int energyLevel;
     private int maxCrew;
     protected float efficiency;
     protected List<Crew> repairMan;
@@ -26,7 +22,6 @@ public abstract class Station implements Damagable {
     public Station(int stationHealth, int energyLevel, int maxCrew, Barracks barracks) {
         this.stationHealth = stationHealth;
         this.maxStationHealth = stationHealth;
-        this.energyLevel = energyLevel;
         this.maxCrew = maxCrew;
         this.efficiency = 0;
         this.crewMembers = new ArrayList<>();
@@ -38,7 +33,6 @@ public abstract class Station implements Damagable {
     public Station(int stationStrength, int energyLevel, int maxCrew) {
         this.stationHealth = stationHealth;
         this.maxStationHealth = stationHealth;
-        this.energyLevel = energyLevel;
         this.maxCrew = maxCrew;
         this.efficiency = 0;
         this.crewMembers = new ArrayList<>();
