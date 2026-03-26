@@ -12,6 +12,7 @@ public abstract class Crew implements Damagable {
     private Float exp;
     private int maxHealthPoints;
     private Station currentStation;
+    private boolean canWork;
 
 
     //TODO figure out a way to temporarily remove the crew from ship into rescue missions
@@ -25,6 +26,7 @@ public abstract class Crew implements Damagable {
         this.exp = (float) 0;
         this.maxHealthPoints = maxHealthPoints;
         this.levelMultiplier = levelMultiplier;
+        this.canWork = true;
     }
 
     public String getName(){
@@ -96,6 +98,14 @@ public abstract class Crew implements Damagable {
      */
     public void setCurrentStation(Station station){
         this.currentStation = station;
+    }
+
+    public boolean getCanWork(){
+        return canWork;
+    }
+
+    public void setCanWork(boolean n){
+        canWork = n;
     }
 
 

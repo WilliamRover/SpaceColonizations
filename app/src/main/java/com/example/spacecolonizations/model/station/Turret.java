@@ -8,7 +8,7 @@ import com.example.spacecolonizations.model.ship.EnemyShip;
 public class Turret extends Station{
     private float damage;
     public Turret(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
-        super(stationStrength, energyLevel, maxCrew);
+        super(maxCrew);
         this.damage = 10;
     }
 
@@ -18,9 +18,6 @@ public class Turret extends Station{
 
     private void setDamage(){
         this.damage *= this.efficiency;
-        //TODO increase damage depending on energy system
-
-        //something related to energy needs to be input to this function
     }
 
 
@@ -33,7 +30,6 @@ public class Turret extends Station{
 
     @Override
     public void setEfficiency() {
-        //TODO make damage scale with crew member level too
         float increment = 1;
         float ttotalEfficiency =  0;
 
@@ -46,7 +42,9 @@ public class Turret extends Station{
             if (crew.getHealthPoints() == 0) {
                 continue;
             }
-            ttotalEfficiency += increment;
+
+            // Damage scales with 10% of level also
+            ttotalEfficiency += (float) (increment + crew.getLevel() * 0.01);
 
             if (crew instanceof Gunner) {
                 ttotalEfficiency += 0.15F;

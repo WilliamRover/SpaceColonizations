@@ -1,5 +1,7 @@
 package com.example.spacecolonizations.model.station;
 
+import android.widget.Toast;
+
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.Technician;
 import com.example.spacecolonizations.reuse.Damagable;
@@ -16,20 +18,25 @@ public abstract class Station {
     private int maxCrew;
     protected float efficiency;
     protected List<Crew> repairMan;
+    protected int maxRepairmen;
 
     //TODO remove health and tie it to isuseable
     //TODO redo repairStation
 
-    public Station(int stationStrength, int energyLevel, int maxCrew) {
+    public Station(int maxCrew) {
         this.maxCrew = maxCrew;
         this.efficiency = 0;
         this.crewMembers = new ArrayList<>();
         this.repairMan = new ArrayList<>();
         this.isUseable = true;
+        this.maxRepairmen = 2;
     }
 
     public void assignCrew(@NonNull Crew crew){
         if (crew.getCurrentStation() == this) {
+            return;
+        } else if (!crew.getCanWork()) {
+            //TODO notification saying crew cannot be assigned
             return;
         }
         if (this.crewMembers.size() < this.maxCrew) {
@@ -39,7 +46,7 @@ public abstract class Station {
             }
 
             crew.setCurrentStation(this);
-            crewMembers.add(crew);
+            this.crewMembers.add(crew);
             this.setEfficiency();
         }
 
@@ -55,12 +62,28 @@ public abstract class Station {
         }
     }
 
-    public void addRepairMan(Crew crew) {
-        this.repairMan.add(crew);
+    public void addRepairMan(@NonNull Crew crew) {
+        if (this.repairMan.size() < this.maxRepairmen) {
+
+            if (crew.getCurrentStation() != null) {
+                crew.getCurrentStation().removeCrew(crew);
+            }
+
+            crew.setCurrentStation(this);
+            crew.setCanWork(false);
+            this.repairMan.add(crew);
+            this.setEfficiency();
+        }
     }
 
-    public void removeRepairMan(Crew crew) {
-        this.repairMan.remove(crew);
+    public void removeRepairMan(@NonNull Crew crew) {
+        if (this.repairMan.remove(crew)) {
+
+            if (crew.getCurrentStation() == this) {
+                crew.setCurrentStation(Barracks.getInstance());
+                crew.setCanWork(true);
+            }
+        }
     }
 
 
@@ -71,6 +94,10 @@ public abstract class Station {
 
     }
 
+
+    protected float getEfficiency() {
+        return this.efficiency;
+    }
     public abstract void setEfficiency();
 
 }

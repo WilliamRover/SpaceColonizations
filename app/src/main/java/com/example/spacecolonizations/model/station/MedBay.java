@@ -14,25 +14,33 @@ public class MedBay extends Station{
     private List<Crew> patients;
     private int maxPatients;
     private int baseHeal;
+    private boolean isHealing;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Runnable healRunnable = new Runnable() {
         @Override
         public void run() {
-            if (crewMembers.isEmpty() || patients.isEmpty() || !isUseable) {
+            if (crewMembers.isEmpty() || patients.isEmpty() || !isUseable || getEfficiency() == 0){
+                isHealing = false;
                 return;
             }
+            isHealing = true;
 
-            for (Crew patient : patients) {
+            for (int i = patients.size() - 1; i >= 0; i--) {
+                Crew patient = patients.get(i);
                 patient.increaseHealthPoints((int) (baseHeal * efficiency));
+                if (patient.getHealthPoints() >= patient.getMaxHealthPoints()) {
+                    removePatient(patient);
+                }
             }
             handler.postDelayed(this, 1000);
         }
     };
 
-    public MedBay(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
-        super(stationStrength, energyLevel, maxCrew);
+    public MedBay(int maxCrew) {
+        super(maxCrew);
         this.patients = new ArrayList<>();
-        baseHeal = 10;
+        this.baseHeal = 10;
+        this.maxPatients = 5;
     }
 
     public void heal(){
@@ -41,12 +49,34 @@ public class MedBay extends Station{
     }
 
     public void addPatient(Crew crew) {
-        patients.add(crew);
-        heal();
+
+        if (!(this.patients.size() < this.maxPatients) || this.patients.contains(crew)) {
+        //TODO notification saying patient cannot be assigned
+            return;
+
+        }
+
+        if (crew.getCurrentStation() != null) {
+            crew.getCurrentStation().removeCrew(crew);
+        }
+
+        crew.setCurrentStation(this);
+        crew.setCanWork(false);
+        this.patients.add(crew);
+
+        if (!this.isHealing) {
+            heal();
+        }
     }
 
     public void removePatient(Crew crew) {
-        patients.remove(crew);
+        if (this.patients.remove(crew)) {
+
+            if (crew.getCurrentStation() == this) {
+                crew.setCurrentStation(Barracks.getInstance());
+            }
+            crew.setCanWork(true);
+        }
     }
 
     @Override
@@ -78,3 +108,4 @@ public class MedBay extends Station{
 
 
 }
+

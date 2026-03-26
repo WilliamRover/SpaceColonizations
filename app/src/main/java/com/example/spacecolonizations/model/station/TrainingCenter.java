@@ -24,13 +24,13 @@ public class TrainingCenter extends Station{
         }
     };
     public TrainingCenter(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
-        super(stationStrength, energyLevel, maxCrew);
+        super(maxCrew);
         this.multiplierIncrement = 20;
     }
 
     @Override
     public void setEfficiency() {
-        this.efficiency = 1;
+        return;
     }
 
     public void train(){
