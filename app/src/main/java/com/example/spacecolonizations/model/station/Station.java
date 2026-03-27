@@ -1,24 +1,52 @@
 package com.example.spacecolonizations.model.station;
 
-import android.widget.Toast;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.example.spacecolonizations.model.crewmate.Crew;
+import com.example.spacecolonizations.model.crewmate.Medic;
 import com.example.spacecolonizations.model.crewmate.Technician;
-import com.example.spacecolonizations.reuse.Damagable;
 
 import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Station {
-    protected boolean isUseable;
+    protected boolean isUsable;
     protected List<Crew> crewMembers;
     private int maxCrew;
     protected float efficiency;
     protected List<Crew> repairMan;
     protected int maxRepairmen;
+    protected float repairEfficiency;
+    private final double baseRepairtime = 30000; // in milliseconds
+    private double repairTimeRemaining;
+    private final Handler repairHandler = new Handler(Looper.getMainLooper());
+    private final Runnable repairRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (repairMan.isEmpty() || isUsable) {
+                return;
+            }
+
+            repairTimeRemaining -= 1000 * repairEfficiency;
+
+            if (repairTimeRemaining <= 0) {
+                repairTimeRemaining = 0;
+                isUsable = true;
+                setEfficiency();
+
+                for (int i = repairMan.size() - 1; i >= 0; i--) {
+                    removeRepairMan(repairMan.get(i));
+                }
+                return;
+            } else {
+                repairHandler.postDelayed(this, 1000);
+            }
+        }
+    };
+
 
     //TODO remove health and tie it to isuseable
     //TODO redo repairStation
@@ -28,8 +56,9 @@ public abstract class Station {
         this.efficiency = 0;
         this.crewMembers = new ArrayList<>();
         this.repairMan = new ArrayList<>();
-        this.isUseable = true;
+        this.isUsable = true;
         this.maxRepairmen = 2;
+        this.repairTimeRemaining = 0;
     }
 
     public void assignCrew(@NonNull Crew crew){
@@ -63,6 +92,14 @@ public abstract class Station {
     }
 
     public void addRepairMan(@NonNull Crew crew) {
+        if (this.isUsable) {
+            //TODO notification saying station is not damaged
+            return;
+
+        } else if (!crew.getCanWork()) {
+            //TODO notification saying repairman cannot be assigned
+            return;
+        }
         if (this.repairMan.size() < this.maxRepairmen) {
 
             if (crew.getCurrentStation() != null) {
@@ -72,7 +109,8 @@ public abstract class Station {
             crew.setCurrentStation(this);
             crew.setCanWork(false);
             this.repairMan.add(crew);
-            this.setEfficiency();
+            this.setRepairEfficiency();
+            this.repairStation();
         }
     }
 
@@ -83,17 +121,51 @@ public abstract class Station {
                 crew.setCurrentStation(Barracks.getInstance());
                 crew.setCanWork(true);
             }
+            this.setRepairEfficiency();
         }
     }
 
 
     public void repairStation(){
-        float repairRate = 0;
-        float repairEfficiency = 1;
+        if (this.isUsable) {
+            this.repairTimeRemaining = 0;
+            return;
+        }
 
+        if (this.repairTimeRemaining <= 0){
+            this.repairTimeRemaining = baseRepairtime;
+        }
+        if (!this.repairMan.isEmpty()) {
+            repairHandler.removeCallbacks(repairRunnable);
+            repairHandler.post(repairRunnable);
+        }
 
     }
 
+
+    private void setRepairEfficiency() {
+        float increment = 1;
+        float totalEfficiency =  0;
+
+        if (this.repairMan.isEmpty()){
+            this.repairEfficiency = 0;
+            return;
+        }
+
+        for (Crew crew: this.repairMan){
+            if (crew.getHealthPoints() == 0) {
+                continue;
+            }
+            totalEfficiency += increment;
+
+            if (crew instanceof Technician) {
+                totalEfficiency += 0.20F;
+            }
+
+            increment /= 2;
+        }
+        this.repairEfficiency = totalEfficiency;
+    }
 
     protected float getEfficiency() {
         return this.efficiency;

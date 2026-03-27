@@ -20,9 +20,8 @@ public class Turret extends Station{
         this.damage *= this.efficiency;
     }
 
-
     public void dealDamage(EnemyShip ship){
-        if (!this.isUseable){
+        if (!this.isUsable){
             return;
         }
         ship.setHullStrength((int) (ship.getHullStrength() - this.damage));
@@ -33,7 +32,7 @@ public class Turret extends Station{
         float increment = 1;
         float ttotalEfficiency =  0;
 
-        if (this.crewMembers.isEmpty()){
+        if (this.crewMembers.isEmpty() || !this.isUsable){
             this.efficiency = 0;
             return;
         }

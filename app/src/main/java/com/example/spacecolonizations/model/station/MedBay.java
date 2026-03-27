@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.example.spacecolonizations.model.crewmate.Crew;
-import com.example.spacecolonizations.model.crewmate.Gunner;
 import com.example.spacecolonizations.model.crewmate.Medic;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class MedBay extends Station{
     private final Runnable healRunnable = new Runnable() {
         @Override
         public void run() {
-            if (crewMembers.isEmpty() || patients.isEmpty() || !isUseable || getEfficiency() == 0){
+            if (crewMembers.isEmpty() || patients.isEmpty() || !isUsable || getEfficiency() == 0){
                 isHealing = false;
                 return;
             }
@@ -69,7 +68,7 @@ public class MedBay extends Station{
         }
     }
 
-    public void removePatient(Crew crew) {
+    private void removePatient(Crew crew) {
         if (this.patients.remove(crew)) {
 
             if (crew.getCurrentStation() == this) {
@@ -82,7 +81,7 @@ public class MedBay extends Station{
     @Override
     public void setEfficiency() {
         float increment = 1;
-        float ttotalEfficiency =  0;
+        float totalEfficiency =  0;
 
         if (this.crewMembers.isEmpty()){
             this.efficiency = 0;
@@ -93,16 +92,16 @@ public class MedBay extends Station{
             if (crew.getHealthPoints() == 0) {
                 continue;
             }
-            ttotalEfficiency += increment;
+            totalEfficiency += increment;
 
             if (crew instanceof Medic) {
-                ttotalEfficiency += 0.15F;
+                totalEfficiency += 0.15F;
             }
 
             increment /= 2;
         }
 
-        this.efficiency = ttotalEfficiency;
+        this.efficiency = totalEfficiency;
         heal();
     }
 

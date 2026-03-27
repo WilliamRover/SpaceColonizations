@@ -9,23 +9,27 @@ import com.example.spacecolonizations.model.crewmate.Crew;
 
 public class TrainingCenter extends Station{
     //TODO remove multiplier stuff and implement xp
-    private int multiplierIncrement;
+
+    private float expIncrement;
+
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Runnable trainRunnable = new Runnable() {
         @Override
         public void run() {
-            if (crewMembers.isEmpty() || !isUseable) {
+            if (crewMembers.isEmpty() || !isUsable) {
                 return;
             }
 
             for (Crew crew: crewMembers) {
-                crew.setMultiplier(multiplierIncrement);
+                crew.receiveExp(expIncrement);
             }
+            handler.postDelayed(this, 1000);
         }
     };
-    public TrainingCenter(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
+
+    public TrainingCenter(int maxCrew) {
         super(maxCrew);
-        this.multiplierIncrement = 20;
+        this.expIncrement = 10;
     }
 
     @Override
