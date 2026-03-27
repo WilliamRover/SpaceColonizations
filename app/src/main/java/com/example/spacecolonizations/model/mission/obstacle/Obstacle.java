@@ -31,7 +31,6 @@ public class Obstacle {
         crewNeed = n;
     }
 
-    public
 
     public void addLocationJob(String location, String job){
         locationJob.put(location, job);
