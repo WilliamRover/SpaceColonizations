@@ -80,32 +80,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/friendlyShipEnergy"
-        android:layout_width="145dp"
-        android:layout_height="12dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:progress="100"
-        app:indicatorColor="#5787FF"
-        app:indicatorTrackGapSize="0dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/friendlyShipHp"
-        app:trackColor="#DFDFDF"
-        app:trackCornerRadius="0dp"
-        app:trackStopIndicatorSize="0dp"
-        app:trackThickness="16dp" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="60dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/energy" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="15dp"
@@ -126,17 +100,6 @@
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/friendlyShipHp"
         app:layout_constraintStart_toStartOf="@+id/friendlyShipHp" />
-
-    <TextView
-        android:id="@+id/friendlyEnergyTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:text="num/100"
-        android:textColor="#314A8A"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/friendlyShipEnergy"
-        app:layout_constraintStart_toStartOf="@+id/friendlyShipEnergy" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/enemyShipHp"
