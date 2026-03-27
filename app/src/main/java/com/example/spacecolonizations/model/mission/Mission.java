@@ -1,7 +1,10 @@
 package com.example.spacecolonizations.model.mission;
 
-import java.io.Serializable;
+import com.example.spacecolonizations.model.crewmate.Crew;
+import com.example.spacecolonizations.model.station.Station;
 
+import java.io.Serializable;
+import java.util.HashMap;
 
 
 public class Mission implements Serializable {
@@ -28,5 +31,9 @@ public class Mission implements Serializable {
     }
     public void setComplete(Boolean n){
         Complete = n;
+    }
+
+    public HashMap<Station, Crew> getLocationJob(){
+        return null;
     }
 }

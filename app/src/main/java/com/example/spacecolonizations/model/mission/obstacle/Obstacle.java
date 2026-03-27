@@ -1,17 +1,20 @@
 package com.example.spacecolonizations.model.mission.obstacle;
 
+import com.example.spacecolonizations.model.crewmate.Crew;
+import com.example.spacecolonizations.model.station.Station;
+
 import java.util.HashMap;
 
 
 
 public class Obstacle {
     private int crewNeed;
-    private HashMap<String,String> locationJob;
+    private HashMap<Station, Crew> locationJob;
     private int levelNeeded;
 
     public Obstacle(int crewNeed, int levelNeeded){
         this.crewNeed = crewNeed;
-        this.locationJob = new HashMap<String,String>();
+        this.locationJob = new HashMap<Station, Crew>();
         this.levelNeeded = levelNeeded;
     }
 
@@ -19,7 +22,7 @@ public class Obstacle {
         return crewNeed;
     }
 
-    public HashMap<String,String> getLocationJob(){
+    public HashMap<Station, Crew> getLocationJob(){
         return locationJob;
     }
 
@@ -32,7 +35,7 @@ public class Obstacle {
     }
 
 
-    public void addLocationJob(String location, String job){
+    public void addLocationJob(Station location, Crew job){
         locationJob.put(location, job);
     }
     public void removeLocationJob(String location){
