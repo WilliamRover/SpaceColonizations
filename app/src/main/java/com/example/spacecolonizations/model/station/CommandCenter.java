@@ -8,8 +8,9 @@ import com.example.spacecolonizations.model.crewmate.Navigator;
 //TODO showStatistic function
 //TODO getMission function
 public class CommandCenter extends Station{
-    public CommandCenter(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
-        super(stationStrength, energyLevel, maxCrew, barracks);
+    public CommandCenter() {
+        super();
+        this.maxCrew = 2;
     }
 
     @Override
@@ -38,19 +39,4 @@ public class CommandCenter extends Station{
         this.efficiency = ttotalEfficiency;
     }
 
-
-
-    @Override
-    public void loseHealth(int damage) {
-        this.stationHealth -= damage;
-
-        if (this.stationHealth <= 0) {
-            this.stationHealth = 0;
-
-            for (Crew crew : this.crewMembers) {
-                crew.loseHealth(crew.getMaxHealthPoints());
-                this.removeCrew(crew, this.barracks);
-            }
-        }
-    }
 }

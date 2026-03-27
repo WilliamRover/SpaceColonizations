@@ -1,94 +1,175 @@
 package com.example.spacecolonizations.model.station;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.example.spacecolonizations.model.crewmate.Crew;
+import com.example.spacecolonizations.model.crewmate.Medic;
 import com.example.spacecolonizations.model.crewmate.Technician;
-import com.example.spacecolonizations.reuse.Damagable;
 
-import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Station implements Damagable {
-    protected int stationHealth;
-    protected boolean isUseable;
-    private int maxStationHealth;
+public abstract class Station implements Serializable {
+    protected boolean isUsable;
     protected List<Crew> crewMembers;
-    private int maxCrew;
+    protected int maxCrew;
     protected float efficiency;
     protected List<Crew> repairMan;
-    protected Barracks barracks;
+    protected int maxRepairmen;
+    protected float repairEfficiency;
+    private final double baseRepairtime = 30000; // in milliseconds
+    private double repairTimeRemaining;
+    private final Handler repairHandler = new Handler(Looper.getMainLooper());
+    private final Runnable repairRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (repairMan.isEmpty() || isUsable) {
+                return;
+            }
+
+            repairTimeRemaining -= 1000 * repairEfficiency;
+
+            if (repairTimeRemaining <= 0) {
+                repairTimeRemaining = 0;
+                isUsable = true;
+                setEfficiency();
+
+                for (int i = repairMan.size() - 1; i >= 0; i--) {
+                    removeRepairMan(repairMan.get(i));
+                }
+                return;
+            } else {
+                repairHandler.postDelayed(this, 1000);
+            }
+        }
+    };
+
 
     //TODO remove health and tie it to isuseable
-    public Station(int stationHealth, int energyLevel, int maxCrew, Barracks barracks) {
-        this.stationHealth = stationHealth;
-        this.maxStationHealth = stationHealth;
-        this.maxCrew = maxCrew;
+    //TODO redo repairStation
+
+    public Station() {
         this.efficiency = 0;
         this.crewMembers = new ArrayList<>();
         this.repairMan = new ArrayList<>();
-        this.isUseable = true;
-        this.barracks = barracks;
+        this.isUsable = true;
+        this.maxRepairmen = 2;
+        this.repairTimeRemaining = 0;
     }
 
-    public Station(int stationStrength, int energyLevel, int maxCrew) {
-        this.stationHealth = stationHealth;
-        this.maxStationHealth = stationHealth;
-        this.maxCrew = maxCrew;
-        this.efficiency = 0;
-        this.crewMembers = new ArrayList<>();
-        this.repairMan = new ArrayList<>();
-        this.isUseable = true;
-    }
-
-    public void assignCrew(Crew crew){
+    public void assignCrew(@NonNull Crew crew){
+        if (crew.getCurrentStation() == this) {
+            return;
+        } else if (!crew.getCanWork()) {
+            //TODO notification saying crew cannot be assigned
+            return;
+        }
         if (this.crewMembers.size() < this.maxCrew) {
-            crewMembers.add(crew);
+
+            if (crew.getCurrentStation() != null) {
+                crew.getCurrentStation().removeCrew(crew);
+            }
+
+            crew.setCurrentStation(this);
+            this.crewMembers.add(crew);
             this.setEfficiency();
         }
 
     }
 
-    public void removeCrew(Crew crew, Station targetStation){
+    public void removeCrew(@NonNull Crew crew){
         if (this.crewMembers.remove(crew)) {
-            this.setEfficiency();
-            targetStation.assignCrew(crew);
 
+            if (crew.getCurrentStation() == this) {
+                crew.setCurrentStation(null);
+            }
+            this.setEfficiency();
         }
     }
 
-    public void addRepairMan(Crew crew) {
-        this.repairMan.add(crew);
+    public void addRepairMan(@NonNull Crew crew) {
+        if (this.isUsable) {
+            //TODO notification saying station is not damaged
+            return;
+
+        } else if (!crew.getCanWork()) {
+            //TODO notification saying repairman cannot be assigned
+            return;
+        }
+        if (this.repairMan.size() < this.maxRepairmen) {
+
+            if (crew.getCurrentStation() != null) {
+                crew.getCurrentStation().removeCrew(crew);
+            }
+
+            crew.setCurrentStation(this);
+            crew.setCanWork(false);
+            this.repairMan.add(crew);
+            this.setRepairEfficiency();
+            this.repairStation();
+        }
     }
 
-    public void removeRepairMan(Crew crew) {
-        this.repairMan.remove(crew);
+    public void removeRepairMan(@NonNull Crew crew) {
+        if (this.repairMan.remove(crew)) {
+
+            if (crew.getCurrentStation() == this) {
+                crew.setCurrentStation(Barracks.getInstance());
+                crew.setCanWork(true);
+            }
+            this.setRepairEfficiency();
+        }
     }
 
 
     public void repairStation(){
-        float repairRate = 0;
-        float eff = 1;
-        if (this.repairMan.isEmpty()){
+        if (this.isUsable) {
+            this.repairTimeRemaining = 0;
             return;
         }
-        if (stationHealth<maxStationHealth){
-            for (Crew repairMan: this.repairMan){
-                repairRate = repairRate + eff;
-                if (repairMan instanceof Technician){
-                    repairRate += 0.15F;
-                }
-                eff /= 2;
-            }
 
-            stationHealth = (int) (stationHealth + 10*repairRate);
-            if (stationHealth>maxStationHealth){
-                stationHealth = maxStationHealth;
-            }
-
+        if (this.repairTimeRemaining <= 0){
+            this.repairTimeRemaining = baseRepairtime;
         }
+        if (!this.repairMan.isEmpty()) {
+            repairHandler.removeCallbacks(repairRunnable);
+            repairHandler.post(repairRunnable);
+        }
+
     }
 
+
+    private void setRepairEfficiency() {
+        float increment = 1;
+        float totalEfficiency =  0;
+
+        if (this.repairMan.isEmpty()){
+            this.repairEfficiency = 0;
+            return;
+        }
+
+        for (Crew crew: this.repairMan){
+            if (crew.getHealthPoints() == 0) {
+                continue;
+            }
+            totalEfficiency += increment;
+
+            if (crew instanceof Technician) {
+                totalEfficiency += 0.20F;
+            }
+
+            increment /= 2;
+        }
+        this.repairEfficiency = totalEfficiency;
+    }
+
+    protected float getEfficiency() {
+        return this.efficiency;
+    }
     public abstract void setEfficiency();
 
 }

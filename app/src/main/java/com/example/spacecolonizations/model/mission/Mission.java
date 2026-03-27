@@ -1,6 +1,10 @@
 package com.example.spacecolonizations.model.mission;
 
-public class Mission {
+import java.io.Serializable;
+
+
+
+public class Mission implements Serializable {
     String missionName;
     int numCrew;
     Boolean Complete;

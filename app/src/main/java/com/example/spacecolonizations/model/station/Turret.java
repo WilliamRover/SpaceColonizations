@@ -7,9 +7,10 @@ import com.example.spacecolonizations.model.ship.EnemyShip;
 
 public class Turret extends Station{
     private float damage;
-    public Turret(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
-        super(stationStrength, energyLevel, maxCrew, barracks);
+    public Turret() {
+        super();
         this.damage = 10;
+        this.maxCrew = 5;
     }
 
     public float getdamage(){
@@ -18,14 +19,10 @@ public class Turret extends Station{
 
     private void setDamage(){
         this.damage *= this.efficiency;
-        //TODO increase damage depending on energy system
-
-        //something related to energy needs to be input to this function
     }
 
-
     public void dealDamage(EnemyShip ship){
-        if (!this.isUseable){
+        if (!this.isUsable){
             return;
         }
         ship.setHullStrength((int) (ship.getHullStrength() - this.damage));
@@ -33,11 +30,10 @@ public class Turret extends Station{
 
     @Override
     public void setEfficiency() {
-        //TODO make damage scale with crew member level too
         float increment = 1;
         float ttotalEfficiency =  0;
 
-        if (this.crewMembers.isEmpty()){
+        if (this.crewMembers.isEmpty() || !this.isUsable){
             this.efficiency = 0;
             return;
         }
@@ -46,7 +42,9 @@ public class Turret extends Station{
             if (crew.getHealthPoints() == 0) {
                 continue;
             }
-            ttotalEfficiency += increment;
+
+            // Damage scales with 10% of level also
+            ttotalEfficiency += (float) (increment + crew.getLevel() * 0.01);
 
             if (crew instanceof Gunner) {
                 ttotalEfficiency += 0.15F;
@@ -60,18 +58,5 @@ public class Turret extends Station{
 
     }
 
-    @Override
-    public void loseHealth(int damage) {
-        this.stationHealth -= damage;
 
-        if (this.stationHealth <= 0) {
-            this.stationHealth = 0;
-            this.isUseable = false;
-
-            for (Crew crew : this.crewMembers) {
-                crew.loseHealth(crew.getMaxHealthPoints());
-                this.removeCrew(crew, this.barracks);
-            }
-        }
-    }
 }

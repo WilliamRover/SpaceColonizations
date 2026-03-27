@@ -9,28 +9,33 @@ import com.example.spacecolonizations.model.crewmate.Crew;
 
 public class TrainingCenter extends Station{
     //TODO remove multiplier stuff and implement xp
-    private int multiplierIncrement;
+
+    private float expIncrement;
+
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Runnable trainRunnable = new Runnable() {
         @Override
         public void run() {
-            if (crewMembers.isEmpty() || !isUseable) {
+            if (crewMembers.isEmpty() || !isUsable) {
                 return;
             }
 
             for (Crew crew: crewMembers) {
-                crew.setMultiplier(multiplierIncrement);
+                crew.receiveExp(expIncrement);
             }
+            handler.postDelayed(this, 1000);
         }
     };
-    public TrainingCenter(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
-        super(stationStrength, energyLevel, maxCrew, barracks);
-        this.multiplierIncrement = 20;
+
+    public TrainingCenter() {
+        super();
+        this.expIncrement = 10;
+        this.maxCrew = 5;
     }
 
     @Override
     public void setEfficiency() {
-        this.efficiency = 1;
+        return;
     }
 
     public void train(){
@@ -38,18 +43,5 @@ public class TrainingCenter extends Station{
         handler.post(trainRunnable);
     }
 
-    @Override
-    public void loseHealth(int damage) {
-        this.stationHealth -= damage;
-        this.isUseable = false;
 
-        if (this.stationHealth <= 0) {
-            this.stationHealth = 0;
-
-            for (Crew crew : this.crewMembers) {
-                crew.loseHealth(crew.getMaxHealthPoints());
-                this.removeCrew(crew, this.barracks);
-            }
-        }
-    }
 }
