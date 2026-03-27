@@ -12,6 +12,7 @@ import java.util.List;
 
 public class MedBay extends Station{
     private List<Crew> patients;
+    private int maxPatients;
     private int baseHeal;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Runnable healRunnable = new Runnable() {

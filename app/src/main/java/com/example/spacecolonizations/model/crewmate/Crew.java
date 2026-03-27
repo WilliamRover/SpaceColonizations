@@ -12,7 +12,10 @@ public abstract class Crew implements Damagable {
     private int maxHealthPoints;
 
 
+    //TODO figure out a way to temporarily remove the crew from ship into rescue missions
     //TODO implement Damageable
+    //TODO keep multiplier as possible future implementation
+    // and implement exp
     public Crew(String name, int healthPoints, int level, float levelMultiplier, int maxHealthPoints){
         this.name = name;
         this.healthPoints = healthPoints;
