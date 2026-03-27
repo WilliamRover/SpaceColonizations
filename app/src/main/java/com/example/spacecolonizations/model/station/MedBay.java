@@ -35,11 +35,12 @@ public class MedBay extends Station{
         }
     };
 
-    public MedBay(int maxCrew) {
-        super(maxCrew);
+    public MedBay() {
+        super();
         this.patients = new ArrayList<>();
         this.baseHeal = 10;
         this.maxPatients = 5;
+        this.maxCrew = 5;
     }
 
     public void heal(){

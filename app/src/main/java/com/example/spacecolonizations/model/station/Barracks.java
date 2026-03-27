@@ -8,16 +8,17 @@ import org.jspecify.annotations.Nullable;
 public class Barracks extends Station{
     private static Barracks instance;
 
-    public static Barracks getInstance(@Nullable int maxCrew) {
+    public static Barracks getInstance() {
         if (instance == null) {
-            instance = new Barracks(maxCrew);
+            instance = new Barracks();
         }
         return instance;
     }
-    public static Barracks getInstance() {return instance;}
 
-    private Barracks(int maxCrew) {
-        super(maxCrew);
+
+    private Barracks() {
+        super();
+        this.maxCrew = 100;
     }
 
     @Override

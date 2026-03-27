@@ -9,13 +9,14 @@ import com.example.spacecolonizations.model.crewmate.Technician;
 
 import org.jspecify.annotations.NonNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Station {
+public abstract class Station implements Serializable {
     protected boolean isUsable;
     protected List<Crew> crewMembers;
-    private int maxCrew;
+    protected int maxCrew;
     protected float efficiency;
     protected List<Crew> repairMan;
     protected int maxRepairmen;
@@ -51,8 +52,7 @@ public abstract class Station {
     //TODO remove health and tie it to isuseable
     //TODO redo repairStation
 
-    public Station(int maxCrew) {
-        this.maxCrew = maxCrew;
+    public Station() {
         this.efficiency = 0;
         this.crewMembers = new ArrayList<>();
         this.repairMan = new ArrayList<>();

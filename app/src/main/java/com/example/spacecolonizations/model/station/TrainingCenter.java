@@ -27,9 +27,10 @@ public class TrainingCenter extends Station{
         }
     };
 
-    public TrainingCenter(int maxCrew) {
-        super(maxCrew);
+    public TrainingCenter() {
+        super();
         this.expIncrement = 10;
+        this.maxCrew = 5;
     }
 
     @Override

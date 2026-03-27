@@ -8,8 +8,9 @@ import com.example.spacecolonizations.model.crewmate.Navigator;
 //TODO showStatistic function
 //TODO getMission function
 public class CommandCenter extends Station{
-    public CommandCenter(int stationStrength, int energyLevel, int maxCrew, Barracks barracks) {
-        super(maxCrew);
+    public CommandCenter() {
+        super();
+        this.maxCrew = 2;
     }
 
     @Override
