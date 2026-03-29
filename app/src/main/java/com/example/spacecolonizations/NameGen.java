@@ -1,6 +1,6 @@
 package com.example.spacecolonizations;
 
-public class nameGen {
+public class NameGen {
 
 
     static String nGen(int n){

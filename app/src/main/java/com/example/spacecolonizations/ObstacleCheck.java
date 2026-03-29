@@ -12,8 +12,8 @@ public class ObstacleCheck {
      * CheckPasssObstacle work by giving it the mission and array of all station want to check and
      * it will run through the hashmap of station and expected job of the crew if not found it will
      * output as False
-     * ps. if station arraylist is null it will return True
-     * ps2. if missionType != pass obstacle it will return true
+     * - if station arraylist is null it will return true
+     * - if missionType != pass obstacle it will return true
      *
      */
     public boolean checkPassObstacle(Mission m, ArrayList<Station> s) {
