@@ -4,17 +4,18 @@ import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.station.Station;
 
 import java.util.HashMap;
+import java.util.ArrayList;
 
 
 
 public class Obstacle {
     private int crewNeed;
-    private HashMap<Station, Crew> locationJob;
+    private HashMap<Station, ArrayList<Crew>> locationJob;
     private int levelNeeded;
 
     public Obstacle(int crewNeed, int levelNeeded){
         this.crewNeed = crewNeed;
-        this.locationJob = new HashMap<Station, Crew>();
+        this.locationJob = new HashMap<Station, ArrayList<Crew>>();
         this.levelNeeded = levelNeeded;
     }
 
@@ -22,7 +23,7 @@ public class Obstacle {
         return crewNeed;
     }
 
-    public HashMap<Station, Crew> getLocationJob(){
+    public HashMap<Station, ArrayList<Crew>> getLocationJob(){
         return locationJob;
     }
 
@@ -36,9 +37,19 @@ public class Obstacle {
 
 
     public void addLocationJob(Station location, Crew job){
-        locationJob.put(location, job);
+        HashMap<Station, ArrayList<Crew>> e = getLocationJob();
+        ArrayList<Crew> c = e.get(location);
+        if (c == null) {
+            c = new ArrayList<>();
+        }
+
+        if (!c.contains(job)) {
+            c.add(job);
+        }
+
+        e.put(location, c);
     }
-    public void removeLocationJob(String location){
+    public void removeLocationJob(Station location){
         locationJob.remove(location);
     }
 
@@ -46,12 +57,13 @@ public class Obstacle {
         levelNeeded = n;
     }
 
-    public void setUp(){
-        return;
-    }
 
     public String returnType(){
         return "Obstacle";
+    }
+
+    public void setUp(){
+
     }
 
 

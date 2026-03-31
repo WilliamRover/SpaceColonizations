@@ -16,38 +16,30 @@ public class ObstacleCheck {
      * - if missionType != pass obstacle it will return true
      *
      */
-    public boolean checkPassObstacle(Mission m, ArrayList<Station> s) {
-
-        if (m == null) {
+    public boolean checkPassObstacle(Mission m, ArrayList<Station> stations) {
+        if (m == null || stations == null) {
             return true;
         }
 
-        if (s == null) {
-            return true;
-        }
+        for (Station station : stations) {
+            ArrayList<Crew> requiredCrew = m.getLocationJob().get(station);
 
-        int size = m.getLocationJob().size();
+            if (requiredCrew != null) {
+                boolean allCrewFound = true;
 
-        for (Station t : s) {
-            boolean found = false;
-
-            if (m.getLocationJob().get(t) != null) {
-                Crew requiredCrew = m.getLocationJob().get(t);
-
-                for (Crew inStation : t.getCrewMembers()) {
-                    if (requiredCrew.equals(inStation)) {
-                        found = true;
-                        size--;
+                for (Crew crew : requiredCrew) {
+                    if (!station.getCrewMembers().contains(crew)) {
+                        allCrewFound = false;
                         break;
                     }
                 }
 
-                if (!found) {
+                if (!allCrewFound) {
                     return false;
                 }
             }
         }
 
-        return size == 0;
+        return true;
     }
 }

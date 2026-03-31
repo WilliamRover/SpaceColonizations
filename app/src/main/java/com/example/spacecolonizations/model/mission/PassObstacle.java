@@ -46,7 +46,7 @@ public class PassObstacle extends Mission {
     }
 
     @Override
-    public HashMap<Station, Crew> getLocationJob(){
+    public HashMap<Station, ArrayList<Crew>> getLocationJob(){
         return e.getLocationJob();
     }
 }
