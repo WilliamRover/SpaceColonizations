@@ -9,6 +9,7 @@ import com.example.spacecolonizations.model.crewmate.Technician;
 
 import org.jspecify.annotations.NonNull;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,30 +24,8 @@ public abstract class Station implements Serializable {
     protected float repairEfficiency;
     private final double baseRepairtime = 30000; // in milliseconds
     private double repairTimeRemaining;
-    private final Handler repairHandler = new Handler(Looper.getMainLooper());
-    private final Runnable repairRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (repairMan.isEmpty() || isUsable) {
-                return;
-            }
-
-            repairTimeRemaining -= 1000 * repairEfficiency;
-
-            if (repairTimeRemaining <= 0) {
-                repairTimeRemaining = 0;
-                isUsable = true;
-                setEfficiency();
-
-                for (int i = repairMan.size() - 1; i >= 0; i--) {
-                    removeRepairMan(repairMan.get(i));
-                }
-                return;
-            } else {
-                repairHandler.postDelayed(this, 1000);
-            }
-        }
-    };
+    private transient Handler repairHandler;
+    private transient Runnable repairRunnable;
 
 
     //TODO remove health and tie it to isuseable
@@ -59,6 +38,7 @@ public abstract class Station implements Serializable {
         this.isUsable = true;
         this.maxRepairmen = 2;
         this.repairTimeRemaining = 0;
+        this.initHandlers();
     }
 
     public void assignCrew(@NonNull Crew crew){
@@ -176,4 +156,41 @@ public abstract class Station implements Serializable {
     }
     public abstract void setEfficiency();
 
+    // Add this special method to re-initialize transient fields after loading
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.initHandlers();
+    }
+
+    protected void initHandlers() {
+        repairHandler = new Handler(Looper.getMainLooper());
+        repairRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (repairMan.isEmpty() || isUsable) {
+                    return;
+                }
+
+                repairTimeRemaining -= 1000 * repairEfficiency;
+
+                if (repairTimeRemaining <= 0) {
+                    repairTimeRemaining = 0;
+                    isUsable = true;
+                    setEfficiency();
+
+                    for (int i = repairMan.size() - 1; i >= 0; i--) {
+                        removeRepairMan(repairMan.get(i));
+                    }
+                    return;
+                } else {
+                    repairHandler.postDelayed(this, 1000);
+                }
+            }
+        };
+
+        //continue repair if game closed while repairing
+        if (!isUsable && !repairMan.isEmpty()) {
+            this.repairStation();
+        }
+    }
 }

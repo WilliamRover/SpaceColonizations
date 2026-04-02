@@ -27,5 +27,11 @@ public class Barracks extends Station{
     }
 
 
+    // used to resolve serialization issues with singleton pattern
+    private Object readResolve() {
+        return getInstance();
+    }
+
+
 
 }

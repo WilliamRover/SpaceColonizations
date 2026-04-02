@@ -6,6 +6,7 @@ import android.os.Looper;
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.Medic;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,26 +15,8 @@ public class MedBay extends Station{
     private int maxPatients;
     private int baseHeal;
     private boolean isHealing;
-    private final Handler handler = new Handler(Looper.getMainLooper());
-    private final Runnable healRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (crewMembers.isEmpty() || patients.isEmpty() || !isUsable || getEfficiency() == 0){
-                isHealing = false;
-                return;
-            }
-            isHealing = true;
-
-            for (int i = patients.size() - 1; i >= 0; i--) {
-                Crew patient = patients.get(i);
-                patient.increaseHealthPoints((int) (baseHeal * efficiency));
-                if (patient.getHealthPoints() >= patient.getMaxHealthPoints()) {
-                    removePatient(patient);
-                }
-            }
-            handler.postDelayed(this, 1000);
-        }
-    };
+    private transient Handler handler;
+    private transient Runnable healRunnable;
 
     public MedBay() {
         super();
@@ -41,6 +24,7 @@ public class MedBay extends Station{
         this.baseHeal = 10;
         this.maxPatients = 5;
         this.maxCrew = 5;
+        this.initMedBayHandlers();
     }
 
     public void heal(){
@@ -76,6 +60,7 @@ public class MedBay extends Station{
                 crew.setCurrentStation(Barracks.getInstance());
             }
             crew.setCanWork(true);
+
         }
     }
 
@@ -106,6 +91,38 @@ public class MedBay extends Station{
         heal();
     }
 
+    private void initMedBayHandlers() {
+        handler = new Handler(Looper.getMainLooper());
+        healRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (crewMembers.isEmpty() || patients.isEmpty() || !isUsable || getEfficiency() == 0){
+                    isHealing = false;
+                    return;
+                }
+                isHealing = true;
 
+                for (int i = patients.size() - 1; i >= 0; i--) {
+                    Crew patient = patients.get(i);
+                    patient.increaseHealthPoints((int) (baseHeal * efficiency));
+                    if (patient.getHealthPoints() >= patient.getMaxHealthPoints()) {
+                        removePatient(patient);
+                    }
+                }
+                handler.postDelayed(this, 1000);
+            }
+        };
+        super.initHandlers();
+
+        if (!isUsable || crewMembers.isEmpty() || patients.isEmpty()) {
+            isHealing = false;
+        } else {
+            this.heal();
+        }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        initMedBayHandlers();
+    }
 }
-

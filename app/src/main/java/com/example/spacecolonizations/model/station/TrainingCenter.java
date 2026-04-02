@@ -5,6 +5,7 @@ import android.os.Looper;
 
 import com.example.spacecolonizations.model.crewmate.Crew;
 
+import java.io.IOException;
 
 
 public class TrainingCenter extends Station{
@@ -12,25 +13,14 @@ public class TrainingCenter extends Station{
 
     private float expIncrement;
 
-    private final Handler handler = new Handler(Looper.getMainLooper());
-    private final Runnable trainRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (crewMembers.isEmpty() || !isUsable) {
-                return;
-            }
-
-            for (Crew crew: crewMembers) {
-                crew.receiveExp(expIncrement);
-            }
-            handler.postDelayed(this, 1000);
-        }
-    };
+    private transient Handler trainHandler;
+    private transient Runnable trainRunnable;
 
     public TrainingCenter() {
         super();
         this.expIncrement = 10;
         this.maxCrew = 5;
+        this.initTrainingHandlers();
     }
 
     @Override
@@ -39,9 +29,37 @@ public class TrainingCenter extends Station{
     }
 
     public void train(){
-        handler.removeCallbacks(trainRunnable);
-        handler.post(trainRunnable);
+        trainHandler.removeCallbacks(trainRunnable);
+        trainHandler.post(trainRunnable);
     }
 
+
+    private void initTrainingHandlers() {
+        trainHandler = new Handler(Looper.getMainLooper());
+        trainRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (crewMembers.isEmpty() || !isUsable) {
+                    return;
+                }
+
+                for (Crew crew: crewMembers) {
+                    crew.receiveExp(expIncrement);
+                }
+                trainHandler.postDelayed(this, 1000);
+            }
+        };
+
+        super.initHandlers();
+
+        if (isUsable && !crewMembers.isEmpty()) {
+            train();
+        }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.initTrainingHandlers();
+    }
 
 }

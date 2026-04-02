@@ -59,4 +59,11 @@ public class Turret extends Station{
     }
 
 
+    // TODO add functionality to break turret
+    public void breakTurret() {
+        this.isUsable = false;
+
+    }
+
+
 }

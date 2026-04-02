@@ -18,51 +18,77 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
 
 public class CrewManager {
     private static final String TAG = "CrewManager";
     private static List<Crew> crewList;
     private static final String saveFileName = "crew_data.ser";
+    private static List<Station> stations;
 
     //TODO find a way to add existing crew to the list
     //TODO find a way to remove dead crew
 
-    public void loadFromFile(Context context) {
+    /**
+     * To be called when the app starts
+     * @param context
+     */
+    public static void loadFromFile(Context context) {
         File file = new File(context.getFilesDir(), saveFileName);
 
         if (!file.exists()) {
             crewList = new ArrayList<>();
+            stations = new ArrayList<>();
             return;
         }
 
-        try {
+        try (
             FileInputStream inputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream)) {
 
-            crewList = (List<Crew>) objectInputStream.readObject();
+            HashMap<String, Object> data = (HashMap<String, Object>) objectInputStream.readObject();
+            crewList = (List<Crew>) data.get("crewList");
+            stations = (List<Station>) data.get("stationList");
+
 
         } catch (FileNotFoundException e) {
             crewList = new ArrayList<>();
+            stations = new ArrayList<>();
             Log.w(TAG, "crew_data.ser not found", e);
+
         } catch (IOException e) {
             Log.w(TAG, "IO Exception occurred", e);
+
         } catch (ClassNotFoundException e) {
-            Log.w(TAG, "crew_data.ser did not have the crewList", e);
+            crewList = new ArrayList<>();
+            stations = new ArrayList<>();
+            Log.w(TAG, "crew_data.ser did not have the save data", e);
+
         } finally {
             if (crewList == null) {
                 crewList = new ArrayList<>();
                 Log.w(TAG, "crewList in file is null");
             }
+
+            if (stations == null) {
+                stations = new ArrayList<>();
+                Log.w(TAG, "stations in file is null");
+            }
         }
 
     }
 
-    public static void saveCrewTOFile(Context context) {
-        try (FileOutputStream outputStream = context.openFileOutput(saveFileName, context.MODE_PRIVATE);
+
+    public static void saveTOFile(Context context) {
+        try (FileOutputStream outputStream = context.openFileOutput(saveFileName, Context.MODE_PRIVATE);
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
 
-            objectOutputStream.writeObject(crewList);
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("crewList", crewList);
+            data.put("stationList", stations);
+            objectOutputStream.writeObject(data);
 
         } catch (FileNotFoundException e) {
             Log.w(TAG, "crew_data.ser not found", e);
@@ -72,49 +98,40 @@ public class CrewManager {
     }
 
     public static List<Station> getStations() {
-        List<Station> stations = new ArrayList<>();
-
-        for (Crew crew : crewList) {
-            Station station = crew.getCurrentStation();
-            if (station == null) {
-                continue;
-            }
-            if (stations.contains(station)) {
-                continue;
-            }
-            stations.add(station);
-
-            // only 5 stations are there in total
-            if (stations.size() == 5) {
-                break;
-            }
-
-        }
-
-        if (stations.size() < 5) {
-            boolean hasMedBay = false;
-            boolean hasTurret = false;
-            boolean hasCommand = false;
-            boolean hasTraining = false;
-            boolean hasBarracks = false;
-
-            for (Station s : stations) {
-                if (s instanceof MedBay) hasMedBay = true;
-                else if (s instanceof Turret) hasTurret = true;
-                else if (s instanceof CommandCenter) hasCommand = true;
-                else if (s instanceof TrainingCenter) hasTraining = true;
-                else if (s instanceof Barracks) hasBarracks = true;
-            }
-
-            // Create and add missing ones
-            if (!hasMedBay) stations.add(new MedBay());
-            if (!hasTurret) stations.add(new Turret());
-            if (!hasCommand) stations.add(new CommandCenter());
-            if (!hasTraining) stations.add(new TrainingCenter());
-            if (!hasBarracks) stations.add(Barracks.getInstance());
+        if (stations.isEmpty()) {
+            stations.add(new CommandCenter());
+            stations.add(new TrainingCenter());
+            stations.add(new MedBay());
+            stations.add(new Turret());
         }
 
         return stations;
     }
 
+
+    public static List<Crew> getCrew(){
+        if (crewList.isEmpty()){
+            // TODO ask java to create crew with the name gen thingy majigy
+        }
+
+        return crewList;
+    }
+
+
+    /**
+     * Use this when creating the crew in any case
+     * @param crew
+     */
+    public static void addCrew(Crew crew) {
+        crewList.add(crew);
+        Barracks.getInstance().assignCrew(crew);
+    }
+
+    /**
+     * Use this when crew dies.
+     * @param crew
+     */
+    public static void removeCrew(Crew crew) {
+        crewList.remove(crew);
+    }
 }

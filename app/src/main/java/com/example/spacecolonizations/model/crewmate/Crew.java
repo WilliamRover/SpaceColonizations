@@ -12,7 +12,7 @@ public abstract class Crew implements Damagable, Serializable {
     private int level;
     private Float exp;
     private int maxHealthPoints;
-    private Station currentStation;
+    private transient Station currentStation;
     private boolean canWork;
     //The above attribute is used to figure out if the crew member is able to be assigned for jobs at station
     //They will not be able to be assigned if they are a patient or they are in mission.
