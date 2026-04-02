@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.example.spacecolonizations.model.crewmate.Crew;
-import com.example.spacecolonizations.model.crewmate.Medic;
+import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.crewmate.Technician;
 
 import org.jspecify.annotations.NonNull;
@@ -23,9 +23,12 @@ public abstract class Station implements Serializable {
     protected int maxRepairmen;
     protected float repairEfficiency;
     private final double baseRepairtime = 30000; // in milliseconds
-    private double repairTimeRemaining;
+    protected double repairTimeRemaining;
     private transient Handler repairHandler;
     private transient Runnable repairRunnable;
+    protected int breakTimeRemaining;
+    protected transient Handler breakHandler;
+    protected transient Runnable breakRunnable;
 
 
     //TODO remove health and tie it to isuseable
@@ -38,7 +41,8 @@ public abstract class Station implements Serializable {
         this.isUsable = true;
         this.maxRepairmen = 2;
         this.repairTimeRemaining = 0;
-        this.initHandlers();
+        this.initRepairHandler();
+        this.initBreakHandler();
     }
 
     public void assignCrew(@NonNull Crew crew){
@@ -123,7 +127,7 @@ public abstract class Station implements Serializable {
     }
 
 
-    private void setRepairEfficiency() {
+    protected void setRepairEfficiency() {
         float increment = 1;
         float totalEfficiency =  0;
 
@@ -156,13 +160,18 @@ public abstract class Station implements Serializable {
     }
     public abstract void setEfficiency();
 
-    // Add this special method to re-initialize transient fields after loading
-    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        this.initHandlers();
+
+    /**
+     * 'Destroys' the station and kills all crew, repairmen and patients
+     */
+    public void explode() {
+        this.isUsable = false;
+        this.breakTimeRemaining = 60000;
+        breakHandler.removeCallbacks(this.breakRunnable);
+        breakHandler.post(this.breakRunnable);
     }
 
-    protected void initHandlers() {
+    protected void initRepairHandler() {
         repairHandler = new Handler(Looper.getMainLooper());
         repairRunnable = new Runnable() {
             @Override
@@ -192,5 +201,61 @@ public abstract class Station implements Serializable {
         if (!isUsable && !repairMan.isEmpty()) {
             this.repairStation();
         }
+    }
+
+    /**
+     * TO be overridden by medbay.
+     * no for any other class
+     */
+    protected void clearPatients(){ return;}
+    protected void initBreakHandler() {
+        breakHandler = new Handler(Looper.getMainLooper());
+        breakRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (isUsable) {
+                    return;
+                }
+
+                breakTimeRemaining -= 1000;
+
+                if (breakTimeRemaining <= 0) {
+                    for (int i = crewMembers.size() - 1; i >= 0; i--) {
+                        Crew crew = crewMembers.get(i);
+                        crew.setCurrentStation(null);
+                        CrewManager.removeCrew(crew);
+                    }
+                    crewMembers.clear();
+
+                    for (int i = repairMan.size() - 1; i >= 0; i--) {
+                        Crew crew = repairMan.get(i);
+                        crew.setCurrentStation(null);
+                        CrewManager.removeCrew(crew);
+                    }
+                    repairMan.clear();
+
+                    clearPatients();
+
+                    breakTimeRemaining = 0;
+                    repairTimeRemaining = 30000;
+                    return;
+
+                } else {
+                    breakHandler.postDelayed(this, 1000);
+                }
+            }
+        };
+
+
+        if (!this.isUsable && this.breakTimeRemaining > 0) {
+            breakHandler.postDelayed(this.breakRunnable, 1000);
+        }
+    }
+
+    // Add this special method to re-initialize transient fields after loading
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.initRepairHandler();
+        this.initBreakHandler();
     }
 }

@@ -28,8 +28,7 @@ public class CrewManager {
     private static final String saveFileName = "crew_data.ser";
     private static List<Station> stations;
 
-    //TODO find a way to add existing crew to the list
-    //TODO find a way to remove dead crew
+
 
     /**
      * To be called when the app starts

@@ -20,7 +20,7 @@ public class TrainingCenter extends Station{
         super();
         this.expIncrement = 10;
         this.maxCrew = 5;
-        this.initTrainingHandlers();
+        this.initTrainingHandler();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class TrainingCenter extends Station{
     }
 
 
-    private void initTrainingHandlers() {
+    private void initTrainingHandler() {
         trainHandler = new Handler(Looper.getMainLooper());
         trainRunnable = new Runnable() {
             @Override
@@ -50,7 +50,6 @@ public class TrainingCenter extends Station{
             }
         };
 
-        super.initHandlers();
 
         if (isUsable && !crewMembers.isEmpty()) {
             train();
@@ -59,7 +58,7 @@ public class TrainingCenter extends Station{
 
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        this.initTrainingHandlers();
+        this.initTrainingHandler();
     }
 
 }

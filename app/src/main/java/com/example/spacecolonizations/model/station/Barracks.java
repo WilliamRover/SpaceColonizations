@@ -1,10 +1,6 @@
 package com.example.spacecolonizations.model.station;
 
 
-import com.example.spacecolonizations.model.crewmate.Crew;
-
-import org.jspecify.annotations.Nullable;
-
 public class Barracks extends Station{
     private static Barracks instance;
 
@@ -25,6 +21,19 @@ public class Barracks extends Station{
     public void setEfficiency() {
         return;
     }
+
+    //Barracks is meant to be a safe place
+    //does not require repair or explosion or breaking
+    @Override
+    public void explode() {
+        return;
+    }
+
+    @Override
+    protected void initRepairHandler() {return;}
+
+    @Override
+    protected void initBreakHandler() {return;}
 
 
     // used to resolve serialization issues with singleton pattern

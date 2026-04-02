@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.example.spacecolonizations.model.crewmate.Crew;
+import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.crewmate.Medic;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class MedBay extends Station{
         this.baseHeal = 10;
         this.maxPatients = 5;
         this.maxCrew = 5;
-        this.initMedBayHandlers();
+        this.initMedBayHandler();
     }
 
     public void heal(){
@@ -64,6 +65,20 @@ public class MedBay extends Station{
         }
     }
 
+    /**
+     * kill the patients
+     */
+    @Override
+    protected void clearPatients(){
+        for (int i = patients.size() - 1; i >= 0; i--) {
+            Crew crew = patients.get(i);
+            crew.setCurrentStation(null);
+            CrewManager.removeCrew(crew);
+        }
+        patients.clear();
+        isHealing = false;
+    }
+
     @Override
     public void setEfficiency() {
         float increment = 1;
@@ -91,7 +106,8 @@ public class MedBay extends Station{
         heal();
     }
 
-    private void initMedBayHandlers() {
+
+    private void initMedBayHandler() {
         handler = new Handler(Looper.getMainLooper());
         healRunnable = new Runnable() {
             @Override
@@ -112,7 +128,6 @@ public class MedBay extends Station{
                 handler.postDelayed(this, 1000);
             }
         };
-        super.initHandlers();
 
         if (!isUsable || crewMembers.isEmpty() || patients.isEmpty()) {
             isHealing = false;
@@ -123,6 +138,6 @@ public class MedBay extends Station{
 
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        initMedBayHandlers();
+        this.initMedBayHandler();
     }
 }

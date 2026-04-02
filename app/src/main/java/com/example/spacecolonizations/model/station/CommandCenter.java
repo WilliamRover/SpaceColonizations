@@ -2,7 +2,6 @@ package com.example.spacecolonizations.model.station;
 
 import com.example.spacecolonizations.model.crewmate.Commander;
 import com.example.spacecolonizations.model.crewmate.Crew;
-import com.example.spacecolonizations.model.crewmate.Gunner;
 import com.example.spacecolonizations.model.crewmate.Navigator;
 
 //TODO showStatistic function
