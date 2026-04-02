@@ -1,10 +1,14 @@
 package com.example.spacecolonizations.model.mission;
 
+import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.mission.obstacle.Asteroid;
 import com.example.spacecolonizations.model.mission.obstacle.EngineFailure;
 import com.example.spacecolonizations.model.mission.obstacle.Obstacle;
+import com.example.spacecolonizations.model.station.Station;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 public class PassObstacle extends Mission {
 
     private ArrayList<Obstacle> obstacles;
@@ -39,5 +43,10 @@ public class PassObstacle extends Mission {
     @Override
     public String getMissionType(){
         return e.returnType();
+    }
+
+    @Override
+    public HashMap<Station, ArrayList<Crew>> getLocationJob(){
+        return e.getLocationJob();
     }
 }

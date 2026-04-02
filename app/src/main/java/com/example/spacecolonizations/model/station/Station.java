@@ -167,6 +167,10 @@ public abstract class Station implements Serializable {
         this.repairEfficiency = totalEfficiency;
     }
 
+    public List<Crew> getCrewMembers() {
+        return this.crewMembers;
+    }
+
     protected float getEfficiency() {
         return this.efficiency;
     }
