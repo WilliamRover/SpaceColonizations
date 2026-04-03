@@ -255,6 +255,29 @@ public abstract class Station implements Serializable {
     // Add this special method to re-initialize transient fields after loading
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
+
+        // Loading from file may cause dupliates so curret station is set to transient
+        // this will hopefully fix the issue
+        if (!this.crewMembers.isEmpty()) {
+            for (Crew crew : this.crewMembers) {
+                crew.setCurrentStation(this);
+            }
+        }
+
+        if (!this.repairMan.isEmpty()) {
+            for (Crew crew : this.repairMan) {
+                crew.setCurrentStation(this);
+            }
+        }
+
+        if (this instanceof MedBay) {
+            if (!((MedBay) this).getPatients().isEmpty()) {
+                for (Crew crew : ((MedBay) this).getPatients()) {
+                    crew.setCurrentStation(this);
+                }
+            }
+        }
+
         this.initRepairHandler();
         this.initBreakHandler();
     }

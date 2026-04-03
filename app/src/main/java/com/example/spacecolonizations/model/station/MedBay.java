@@ -65,6 +65,10 @@ public class MedBay extends Station{
         }
     }
 
+    protected List<Crew> getPatients() {
+        return this.patients;
+    }
+
     /**
      * kill the patients
      */
