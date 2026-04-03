@@ -61,8 +61,12 @@ public class Rescue extends Mission {
         damageCrew();
         ArrayList<Crew> tempCrew = crewMembers;
         for (Crew i : crewMembers){
+            if (i.getHealthPoints()>0){
+                setComplete(true);
+            }
             removeCrew(i);
         }
+
         return tempCrew;
     }
 
