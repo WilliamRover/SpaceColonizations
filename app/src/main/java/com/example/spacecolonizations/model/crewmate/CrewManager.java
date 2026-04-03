@@ -80,6 +80,10 @@ public class CrewManager {
     }
 
 
+    /**
+     * Save crew and Stations to file
+     * @param context
+     */
     public static void saveTOFile(Context context) {
         try (FileOutputStream outputStream = context.openFileOutput(saveFileName, Context.MODE_PRIVATE);
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
@@ -108,6 +112,10 @@ public class CrewManager {
     }
 
 
+    /**
+     * Returns List of living crew members
+     * @return List of Crew
+     */
     public static List<Crew> getCrew(){
         if (crewList.isEmpty()){
             // TODO ask java to create crew with the name gen thingy majigy

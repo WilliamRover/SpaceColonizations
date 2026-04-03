@@ -25,7 +25,7 @@ public class Barracks extends Station{
     //Barracks is meant to be a safe place
     //does not require repair or explosion or breaking
     @Override
-    public void explode() {
+    public void breakStation() {
         return;
     }
 

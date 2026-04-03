@@ -128,7 +128,7 @@ public abstract class Station implements Serializable {
 
 
     /**
-     *
+     *Try to repair the Station
      */
     public void repairStation(){
         if (this.isUsable) {
@@ -147,6 +147,9 @@ public abstract class Station implements Serializable {
     }
 
 
+    /**
+     * Calculate the repair efficiency of the station.
+     */
     protected void setRepairEfficiency() {
         float increment = 1;
         float totalEfficiency =  0;
@@ -171,20 +174,33 @@ public abstract class Station implements Serializable {
         this.repairEfficiency = totalEfficiency;
     }
 
+    /**
+     * Get the current crew members of the station.
+     * @return a list of crew members.
+     */
     public List<Crew> getCrewMembers() {
         return this.crewMembers;
     }
 
+    /**
+     * Get the current repair men of the station.
+     * @return efficiency as a float
+     */
     protected float getEfficiency() {
         return this.efficiency;
     }
+
+    /**
+     * Set the efficiency of the station.
+     * This method should be overridden by subclasses.
+     */
     public abstract void setEfficiency();
 
 
     /**
      * 'Destroys' the station and kills all crew, repairmen and patients
      */
-    public void explode() {
+    public void breakStation() {
         this.isUsable = false;
         this.breakTimeRemaining = 60000;
         breakHandler.removeCallbacks(this.breakRunnable);
@@ -228,6 +244,10 @@ public abstract class Station implements Serializable {
      * no for any other class
      */
     protected void clearPatients(){ return;}
+
+    /**
+     * Timer and crew death logic for breaking the station
+     */
     protected void initBreakHandler() {
         breakHandler = new Handler(Looper.getMainLooper());
         breakRunnable = new Runnable() {
