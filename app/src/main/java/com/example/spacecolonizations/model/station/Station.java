@@ -45,6 +45,10 @@ public abstract class Station implements Serializable {
         this.initBreakHandler();
     }
 
+    /**
+     * Assign a crew to the station.
+     * @param crew
+     */
     public void assignCrew(@NonNull Crew crew){
         if (crew.getCurrentStation() == this) {
             return;
@@ -65,6 +69,10 @@ public abstract class Station implements Serializable {
 
     }
 
+    /**
+     * Remove a crew from the station.
+     * @param crew
+     */
     public void removeCrew(@NonNull Crew crew){
         if (this.crewMembers.remove(crew)) {
 
@@ -75,6 +83,10 @@ public abstract class Station implements Serializable {
         }
     }
 
+    /**
+     * Assign a repairman to the station.
+     * @param crew
+     */
     public void addRepairMan(@NonNull Crew crew) {
         if (this.isUsable) {
             //TODO notification saying station is not damaged
@@ -98,7 +110,12 @@ public abstract class Station implements Serializable {
         }
     }
 
-    public void removeRepairMan(@NonNull Crew crew) {
+
+    /**
+     * Remove a repairman from the station.
+     * @param crew
+     */
+    private void removeRepairMan(@NonNull Crew crew) {
         if (this.repairMan.remove(crew)) {
 
             if (crew.getCurrentStation() == this) {
@@ -110,6 +127,9 @@ public abstract class Station implements Serializable {
     }
 
 
+    /**
+     *
+     */
     public void repairStation(){
         if (this.isUsable) {
             this.repairTimeRemaining = 0;
