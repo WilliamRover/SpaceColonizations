@@ -17,21 +17,7 @@ public class FriendlyShip extends Ship{
 
     public FriendlyShip(int innitHullStrength, int innitEnergy) {
         super(innitHullStrength);
-        this.innitEnergy = innitEnergy;
-        this.energy = innitEnergy;
-
     }
-
-    public int getEnergy() {
-        return energy;
-    }
-    public int getInnitEnergy(){
-        return innitEnergy;
-    }
-    public void setEnergy(int energy) {
-        this.energy = energy;
-    }
-
     public void recruitCrew(Crew c) {
         crews.add(c);
         totalCrew++;
