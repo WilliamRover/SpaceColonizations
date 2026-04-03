@@ -38,18 +38,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        innitView();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Enemy ship attack
+        enemyShip.attackShip(friendlyShip, friendlyShipImage, friendlyExplode, friendlyHpBar, friendlyHpTxt, 6);
+        friendlyShip.attackShip(enemyShip, enemyShipImage, enemyExplode, enemyHpBar, enemyHpTxt, 12);
+    }
 
+    private void innitView() {
         // Ship
         friendlyShip = new FriendlyShip(100, 110);
         enemyShip = new EnemyShip(120);
 
         friendlyHpBar = findViewById(R.id.friendlyShipHp);
-        friendlyEnergyBar = findViewById(R.id.friendlyShipEnergy);
         enemyHpBar = findViewById(R.id.enemyShipHp);
         friendlyShipImage = findViewById(R.id.friendlyShipModel);
         enemyShipImage = findViewById(R.id.enemyShipModel);
@@ -57,19 +64,16 @@ public class MainActivity extends AppCompatActivity {
         enemyExplode = findViewById(R.id.enemyExplode);
         friendlyHpTxt = findViewById(R.id.friendlyHpTxt);
         enemyHpTxt = findViewById(R.id.enemyHpTxt);
-        friendlyEnergyTxt = findViewById(R.id.friendlyEnergyTxt);
+
+        // Set max values for progress bars
+        friendlyHpBar.setMax(friendlyShip.getInnitHullStrength());
+        enemyHpBar.setMax(enemyShip.getInnitHullStrength());
 
         // Initial set
-        friendlyEnergyBar.setProgress(friendlyShip.getEnergy());
         enemyHpBar.setProgress(enemyShip.getHullStrength());
         friendlyHpBar.setProgress(friendlyShip.getHullStrength());
+        
         friendlyHpTxt.setText(friendlyShip.getHullStrength() + "/" + friendlyShip.getInnitHullStrength());
         enemyHpTxt.setText(enemyShip.getHullStrength() + "/" + enemyShip.getInnitHullStrength());
-        friendlyEnergyTxt.setText(friendlyShip.getEnergy() + "/" + friendlyShip.getInnitEnergy());
-
-        // Enemy ship attack
-        enemyShip.attackShip(friendlyShip, friendlyShipImage, friendlyExplode, friendlyHpBar, friendlyHpTxt, 6);
-        friendlyShip.attackShip(enemyShip, enemyShipImage, enemyExplode, enemyHpBar, enemyHpTxt, 12);
     }
-
 }

@@ -160,36 +160,6 @@
         app:layout_constraintTop_toTopOf="@+id/trainingCenterBtn" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/energyBtn"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="212dp"
-        android:layout_marginTop="80dp"
-        android:alpha="0.3"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text=""
-        app:layout_constraintStart_toStartOf="@+id/friendlyShipModel"
-        app:layout_constraintTop_toTopOf="@+id/friendlyShipModel"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
-        app:strokeColor="#979797"
-        app:strokeWidth="6dp" />
-
-    <TextView
-        android:id="@+id/energyBtnLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Energy"
-        android:textColor="#82AED2FF"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/energyBtn"
-        app:layout_constraintEnd_toEndOf="@+id/energyBtn"
-        app:layout_constraintStart_toStartOf="@+id/energyBtn"
-        app:layout_constraintTop_toTopOf="@+id/energyBtn" />
-
-    <com.google.android.material.button.MaterialButton
         android:id="@+id/commandBtn"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="40dp"
