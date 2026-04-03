@@ -106,6 +106,7 @@ public class CrewManager {
             stations.add(new TrainingCenter());
             stations.add(new MedBay());
             stations.add(new Turret());
+            stations.add(Barracks.getInstance());
         }
 
         return stations;
