@@ -1,5 +1,9 @@
 package com.example.spacecolonizations.model.mission;
 
+import com.example.spacecolonizations.model.ship.EnemyShip;
+
+import java.util.ArrayList;
+
 /**
  * fight enemy subclass of mission
  * missionName -> name of the mission in string
@@ -13,6 +17,11 @@ public class FightEnemy extends Mission {
     @Override
     public String getMissionType(){
         return "Fight enemy";
+    }
+
+    public void setUp(){
+        EnemyShip enemyShip = new EnemyShip(120);
+
     }
 
 }
