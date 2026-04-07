@@ -3,7 +3,7 @@ package com.example.spacecolonizations;
 public class NameGen {
 
 
-    static String nGen(int n){
+    public static String nGen(int n){
         String AlphaString = "abcdefghijklmnopqrstuvxyz";
         StringBuilder sb = new StringBuilder(n);
 
@@ -15,9 +15,9 @@ public class NameGen {
         return sb.toString();
     }
 
-    static String generateName (){
-        String fName = nGen((int) (Math.random()*5) + 3);
-        String lName = nGen((int) (Math.random()*5) + 3);
+    public static String generateName (){
+        String fName = nGen((int) ((Math.random()*5) + 3));
+        String lName = nGen((int) ((Math.random()*5) + 3));
         return fName + " " + lName;
     }
 }

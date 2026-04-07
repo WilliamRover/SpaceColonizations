@@ -22,8 +22,9 @@ public class PassObstacle extends Mission {
 
 
 
-    public PassObstacle(String missionName, int numCrew){
-        super(missionName, numCrew);
+    public PassObstacle(String missionName){
+        super(missionName);
+
         this.obstacles = new ArrayList<Obstacle>();
 
         this.asteroid = new Asteroid();

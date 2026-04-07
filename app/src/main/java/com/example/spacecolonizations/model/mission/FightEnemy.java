@@ -10,8 +10,8 @@ import java.util.ArrayList;
  * numCrew -> number of crew members require in the mission
  */
 public class FightEnemy extends Mission {
-    public FightEnemy(String missionName, int numCrew){
-        super(missionName, numCrew);
+    public FightEnemy(String missionName){
+        super(missionName);
     }
 
     @Override

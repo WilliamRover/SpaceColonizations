@@ -9,34 +9,35 @@ import java.util.List;
 public class Rescue extends Mission {
     private ArrayList<Crew> crewMembers;
 
-    private int timeRequire;
+    private int turnRequire;
 
-    private int timeRightNow;
-    public Rescue(String missionName, int numCrew){
-        super(missionName, numCrew);
+    private int turnRightNow;
+    public Rescue(String missionName){
+        super(missionName);
+        this.numCrew = 2;
         this.crewMembers = new ArrayList<>();
-        this.timeRequire = 2;
-        this.timeRightNow = 0;
+        this.turnRequire = 2;
+        this.turnRightNow = 0;
     }
     @Override
     public String getMissionType(){
         return "Rescue";
     }
 
-    public int getTimeRequire(){
-        return timeRequire;
+    public int getTurnRequire(){
+        return turnRequire;
     }
 
-    public int getTimeRightNow(){
-        return timeRightNow;
+    public int getTurnRightNow(){
+        return turnRightNow;
     }
 
     public void addTime(){
-        timeRightNow = timeRightNow + 1;
+        turnRightNow = turnRightNow + 1;
     }
 
     public boolean checkTime(){
-        if (timeRightNow >= timeRequire){
+        if (turnRightNow >= turnRequire){
             return true;
         }
         return false;
@@ -48,12 +49,8 @@ public class Rescue extends Mission {
             double dice2 = (Math.random()*40)+40;
             if (dice<=1){
                 c.loseHealth(c.getMaxHealthPoints());
-                c.setCanWork(false);
             } else if (dice<=51) {
                 c.loseHealth((int) ((c.getMaxHealthPoints())*(dice2/100)));
-                if (c.getHealthPoints() == 0){
-                    c.setCanWork(false);
-                }
             }
         }
     }
@@ -80,13 +77,8 @@ public class Rescue extends Mission {
     }
     public void removeCrew(Crew crew){
         crewMembers.remove(crew);
-        if (crew.getHealthPoints()!=0){
-            CrewManager.removeCrew(crew);
-        }
-        else {
-            crew.setCanWork(true);
-            Barracks.getInstance().assignCrew(crew);
-        }
+        crew.setCanWork(crew.getHealthPoints() != 0);
+        Barracks.getInstance().assignCrew(crew);
 
     }
     public List<Crew> getCrewMembers(){
