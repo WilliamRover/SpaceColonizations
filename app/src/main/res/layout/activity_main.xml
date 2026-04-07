@@ -14,7 +14,7 @@
         android:id="@+id/friendlyShipModel"
         android:layout_width="540dp"
         android:layout_height="205dp"
-        android:layout_marginStart="372dp"
+        android:layout_marginStart="332dp"
         android:layout_marginTop="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -54,7 +54,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/friendlyShipHp"
+        android:id="@+id/shipHpBar"
         android:layout_width="145dp"
         android:layout_height="12dp"
         android:layout_marginStart="8dp"
@@ -98,8 +98,8 @@
         android:text="num/100"
         android:textColor="#3F663B"
         android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/friendlyShipHp"
-        app:layout_constraintStart_toStartOf="@+id/friendlyShipHp" />
+        app:layout_constraintBottom_toBottomOf="@+id/shipHpBar"
+        app:layout_constraintStart_toStartOf="@+id/shipHpBar" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/enemyShipHp"
@@ -308,5 +308,34 @@
         app:layout_constraintEnd_toEndOf="@+id/medBayBtn"
         app:layout_constraintStart_toStartOf="@+id/medBayBtn"
         app:layout_constraintTop_toTopOf="@+id/medBayBtn" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/stationCard"
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recViewCrew"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp" />
+
+        <TextView
+            android:id="@+id/txtViewStationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="5dp"
+            android:text="Station"
+            android:textStyle="bold|italic" />
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

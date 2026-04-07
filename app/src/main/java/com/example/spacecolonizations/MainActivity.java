@@ -46,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        // Enemy ship attack
-        enemyShip.attackShip(friendlyShip, friendlyShipImage, friendlyExplode, friendlyHpBar, friendlyHpTxt, 6);
-        friendlyShip.attackShip(enemyShip, enemyShipImage, enemyExplode, enemyHpBar, enemyHpTxt, 12);
     }
 
     private void innitView() {
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         friendlyShip = new FriendlyShip(100, 110);
         enemyShip = new EnemyShip(120);
 
-        friendlyHpBar = findViewById(R.id.friendlyShipHp);
+        friendlyHpBar = findViewById(R.id.shipHpBar);
         enemyHpBar = findViewById(R.id.enemyShipHp);
         friendlyShipImage = findViewById(R.id.friendlyShipModel);
         enemyShipImage = findViewById(R.id.enemyShipModel);
