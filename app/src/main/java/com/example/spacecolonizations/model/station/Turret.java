@@ -25,7 +25,7 @@ public class Turret extends Station{
         if (!this.isUsable){
             return;
         }
-        ship.setHullStrength((int) (ship.getHullStrength() - this.damage));
+        ship.loseHealth((int) (this.damage));
     }
 
     @Override
