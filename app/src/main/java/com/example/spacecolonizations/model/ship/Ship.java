@@ -1,5 +1,7 @@
 package com.example.spacecolonizations.model.ship;
 
+import static java.lang.Math.round;
+
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
@@ -7,7 +9,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.spacecolonizations.model.crewmate.Crew;
+import com.example.spacecolonizations.model.crewmate.CrewManager;
+import com.example.spacecolonizations.model.station.Barracks;
+import com.example.spacecolonizations.model.station.Station;
 import com.example.spacecolonizations.reuse.Damagable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Ship implements Damagable {
     private int hullStrength;
@@ -30,34 +39,7 @@ public abstract class Ship implements Damagable {
         }
     }
     public void attackShip(Ship ship, View shipModel, View kaboom, ProgressBar hpProgress, TextView hpTxt, int shipDps) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                if (Ship.this.getHullStrength() <= 0) {
-                    handler.removeCallbacks(this);
-                    return;
-                }
 
-                // Decrease target's hull strength
-                int curHull = ship.getHullStrength();
-
-                if (curHull <= 0) {
-                    explode(shipModel, kaboom);
-                    // Stop the loop
-                    handler.removeCallbacks(this);
-                    return;
-                }
-
-                if (curHull > 0) {
-                    ship.loseHealth(shipDps);
-                    hpTxt.setText(ship.getHullStrength() + "/" + ship.getInnitHullStrength());
-                    hpProgress.setProgress(ship.getHullStrength());
-                    handler.postDelayed(this, 1000);
-                }
-            }
-        };
-        handler.postDelayed(runnable, 1000);
     }
     private void explode(View shipModel, View kaboom) {
         kaboom.setVisibility(View.VISIBLE);
@@ -65,7 +47,14 @@ public abstract class Ship implements Damagable {
         shipModel.setVisibility(View.INVISIBLE);
     }
 
+    @Override
     public void loseHealth(int damage) {
         this.hullStrength -= damage;
+        if (this instanceof FriendlyShip) {
+            List<Station> stations = CrewManager.getStations();
+            stations.remove(Barracks.getInstance());
+            List<Crew> crews = stations.get((int) round((Math.random()*stations.size()))).getCrewMembers();
+            crews.get((int) round((Math.random()*crews.size()))).loseHealth(10);
+        }
     }
 }

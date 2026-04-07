@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="190dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/crewImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:rotation="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/crewHpBar"
+            android:layout_width="119dp"
+            android:layout_height="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:progress="100"
+            app:indicatorColor="#C04242"
+            app:indicatorTrackGapSize="0dp"
+            app:layout_constraintStart_toEndOf="@+id/crewImg"
+            app:layout_constraintTop_toBottomOf="@+id/txtViewName"
+            app:trackColor="#B5B5B5"
+            app:trackCornerRadius="0dp"
+            app:trackStopIndicatorSize="0dp"
+            app:trackThickness="8dp" />
+
+        <TextView
+            android:id="@+id/txtViewName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@+id/crewHpBar"
+            app:layout_constraintHorizontal_bias="0.443"
+            app:layout_constraintStart_toStartOf="@+id/crewHpBar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/crewHpTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="num/100"
+            android:textColor="#663B3B"
+            android:textSize="7sp"
+            app:layout_constraintStart_toStartOf="@+id/crewHpBar"
+            app:layout_constraintTop_toTopOf="@+id/crewHpBar" />
+
+        <TextView
+            android:id="@+id/txtViewJob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Job:"
+            android:textSize="8sp"
+            app:layout_constraintStart_toStartOf="@+id/crewHpBar"
+            app:layout_constraintTop_toBottomOf="@+id/crewHpBar" />
+
+        <TextView
+            android:id="@+id/txtViewCrewJob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:text="CrewJob"
+            android:textSize="8sp"
+            app:layout_constraintStart_toEndOf="@+id/txtViewJob"
+            app:layout_constraintTop_toBottomOf="@+id/crewHpBar" />
+
+        <TextView
+            android:id="@+id/txtViewLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="Lv."
+            android:textSize="8sp"
+            app:layout_constraintStart_toStartOf="@+id/crewImg"
+            app:layout_constraintTop_toBottomOf="@+id/crewImg" />
+
+        <TextView
+            android:id="@+id/txtViewLevelNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="num"
+            android:textSize="8sp"
+            app:layout_constraintStart_toEndOf="@+id/txtViewLevel"
+            app:layout_constraintTop_toBottomOf="@+id/crewImg" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/crewLevelBar"
+            android:layout_width="137dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="20dp"
+            android:progress="100"
+            app:indicatorColor="#CFBC51"
+            app:indicatorTrackGapSize="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txtViewLevel"
+            app:layout_constraintStart_toEndOf="@+id/txtViewLevel"
+            app:layout_constraintTop_toTopOf="@+id/txtViewLevel"
+            app:trackColor="#A0A0A0"
+            app:trackCornerRadius="0dp"
+            app:trackStopIndicatorSize="0dp"
+            app:trackThickness="3dp" />
+
+        <TextView
+            android:id="@+id/txtViewXpNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="num/200"
+            android:textSize="5sp"
+            app:layout_constraintEnd_toEndOf="@+id/crewLevelBar"
+            app:layout_constraintStart_toStartOf="@+id/crewLevelBar"
+            app:layout_constraintTop_toBottomOf="@+id/crewLevelBar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
