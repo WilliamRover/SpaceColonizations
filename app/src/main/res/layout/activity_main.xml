@@ -220,36 +220,6 @@
         app:layout_constraintTop_toTopOf="@+id/barracksBtn" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/mainHallBtn"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="260dp"
-        android:layout_marginTop="80dp"
-        android:alpha="0.3"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text=""
-        app:layout_constraintStart_toStartOf="@+id/friendlyShipModel"
-        app:layout_constraintTop_toTopOf="@+id/friendlyShipModel"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
-        app:strokeColor="#979797"
-        app:strokeWidth="6dp" />
-
-    <TextView
-        android:id="@+id/mainHallBtnLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Main hall"
-        android:textColor="#82AED2FF"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/mainHallBtn"
-        app:layout_constraintEnd_toEndOf="@+id/mainHallBtn"
-        app:layout_constraintStart_toStartOf="@+id/mainHallBtn"
-        app:layout_constraintTop_toTopOf="@+id/mainHallBtn" />
-
-    <com.google.android.material.button.MaterialButton
         android:id="@+id/turretBtn"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="40dp"
@@ -316,6 +286,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="6dp"
         android:layout_marginBottom="10dp"
+        android:visibility="gone"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -330,7 +301,7 @@
 
         <TextView
             android:id="@+id/txtViewStationName"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="13dp"
             android:layout_marginTop="5dp"
