@@ -8,8 +8,6 @@
     android:background="@drawable/game_bg"
     tools:context=".MainActivity">
 
-    <!-- Including the ship stat layouts directly instead of using a RecyclerView -->
-
     <ImageView
         android:id="@+id/friendlyShipModel"
         android:layout_width="540dp"
@@ -62,7 +60,7 @@
         android:progress="100"
         app:indicatorColor="#4C904C"
         app:indicatorTrackGapSize="0dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/hullStrengthSymbol"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:trackColor="#DFDFDF"
         app:trackCornerRadius="0dp"
@@ -81,7 +79,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/hullStrengthSymbol"
         android:layout_width="15dp"
         android:layout_height="14dp"
         android:layout_marginStart="20dp"
@@ -279,34 +277,37 @@
         app:layout_constraintStart_toStartOf="@+id/medBayBtn"
         app:layout_constraintTop_toTopOf="@+id/medBayBtn" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/stationCard"
+    <FrameLayout
+        android:id="@+id/stationDetailContainer"
         android:layout_width="200dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="6dp"
         android:layout_marginBottom="10dp"
-        android:visibility="gone"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recViewCrew"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="25dp" />
+    <ImageView
+        android:id="@+id/moneySymbol"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hullStrengthSymbol"
+        app:srcCompat="@drawable/money" />
 
-        <TextView
-            android:id="@+id/txtViewStationName"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            android:layout_marginTop="5dp"
-            android:text="Station"
-            android:textStyle="bold|italic" />
-    </com.google.android.material.card.MaterialCardView>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="moneyNum"
+        android:textColor="#FFEB3B"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/moneySymbol"
+        app:layout_constraintTop_toTopOf="@+id/moneySymbol" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

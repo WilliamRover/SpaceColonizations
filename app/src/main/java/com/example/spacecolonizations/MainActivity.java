@@ -3,7 +3,6 @@ package com.example.spacecolonizations;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ImageView;
@@ -13,11 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
 
+import com.example.spacecolonizations.fragments.StationDetailFragment;
 import com.example.spacecolonizations.model.crewmate.Commander;
-import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.Gunner;
 import com.example.spacecolonizations.model.crewmate.Medic;
 import com.example.spacecolonizations.model.crewmate.Navigator;
@@ -30,13 +28,8 @@ import com.example.spacecolonizations.model.station.MedBay;
 import com.example.spacecolonizations.model.station.Station;
 import com.example.spacecolonizations.model.station.TrainingCenter;
 import com.example.spacecolonizations.model.station.Turret;
-import com.google.android.material.card.MaterialCardView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
-
-import com.example.spacecolonizations.adapter.StationAdapter;
 
 public class MainActivity extends AppCompatActivity {
     // Ship attributes
@@ -50,14 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView enemyExplode;
     private TextView friendlyHpTxt;
     private TextView enemyHpTxt;
-    private TextView stationNameTxt;
-    private MaterialCardView stationCard;
-
-    private RecyclerView recyclerView;
-    private StationAdapter adapter;
-
-
-    private Runnable runnable;
+    
+    private View fragmentContainer;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -72,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
         innitButtons();
 
 
+        // Hide fragment when clicking outside on the root layout
+        findViewById(R.id.main).setOnClickListener(v -> {
+            hideStationDetail();
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -97,8 +88,7 @@ public class MainActivity extends AppCompatActivity {
         friendlyHpTxt = findViewById(R.id.friendlyHpTxt);
         enemyHpTxt = findViewById(R.id.enemyHpTxt);
         
-        stationCard = findViewById(R.id.stationCard);
-        stationNameTxt = findViewById(R.id.txtViewStationName);
+        fragmentContainer = findViewById(R.id.stationDetailContainer);
 
         // Set max values for progress bars
         friendlyHpBar.setMax(friendlyShip.getInnitHullStrength());
@@ -108,14 +98,8 @@ public class MainActivity extends AppCompatActivity {
         enemyHpBar.setProgress(enemyShip.getHullStrength());
         friendlyHpBar.setProgress(friendlyShip.getHullStrength());
         
-        friendlyHpTxt.setText(String.format("%d/%d", friendlyShip.getHullStrength(), friendlyShip.getInnitHullStrength()));
-        enemyHpTxt.setText(String.format("%d/%d", enemyShip.getHullStrength(), enemyShip.getInnitHullStrength()));
-
-        // Recycler view for crew
-        recyclerView = findViewById(R.id.recViewCrew);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new StationAdapter(friendlyShip.getCrews());
-        recyclerView.setAdapter(adapter);
+        friendlyHpTxt.setText(String.format(Locale.US, "%d/%d", friendlyShip.getHullStrength(), friendlyShip.getInnitHullStrength()));
+        enemyHpTxt.setText(String.format(Locale.US, "%d/%d", enemyShip.getHullStrength(), enemyShip.getInnitHullStrength()));
     }
 
     private void addSampleCrews() {
@@ -145,6 +129,23 @@ public class MainActivity extends AppCompatActivity {
         friendlyShip.recruitCrew(crew1);
         friendlyShip.recruitCrew(crew2);
         friendlyShip.recruitCrew(crew3);
+        friendlyShip.recruitCrew(crew4);
+        friendlyShip.recruitCrew(crew5);
+        friendlyShip.recruitCrew(crew6);
+        friendlyShip.recruitCrew(crew7);
+        friendlyShip.recruitCrew(crew8);
+        friendlyShip.recruitCrew(crew9);
+        friendlyShip.recruitCrew(crew10);
+        friendlyShip.recruitCrew(crew11);
+        friendlyShip.recruitCrew(crew12);
+        friendlyShip.recruitCrew(crew13);
+        friendlyShip.recruitCrew(crew14);
+        friendlyShip.recruitCrew(crew15);
+        friendlyShip.recruitCrew(crew16);
+        friendlyShip.recruitCrew(crew17);
+        friendlyShip.recruitCrew(crew18);
+        friendlyShip.recruitCrew(crew19);
+        friendlyShip.recruitCrew(crew20);
 
         // Assign to stations
         for (Station station : friendlyShip.getStations()) {
@@ -178,42 +179,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void innitButtons() {
-        // Hide station card when clicking outside on the root layout
-        findViewById(R.id.main).setOnClickListener(v -> {
-            if (stationCard.getVisibility() == View.VISIBLE) {
-                stationCard.setVisibility(View.GONE);
-            }
-        });
-
-        // Prevent clicks on the card itself from triggering the root's listener
-        stationCard.setOnClickListener(v -> {
-            // Do nothing, just consume the click
-        });
         findViewById(R.id.trainingCenterBtn).setOnClickListener(v -> {
-            showStation("Training Center", com.example.spacecolonizations.model.station.TrainingCenter.class);
+            showStationDetail("Training Center", TrainingCenter.class);
         });
         findViewById(R.id.commandBtn).setOnClickListener(v -> {
-            showStation("Command Center", com.example.spacecolonizations.model.station.CommandCenter.class);
+            showStationDetail("Command Center", CommandCenter.class);
         });
         findViewById(R.id.barracksBtn).setOnClickListener(v -> {
-            showStation("Barracks", com.example.spacecolonizations.model.station.Barracks.class);
+            showStationDetail("Barracks", Barracks.class);
         });
         findViewById(R.id.turretBtn).setOnClickListener(v -> {
-            showStation("Turret", com.example.spacecolonizations.model.station.Turret.class);
+            showStationDetail("Turret", Turret.class);
         });
         findViewById(R.id.medBayBtn).setOnClickListener(v -> {
-            showStation("Med Bay", com.example.spacecolonizations.model.station.MedBay.class);
+            showStationDetail("Med Bay", MedBay.class);
         });
     }
 
-    private void showStation(String name, Class<? extends Station> stationClass) {
-        stationCard.setVisibility(View.VISIBLE);
-        stationNameTxt.setText(name);
-        
+    private void showStationDetail(String name, Class<? extends Station> stationClass) {
         Station station = friendlyShip.getStation(stationClass);
         if (station != null) {
-            adapter = new StationAdapter(station.getCrewMembers());
-            recyclerView.setAdapter(adapter);
+            fragmentContainer.setVisibility(View.VISIBLE);
+            StationDetailFragment fragment = StationDetailFragment.newInstance(name, station.getCrewMembers());
+            
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.stationDetailContainer, fragment)
+                    .commit();
+        }
+    }
+
+    private void hideStationDetail() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.stationDetailContainer);
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .remove(fragment)
+                    .commit();
+            fragmentContainer.setVisibility(View.GONE);
         }
     }
 }
