@@ -6,30 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/game_bg"
-    tools:context=".MainActivity">
-
-    <!-- Including the ship stat layouts directly instead of using a RecyclerView -->
+    tools:context=".FightEnemyActivity">
 
     <ImageView
         android:id="@+id/friendlyShipModel"
         android:layout_width="540dp"
         android:layout_height="205dp"
-        android:layout_marginStart="372dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginStart="332dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ship_model_friendly_v2" />
 
     <ImageView
         android:id="@+id/enemyShipModel"
-        android:layout_width="454dp"
+        android:layout_width="290dp"
         android:layout_height="257dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="604dp"
-        android:rotation="180"
+        android:layout_marginEnd="608dp"
+        android:rotation="0"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/enemyshipplacebo" />
+        app:srcCompat="@drawable/enemyshipmodel" />
 
     <TextView
         android:id="@+id/friendlyExplode"
@@ -54,15 +52,15 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/friendlyShipHp"
+        android:id="@+id/shipHpBar"
         android:layout_width="145dp"
         android:layout_height="12dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:progress="100"
         app:indicatorColor="#4C904C"
         app:indicatorTrackGapSize="0dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:trackColor="#DFDFDF"
         app:trackCornerRadius="0dp"
@@ -73,7 +71,7 @@
         android:id="@+id/textView"
         android:layout_width="89dp"
         android:layout_height="0dp"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="180dp"
         android:layout_marginTop="8dp"
         android:text="Ship level 1"
         android:textColor="#FBFBFB"
@@ -81,13 +79,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/hullStrengthSymbol"
         android:layout_width="15dp"
         android:layout_height="14dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/shipHpBar"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:srcCompat="@drawable/hullstrength" />
 
     <TextView
@@ -98,20 +96,20 @@
         android:text="num/100"
         android:textColor="#3F663B"
         android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/friendlyShipHp"
-        app:layout_constraintStart_toStartOf="@+id/friendlyShipHp" />
+        app:layout_constraintBottom_toBottomOf="@+id/shipHpBar"
+        app:layout_constraintStart_toStartOf="@+id/shipHpBar" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/enemyShipHp"
         android:layout_width="112dp"
         android:layout_height="6dp"
-        android:layout_marginStart="208dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="224dp"
         android:progress="100"
         app:indicatorColor="#D91515"
         app:indicatorTrackGapSize="0dp"
         app:layout_constraintStart_toStartOf="@+id/enemyShipModel"
-        app:layout_constraintTop_toBottomOf="@+id/enemyShipModel"
+        app:layout_constraintTop_toTopOf="@+id/enemyShipModel"
         app:trackColor="#DFDFDF"
         app:trackCornerRadius="0dp"
         app:trackStopIndicatorSize="0dp"
@@ -220,36 +218,6 @@
         app:layout_constraintTop_toTopOf="@+id/barracksBtn" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/mainHallBtn"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="260dp"
-        android:layout_marginTop="80dp"
-        android:alpha="0.3"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text=""
-        app:layout_constraintStart_toStartOf="@+id/friendlyShipModel"
-        app:layout_constraintTop_toTopOf="@+id/friendlyShipModel"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
-        app:strokeColor="#979797"
-        app:strokeWidth="6dp" />
-
-    <TextView
-        android:id="@+id/mainHallBtnLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Main hall"
-        android:textColor="#82AED2FF"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/mainHallBtn"
-        app:layout_constraintEnd_toEndOf="@+id/mainHallBtn"
-        app:layout_constraintStart_toStartOf="@+id/mainHallBtn"
-        app:layout_constraintTop_toTopOf="@+id/mainHallBtn" />
-
-    <com.google.android.material.button.MaterialButton
         android:id="@+id/turretBtn"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="40dp"
@@ -308,5 +276,38 @@
         app:layout_constraintEnd_toEndOf="@+id/medBayBtn"
         app:layout_constraintStart_toStartOf="@+id/medBayBtn"
         app:layout_constraintTop_toTopOf="@+id/medBayBtn" />
+
+    <FrameLayout
+        android:id="@+id/stationDetailContainer"
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/moneySymbol"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/shipHpBar"
+        app:layout_constraintTop_toBottomOf="@+id/hullStrengthSymbol"
+        app:srcCompat="@drawable/money" />
+
+    <TextView
+        android:id="@+id/txtViewMoneyNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="moneyNum"
+        android:textColor="#FFEB3B"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/moneySymbol"
+        app:layout_constraintTop_toTopOf="@+id/moneySymbol" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtViewObstacleProb2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="num% Obstacle"
+        app:layout_constraintEnd_toEndOf="@+id/btnEnemy2"
+        app:layout_constraintHorizontal_bias="0.469"
+        app:layout_constraintStart_toStartOf="@+id/btnEnemy2"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewFightProb2" />
+
+    <TextView
+        android:id="@+id/txtEnemyLabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Engage threat"
+        android:textColor="#D32F2F"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/btnEnemy2"
+        app:layout_constraintStart_toStartOf="@+id/btnEnemy2"
+        app:layout_constraintTop_toBottomOf="@+id/btnEnemy2" />
+
+    <TextView
+        android:id="@+id/txtViewFightProb2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:text="num% Fight"
+        app:layout_constraintEnd_toEndOf="@+id/btnEnemy2"
+        app:layout_constraintHorizontal_bias="0.452"
+        app:layout_constraintStart_toStartOf="@+id/btnEnemy2"
+        app:layout_constraintTop_toBottomOf="@+id/txtEnemyLabel2" />
+
+    <ImageView
+        android:id="@+id/crewImg"
+        android:layout_width="224dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="156dp"
+        android:rotation="160"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/friendlyship" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEnemy1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="208dp"
+        android:backgroundTint="#D32F2F"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEnemy2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="228dp"
+        android:layout_marginEnd="116dp"
+        android:backgroundTint="#D32F2F"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnShop"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="316dp"
+        android:layout_marginEnd="388dp"
+        android:backgroundTint="#60D32F"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:textColor="#81BD56"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+
+    <TextView
+        android:id="@+id/txtEnemyLabel1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Engage threat"
+        android:textColor="#D32F2F"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/btnEnemy1"
+        app:layout_constraintStart_toStartOf="@+id/btnEnemy1"
+        app:layout_constraintTop_toBottomOf="@+id/btnEnemy1" />
+
+
+    <TextView
+        android:id="@+id/txtShopLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Shop"
+        android:textColor="#60D32F"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/btnShop"
+        app:layout_constraintStart_toStartOf="@+id/btnShop"
+        app:layout_constraintTop_toBottomOf="@+id/btnShop" />
+
+    <TextView
+        android:id="@+id/txtViewFightProb1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:text="num% Fight"
+        app:layout_constraintEnd_toEndOf="@+id/btnEnemy1"
+        app:layout_constraintStart_toStartOf="@+id/btnEnemy1"
+        app:layout_constraintTop_toBottomOf="@+id/txtEnemyLabel1" />
+
+    <TextView
+        android:id="@+id/txtViewObstacleProb1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="num% Obstacle"
+        app:layout_constraintEnd_toEndOf="@+id/btnEnemy1"
+        app:layout_constraintStart_toStartOf="@+id/btnEnemy1"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewFightProb1" />
+
+
+    <View
+        android:id="@+id/arrow1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="40dp"
+        android:background="@android:color/darker_gray"
+        android:rotation="160"
+        app:layout_constraintBottom_toTopOf="@+id/crewImg"
+        app:layout_constraintEnd_toStartOf="@+id/btnEnemy1"
+        app:layout_constraintStart_toEndOf="@+id/crewImg" />
+
+    <View
+        android:id="@+id/arrow"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="30dp"
+        android:background="@android:color/darker_gray"
+        android:rotation="5"
+        app:layout_constraintBottom_toBottomOf="@+id/crewImg"
+        app:layout_constraintEnd_toStartOf="@+id/btnEnemy2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/crewImg" />
+
+    <View
+        android:id="@+id/arrow2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="36dp"
+        android:background="@android:color/darker_gray"
+        android:rotation="25"
+        app:layout_constraintEnd_toEndOf="@+id/btnShop"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/crewImg"
+        app:layout_constraintTop_toBottomOf="@+id/crewImg" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

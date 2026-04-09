@@ -87,6 +87,9 @@ public abstract class Crew implements Damagable, Serializable {
         this.checkExp();
     }
 
+    public Float getExp() {
+        return exp;
+    }
     public Station getCurrentStation(){
         return this.currentStation;
     }

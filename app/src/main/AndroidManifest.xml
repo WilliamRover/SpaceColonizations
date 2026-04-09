@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpaceColonizations">
+        <!-- Menu -->
         <activity
             android:name=".MenuActivity"
             android:exported="true"
@@ -21,10 +22,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Credits -->
         <activity
-            android:name=".MainActivity"
+            android:name=".CreditActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
+        <!-- Map -->
+        <activity
+            android:name=".MapActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+        <!-- Fight enemy -->
+        <activity
+            android:name=".FightEnemyActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+        <!-- Asteroid -->
+        <activity
+            android:name=".AsteroidActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+        <!-- Engine failure -->
+        <activity
+            android:name=".EngineFailureActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+        <!-- Shop -->
+        <activity
+            android:name=".ShopActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+
+
     </application>
 
 </manifest>
