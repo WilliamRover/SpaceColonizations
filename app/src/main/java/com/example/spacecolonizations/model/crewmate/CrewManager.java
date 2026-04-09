@@ -3,6 +3,7 @@ package com.example.spacecolonizations.model.crewmate;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.spacecolonizations.model.mission.Rescue;
 import com.example.spacecolonizations.model.station.Barracks;
 import com.example.spacecolonizations.model.station.CommandCenter;
 import com.example.spacecolonizations.model.station.MedBay;
@@ -27,6 +28,7 @@ public class CrewManager {
     private static List<Crew> crewList;
     private static final String saveFileName = "crew_data.ser";
     private static List<Station> stations;
+    private static List<Rescue> rescueMissions;
 
 
 
@@ -40,6 +42,7 @@ public class CrewManager {
         if (!file.exists()) {
             crewList = new ArrayList<>();
             stations = new ArrayList<>();
+            rescueMissions = new ArrayList<>();
             return;
         }
 
@@ -50,11 +53,13 @@ public class CrewManager {
             HashMap<String, Object> data = (HashMap<String, Object>) objectInputStream.readObject();
             crewList = (List<Crew>) data.get("crewList");
             stations = (List<Station>) data.get("stationList");
+            rescueMissions = (List<Rescue>) data.get("rescueMissionList");
 
 
         } catch (FileNotFoundException e) {
             crewList = new ArrayList<>();
             stations = new ArrayList<>();
+            rescueMissions = new ArrayList<>();
             Log.w(TAG, "crew_data.ser not found", e);
 
         } catch (IOException e) {
@@ -63,6 +68,7 @@ public class CrewManager {
         } catch (ClassNotFoundException e) {
             crewList = new ArrayList<>();
             stations = new ArrayList<>();
+            rescueMissions = new ArrayList<>();
             Log.w(TAG, "crew_data.ser did not have the save data", e);
 
         } finally {
@@ -74,6 +80,11 @@ public class CrewManager {
             if (stations == null) {
                 stations = new ArrayList<>();
                 Log.w(TAG, "stations in file is null");
+            }
+
+            if (rescueMissions == null) {
+                rescueMissions = new ArrayList<>();
+                Log.w(TAG, "rescueMissions in file is null");
             }
         }
 
@@ -91,6 +102,7 @@ public class CrewManager {
             HashMap<String, Object> data = new HashMap<>();
             data.put("crewList", crewList);
             data.put("stationList", stations);
+            data.put("rescueMissionList", rescueMissions);
             objectOutputStream.writeObject(data);
 
         } catch (FileNotFoundException e) {
@@ -100,6 +112,10 @@ public class CrewManager {
         }
     }
 
+    /**
+     * Returns a list of stations. If stations list is empty in save file, the 5 stations will be initialized
+     * @return List of Stations
+     */
     public static List<Station> getStations() {
         if (stations.isEmpty()) {
             stations.add(new CommandCenter());
@@ -142,4 +158,34 @@ public class CrewManager {
     public static void removeCrew(Crew crew) {
         crewList.remove(crew);
     }
+
+
+    /**
+     *Get all active Missions
+     * @return List of active missions. null if there are no active missions
+     */
+    public static List<Rescue> getRescueMissions(){
+        if (rescueMissions.isEmpty()){
+            return null;
+        }
+        return rescueMissions;
+    }
+
+
+    /**
+     * Add a new mission to the list of missions
+     * @param mission
+     */
+    public static void addRescueMission(Rescue mission){
+        rescueMissions.add(mission);
+    }
+
+
+    /**
+     * Remove a rescue mission from the list when it is completed
+     */
+    public static void removeRescueMission(Rescue mission){
+        rescueMissions.remove(mission);
+    }
+
 }

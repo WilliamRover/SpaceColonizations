@@ -243,7 +243,9 @@ public abstract class Station implements Serializable {
      * TO be overridden by medbay.
      * no for any other class
      */
-    protected void clearPatients(){ return;}
+    protected void clearPatients(){
+        return;
+    }
 
     /**
      * Timer and crew death logic for breaking the station
@@ -292,11 +294,20 @@ public abstract class Station implements Serializable {
         }
     }
 
+    protected boolean isSingleton() {
+        return false;
+    }
+
     // Add this special method to re-initialize transient fields after loading
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
 
-        // Loading from file may cause dupliates so curret station is set to transient
+        if (isSingleton()) {
+            return;
+        }
+
+
+        // Loading from file may cause duplicates so current station is set to transient
         // this will hopefully fix the issue
         if (!this.crewMembers.isEmpty()) {
             for (Crew crew : this.crewMembers) {

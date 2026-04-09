@@ -1,6 +1,8 @@
 package com.example.spacecolonizations.model.station;
 
 
+import com.example.spacecolonizations.model.crewmate.Crew;
+
 public class Barracks extends Station{
     private static Barracks instance;
 
@@ -35,10 +37,27 @@ public class Barracks extends Station{
     @Override
     protected void initBreakHandler() {return;}
 
+    @Override
+    protected boolean isSingleton() {
+        return true;
+    }
 
-    // used to resolve serialization issues with singleton pattern
+
+    // used to resolve serialization issues with singleton pattern and possible ghost objects
     private Object readResolve() {
-        return getInstance();
+        Barracks singleton = getInstance();
+
+        singleton.crewMembers = this.crewMembers;
+        singleton.maxCrew = this.maxCrew;
+
+        if (!this.crewMembers.isEmpty()) {
+            for (Crew crew : this.crewMembers) {
+                crew.setCurrentStation(singleton);
+            }
+
+        }
+
+        return singleton;
     }
 
 

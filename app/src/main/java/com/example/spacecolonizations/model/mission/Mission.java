@@ -15,7 +15,6 @@ public class Mission implements Serializable {
     public Mission(String missionName){
         this.numCrew = 1;
         this.missionName = missionName;
-        this.numCrew = numCrew;
         this.Complete = false;
     }
 
