@@ -49,7 +49,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
         holder.levelTxt.setText(String.valueOf(crew.getLevel()));
         
         // Using direct calculation since getters were rolled back
-        int currentExp = 0; // Defaulting to 0 since exp is private
+        int currentExp = Math.round(crew.getExp()); // Defaulting to 0 since exp is private
         int requiredExp = (int) (1000 * Math.exp(crew.getLevel()));
         
         holder.xpTxt.setText(String.format(Locale.US, "%d/%d", currentExp, requiredExp));

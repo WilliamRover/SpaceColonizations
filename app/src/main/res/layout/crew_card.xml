@@ -5,8 +5,10 @@
     android:layout_width="180dp"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    app:cardBackgroundColor="#415C7E"
     app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    app:strokeColor="#00FFFFFF">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -45,6 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="name"
+            android:textColor="#8AA8DB"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="@+id/crewHpBar"
             app:layout_constraintHorizontal_bias="0.443"
@@ -68,6 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="Job:"
+            android:textColor="#8AA8DBFF"
             android:textSize="8sp"
             app:layout_constraintStart_toStartOf="@+id/crewHpBar"
             app:layout_constraintTop_toBottomOf="@+id/crewHpBar" />
@@ -79,6 +83,7 @@
             android:layout_marginStart="2dp"
             android:layout_marginTop="2dp"
             android:text="CrewJob"
+            android:textColor="#8AA8DBFF"
             android:textSize="8sp"
             app:layout_constraintStart_toEndOf="@+id/txtViewJob"
             app:layout_constraintTop_toBottomOf="@+id/crewHpBar" />
@@ -89,6 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:text="Lv."
+            android:textColor="#8AA8DBFF"
             android:textSize="8sp"
             app:layout_constraintStart_toStartOf="@+id/crewImg"
             app:layout_constraintTop_toBottomOf="@+id/crewImg" />
@@ -99,6 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:text="num"
+            android:textColor="#8AA8DBFF"
             android:textSize="8sp"
             app:layout_constraintStart_toEndOf="@+id/txtViewLevel"
             app:layout_constraintTop_toBottomOf="@+id/crewImg" />
@@ -112,6 +119,7 @@
             app:indicatorColor="#CFBC51"
             app:indicatorTrackGapSize="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/txtViewLevel"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txtViewLevel"
             app:layout_constraintTop_toTopOf="@+id/txtViewLevel"
             app:trackColor="#A0A0A0"
@@ -125,6 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:text="num/200"
+            android:textColor="#8AA8DBFF"
             android:textSize="5sp"
             app:layout_constraintEnd_toEndOf="@+id/crewLevelBar"
             app:layout_constraintStart_toStartOf="@+id/crewLevelBar"

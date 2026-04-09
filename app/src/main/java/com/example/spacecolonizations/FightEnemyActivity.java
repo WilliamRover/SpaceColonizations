@@ -31,7 +31,7 @@ import com.example.spacecolonizations.model.station.Turret;
 
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class FightEnemyActivity extends AppCompatActivity {
     // Ship attributes
     private FriendlyShip friendlyShip;
     private EnemyShip enemyShip;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fight_enemy);
 
         // Do some shenanigans from here
 
@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         
         friendlyHpTxt.setText(String.format(Locale.US, "%d/%d", friendlyShip.getHullStrength(), friendlyShip.getInnitHullStrength()));
         enemyHpTxt.setText(String.format(Locale.US, "%d/%d", enemyShip.getHullStrength(), enemyShip.getInnitHullStrength()));
+        moneyNum.setText(String.format(Locale.US, "%d $", friendlyShip.getMoney()));
     }
 
     private void addSampleCrews() {

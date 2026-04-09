@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FriendlyShip extends Ship {
-    private int energy;
-    private int innitEnergy;
     private List<Crew> crews;
     private List<Station> stations;
     private int totalCrew;

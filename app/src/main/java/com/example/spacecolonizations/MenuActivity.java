@@ -18,13 +18,13 @@ public class MenuActivity extends AppCompatActivity {
     private void setupButton() {
         Button btnContinue = findViewById(R.id.btnContinue);
         btnContinue.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, FightEnemyActivity.class);
             startActivity(intent);
         });
 
         Button btnNewGame = findViewById(R.id.btnNewGame);
         btnNewGame.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, FightEnemyActivity.class);
             startActivity(intent);
         });
 
