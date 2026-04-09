@@ -25,6 +25,10 @@
             android:name=".MainActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".CreditActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
     </application>
 
 </manifest>

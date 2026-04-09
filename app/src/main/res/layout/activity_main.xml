@@ -20,14 +20,14 @@
 
     <ImageView
         android:id="@+id/enemyShipModel"
-        android:layout_width="454dp"
+        android:layout_width="290dp"
         android:layout_height="257dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="604dp"
-        android:rotation="180"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="608dp"
+        android:rotation="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/enemyshipplacebo" />
+        app:srcCompat="@drawable/enemyshipmodel" />
 
     <TextView
         android:id="@+id/friendlyExplode"
@@ -103,8 +103,8 @@
         android:id="@+id/enemyShipHp"
         android:layout_width="112dp"
         android:layout_height="6dp"
-        android:layout_marginStart="208dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="20dp"
         android:progress="100"
         app:indicatorColor="#D91515"
         app:indicatorTrackGapSize="0dp"
@@ -300,7 +300,7 @@
         app:srcCompat="@drawable/money" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txtViewMoneyNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

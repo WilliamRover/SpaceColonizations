@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private FriendlyShip friendlyShip;
     private EnemyShip enemyShip;
     private ProgressBar friendlyHpBar;
+    private TextView moneyNum;
     private ImageView enemyShipImage;
     private ImageView friendlyShipImage;
     private ProgressBar enemyHpBar;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView friendlyHpTxt;
     private TextView enemyHpTxt;
     
-    private View fragmentContainer;
+    private View fragmentStationContainer;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         addSampleCrews();
 
         friendlyHpBar = findViewById(R.id.shipHpBar);
+        moneyNum = findViewById(R.id.txtViewMoneyNum);
         enemyHpBar = findViewById(R.id.enemyShipHp);
         friendlyShipImage = findViewById(R.id.friendlyShipModel);
         enemyShipImage = findViewById(R.id.enemyShipModel);
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         friendlyHpTxt = findViewById(R.id.friendlyHpTxt);
         enemyHpTxt = findViewById(R.id.enemyHpTxt);
         
-        fragmentContainer = findViewById(R.id.stationDetailContainer);
+        fragmentStationContainer = findViewById(R.id.stationDetailContainer);
 
         // Set max values for progress bars
         friendlyHpBar.setMax(friendlyShip.getInnitHullStrength());
@@ -199,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
     private void showStationDetail(String name, Class<? extends Station> stationClass) {
         Station station = friendlyShip.getStation(stationClass);
         if (station != null) {
-            fragmentContainer.setVisibility(View.VISIBLE);
+            fragmentStationContainer.setVisibility(View.VISIBLE);
             StationDetailFragment fragment = StationDetailFragment.newInstance(name, station.getCrewMembers());
             
             getSupportFragmentManager().beginTransaction()
@@ -214,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .remove(fragment)
                     .commit();
-            fragmentContainer.setVisibility(View.GONE);
+            fragmentStationContainer.setVisibility(View.GONE);
         }
     }
 }

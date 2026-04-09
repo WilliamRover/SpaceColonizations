@@ -28,5 +28,10 @@ public class MenuActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        Button btnCredits = findViewById(R.id.btnCredits);
+        btnCredits.setOnClickListener((v -> {
+            Intent intent = new Intent(this, CreditActivity.class);
+            startActivity(intent);
+        }));
     }
 }
