@@ -18,6 +18,7 @@ import com.example.spacecolonizations.model.crewmate.Medic;
 import com.example.spacecolonizations.model.crewmate.Navigator;
 import com.example.spacecolonizations.model.crewmate.Technician;
 import com.example.spacecolonizations.model.ship.FriendlyShip;
+import com.example.spacecolonizations.model.shop.Wallet;
 import com.example.spacecolonizations.model.station.Barracks;
 import com.example.spacecolonizations.model.station.CommandCenter;
 import com.example.spacecolonizations.model.station.MedBay;
@@ -30,6 +31,7 @@ import java.util.Locale;
 public class ShipFragment extends Fragment {
 
     private FriendlyShip friendlyShip;
+    private Wallet wallet;
     private ProgressBar shipHpBar;
     private TextView friendlyHpTxt;
     private TextView moneyTxt;
@@ -41,6 +43,7 @@ public class ShipFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ship, container, false);
 
         friendlyShip = FriendlyShip.getShip();
+        wallet = Wallet.getInstance();
         addSampleCrews();
 
         shipHpBar = view.findViewById(R.id.shipHpBar);
@@ -58,7 +61,7 @@ public class ShipFragment extends Fragment {
         shipHpBar.setMax(friendlyShip.getInnitHullStrength());
         shipHpBar.setProgress(friendlyShip.getHullStrength());
         friendlyHpTxt.setText(String.format(Locale.US, "%d/%d", friendlyShip.getHullStrength(), friendlyShip.getInnitHullStrength()));
-        moneyTxt.setText(String.format(Locale.US, "%d $", friendlyShip.getMoney()));
+        moneyTxt.setText(String.format(Locale.US, "%d $", wallet.getBalance()));
     }
 
     private void setupButtons(View view) {

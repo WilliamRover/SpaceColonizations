@@ -16,16 +16,15 @@ import java.util.List;
 public class FriendlyShip extends Ship {
     private List<Crew> crews;
     private List<Station> stations;
-    private int totalCrew;
-    private int money;
     private static FriendlyShip ship;
+    private int totalCrew = 0;
+    private int level;
     private TextView friendlyExplode;
 
     private FriendlyShip(int innitHullStrength) {
         super(innitHullStrength);
         this.crews = new ArrayList<>();
         this.stations = new ArrayList<>();
-        this.money = 0;
         initializeStations();
     }
     public static FriendlyShip getShip() {
@@ -41,18 +40,6 @@ public class FriendlyShip extends Ship {
         addStation(new Turret());
         addStation(new CommandCenter());
         addStation(new TrainingCenter());
-    }
-
-    public int getMoney() {
-        return money;
-    }
-
-    public void addMoney(int n){
-        money = money+n;
-    }
-
-    public void reduceMoney(int n){
-        money = money-n;
     }
 
     public void recruitCrew(Crew c) {
@@ -89,9 +76,5 @@ public class FriendlyShip extends Ship {
 
     public List<Station> getStations() {
         return stations;
-    }
-
-    public List<Crew> getCrews() {
-        return crews;
     }
 }
