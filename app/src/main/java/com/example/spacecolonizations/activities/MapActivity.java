@@ -1,4 +1,4 @@
-package com.example.spacecolonizations;
+package com.example.spacecolonizations.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,9 +6,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.spacecolonizations.R;
 import com.example.spacecolonizations.fragments.PauseFragment;
 import com.example.spacecolonizations.fragments.PauseOverlayFragment;
 

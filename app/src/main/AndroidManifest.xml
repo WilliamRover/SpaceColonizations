@@ -13,7 +13,7 @@
         android:theme="@style/Theme.SpaceColonizations">
         <!-- Menu -->
         <activity
-            android:name=".MenuActivity"
+            android:name=".activities.MenuActivity"
             android:exported="true"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
@@ -24,32 +24,32 @@
         </activity>
         <!-- Credits -->
         <activity
-            android:name=".CreditActivity"
+            android:name=".activities.CreditActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
         <!-- Map -->
         <activity
-            android:name=".MapActivity"
+            android:name=".activities.MapActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
         <!-- Fight enemy -->
         <activity
-            android:name=".FightEnemyActivity"
+            android:name=".activities.FightEnemyActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
         <!-- Asteroid -->
         <activity
-            android:name=".AsteroidActivity"
+            android:name=".activities.AsteroidActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
         <!-- Engine failure -->
         <activity
-            android:name=".EngineFailureActivity"
+            android:name=".activities.EngineFailureActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
         <!-- Shop -->
         <activity
-            android:name=".ShopActivity"
+            android:name=".activities.ShopActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
 

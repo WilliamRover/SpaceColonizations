@@ -1,4 +1,4 @@
-package com.example.spacecolonizations;
+package com.example.spacecolonizations.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.spacecolonizations.R;
 import com.example.spacecolonizations.fragments.ShipFragment;
 import com.example.spacecolonizations.model.ship.EnemyShip;
 import com.example.spacecolonizations.model.ship.FriendlyShip;

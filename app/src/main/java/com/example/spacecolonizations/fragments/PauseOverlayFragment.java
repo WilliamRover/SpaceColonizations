@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.spacecolonizations.MenuActivity;
+import com.example.spacecolonizations.activities.MenuActivity;
 import com.example.spacecolonizations.R;
 
 public class PauseOverlayFragment extends Fragment {

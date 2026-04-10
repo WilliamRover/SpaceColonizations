@@ -1,13 +1,15 @@
-package com.example.spacecolonizations;
+package com.example.spacecolonizations.activities;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class EngineFailureActivity extends AppCompatActivity {
+import com.example.spacecolonizations.R;
+
+public class AsteroidActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.engine_failure);
+        setContentView(R.layout.asteroid);
     }
 }

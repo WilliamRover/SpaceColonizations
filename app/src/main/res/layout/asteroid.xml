@@ -6,12 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/game_bg"
-    tools:context=".AsteroidActivity">
+    tools:context=".activities.AsteroidActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/shipFragment"
         android:name="com.example.spacecolonizations.fragments.ShipFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_ship"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
