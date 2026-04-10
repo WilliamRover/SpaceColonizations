@@ -51,7 +51,7 @@
         app:srcCompat="@drawable/friendlyship" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnEnemy1"
+        android:id="@+id/btnPause"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="48dp"
@@ -105,9 +105,9 @@
         android:textColor="#D32F2F"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/btnEnemy1"
-        app:layout_constraintStart_toStartOf="@+id/btnEnemy1"
-        app:layout_constraintTop_toBottomOf="@+id/btnEnemy1" />
+        app:layout_constraintEnd_toEndOf="@+id/btnPause"
+        app:layout_constraintStart_toStartOf="@+id/btnPause"
+        app:layout_constraintTop_toBottomOf="@+id/btnPause" />
 
 
     <TextView
@@ -129,8 +129,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="9dp"
         android:text="num% Fight"
-        app:layout_constraintEnd_toEndOf="@+id/btnEnemy1"
-        app:layout_constraintStart_toStartOf="@+id/btnEnemy1"
+        app:layout_constraintEnd_toEndOf="@+id/btnPause"
+        app:layout_constraintStart_toStartOf="@+id/btnPause"
         app:layout_constraintTop_toBottomOf="@+id/txtEnemyLabel1" />
 
     <TextView
@@ -138,10 +138,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="num% Obstacle"
-        app:layout_constraintEnd_toEndOf="@+id/btnEnemy1"
-        app:layout_constraintStart_toStartOf="@+id/btnEnemy1"
+        app:layout_constraintEnd_toEndOf="@+id/btnPause"
+        app:layout_constraintStart_toStartOf="@+id/btnPause"
         app:layout_constraintTop_toBottomOf="@+id/txtViewFightProb1" />
 
+
+    <TextView
+        android:id="@+id/txtViewObstacleProb3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="num% Obstacle"
+        app:layout_constraintEnd_toEndOf="@+id/btnPause"
+        app:layout_constraintStart_toStartOf="@+id/btnPause"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewFightProb1" />
 
     <View
         android:id="@+id/arrow1"
@@ -151,7 +160,7 @@
         android:background="@android:color/darker_gray"
         android:rotation="160"
         app:layout_constraintBottom_toTopOf="@+id/crewImg"
-        app:layout_constraintEnd_toStartOf="@+id/btnEnemy1"
+        app:layout_constraintEnd_toStartOf="@+id/btnPause"
         app:layout_constraintStart_toEndOf="@+id/crewImg" />
 
     <View

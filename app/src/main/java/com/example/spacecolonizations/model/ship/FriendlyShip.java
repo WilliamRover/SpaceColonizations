@@ -18,15 +18,21 @@ public class FriendlyShip extends Ship {
     private List<Station> stations;
     private int totalCrew;
     private int money;
-
+    private static FriendlyShip ship;
     private TextView friendlyExplode;
 
-    public FriendlyShip(int innitHullStrength) {
+    private FriendlyShip(int innitHullStrength) {
         super(innitHullStrength);
         this.crews = new ArrayList<>();
         this.stations = new ArrayList<>();
         this.money = 0;
         initializeStations();
+    }
+    public static FriendlyShip getShip() {
+        if (ship == null) {
+            ship = new FriendlyShip(100);
+        }
+        return ship;
     }
 
     private void initializeStations() {

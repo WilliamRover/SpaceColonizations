@@ -1,6 +1,5 @@
 package com.example.spacecolonizations;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -15,7 +14,7 @@ public class MapActivity extends AppCompatActivity {
     }
 
     private void setupButton() {
-        Button btnEnemy1 = findViewById(R.id.btnEnemy1);
+        Button btnEnemy1 = findViewById(R.id.btnPause);
         btnEnemy1.setOnClickListener(v -> {
         // Do some random shits here
         });

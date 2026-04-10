@@ -13,7 +13,7 @@ public class PathGeneration {
 
     public static ArrayList<Mission> generatePath(){
 
-        PassObstacle po = new PassObstacle("PassObstacle");
+        PassObstacle po = new PassObstacle("Pass Obstacle");
         Rescue r = new Rescue("Rescue");
         FightEnemy fe = new FightEnemy("Fight Enemy");
 
