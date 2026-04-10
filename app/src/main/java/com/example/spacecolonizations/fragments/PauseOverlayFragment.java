@@ -17,6 +17,7 @@ public class PauseOverlayFragment extends Fragment {
 
     public interface OnPauseActionListener {
         void onResumeRequested();
+        default void onSaveRequested() {}
     }
 
     private OnPauseActionListener listener;
@@ -41,6 +42,13 @@ public class PauseOverlayFragment extends Fragment {
                 listener.onResumeRequested();
             }
         });
+
+        view.findViewById(R.id.btnSaveGame).setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onSaveRequested();
+            }
+        });
+
         view.findViewById(R.id.btnGoMenu).setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), MenuActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -13,6 +13,34 @@ import com.example.spacecolonizations.R;
 
 public class PauseFragment extends Fragment {
     private View pauseOverlayFrag;
+    private PauseOverlayFragment.OnPauseActionListener externalListener;
+
+    public void setPauseOverlayListener(PauseOverlayFragment.OnPauseActionListener listener) {
+        this.externalListener = listener;
+        updateOverlayListener();
+    }
+
+    private void updateOverlayListener() {
+        PauseOverlayFragment overlayFragment = (PauseOverlayFragment) getChildFragmentManager().findFragmentById(R.id.pauseOverlay);
+        if (overlayFragment != null) {
+            overlayFragment.setOnPauseActionListener(new PauseOverlayFragment.OnPauseActionListener() {
+                @Override
+                public void onResumeRequested() {
+                    pauseOverlayFrag.setVisibility(View.GONE);
+                    if (externalListener != null) {
+                        externalListener.onResumeRequested();
+                    }
+                }
+
+                @Override
+                public void onSaveRequested() {
+                    if (externalListener != null) {
+                        externalListener.onSaveRequested();
+                    }
+                }
+            });
+        }
+    }
 
     @Nullable
     @Override
@@ -27,13 +55,13 @@ public class PauseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        PauseOverlayFragment overlayFragment = (PauseOverlayFragment) getChildFragmentManager().findFragmentById(R.id.pauseOverlay);
-        if (overlayFragment != null) {
-            overlayFragment.setOnPauseActionListener(() -> pauseOverlayFrag.setVisibility(View.GONE));
-        }
+        updateOverlayListener();
     }
 
     private void setupButtons(View view) {
-        view.findViewById(R.id.btnPause).setOnClickListener(v -> pauseOverlayFrag.setVisibility(View.VISIBLE));
+        View btnPause = view.findViewById(R.id.btnPause);
+        if (btnPause != null) {
+            btnPause.setOnClickListener(v -> pauseOverlayFrag.setVisibility(View.VISIBLE));
+        }
     }
 }

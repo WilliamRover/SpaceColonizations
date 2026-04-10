@@ -71,8 +71,9 @@
         android:layout_marginStart="40dp"
         android:layout_marginBottom="-2dp"
         android:text="num/100"
-        android:textColor="#754343"
+        android:textColor="#635252"
         android:textSize="8sp"
+        android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="@+id/enemyShipHp"
         app:layout_constraintStart_toStartOf="@+id/enemyShipHp" />
 
