@@ -18,7 +18,6 @@ public class FriendlyShip extends Ship {
     private List<Crew> crews;
     private List<Station> stations;
     private static FriendlyShip ship;
-    private int totalCrew = 0;
     private int shipKill;
     private TextView friendlyExplode;
 
@@ -48,7 +47,7 @@ public class FriendlyShip extends Ship {
 
     public void recruitCrew(Crew c) {
         crews.add(c);
-        totalCrew++;
+        CrewManager.addCrew(c);
     }
 
     /**
