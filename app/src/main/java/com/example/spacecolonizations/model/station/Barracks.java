@@ -3,8 +3,6 @@ package com.example.spacecolonizations.model.station;
 
 import com.example.spacecolonizations.model.crewmate.Crew;
 
-import java.util.ArrayList;
-
 public class Barracks extends Station{
     private static Barracks instance;
 
@@ -49,16 +47,15 @@ public class Barracks extends Station{
     private Object readResolve() {
         Barracks singleton = getInstance();
 
-        if (this.crewMembers != null) {
-            singleton.crewMembers = this.crewMembers;
-            for (Crew crew : singleton.crewMembers) {
+        singleton.crewMembers = this.crewMembers;
+        singleton.maxCrew = this.maxCrew;
+
+        if (!this.crewMembers.isEmpty()) {
+            for (Crew crew : this.crewMembers) {
                 crew.setCurrentStation(singleton);
             }
-        } else {
-            singleton.crewMembers = new ArrayList<>();
-        }
 
-        singleton.maxCrew = this.maxCrew;
+        }
 
         return singleton;
     }
