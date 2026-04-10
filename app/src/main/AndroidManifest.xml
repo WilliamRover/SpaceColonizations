@@ -52,16 +52,6 @@
             android:name=".activities.ShopActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
-        <!-- Load Game -->
-        <activity
-            android:name=".activities.LoadActivity"
-            android:exported="false"
-            android:screenOrientation="sensorLandscape" />
-        <!-- Statistic -->
-        <activity
-            android:name=".activities.StatisticActivity"
-            android:exported="false"
-            android:screenOrientation="sensorLandscape" />
 
     </application>
 
