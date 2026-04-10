@@ -66,6 +66,8 @@ public class CrewManager {
                 setStatistics(statistics);
             }
 
+            Log.d(TAG, "crew_data.ser loaded");
+
 
         } catch (FileNotFoundException e) {
             crewList = new ArrayList<>();
@@ -127,6 +129,8 @@ public class CrewManager {
             data.put("balance", Wallet.getInstance().getBalance());
             data.put("gameStatistics", Statistics.getInstance().getStatistics());
             objectOutputStream.writeObject(data);
+
+            Log.d(TAG, "crew_data.ser saved");
 
         } catch (FileNotFoundException e) {
             Log.w(TAG, "crew_data.ser not found", e);

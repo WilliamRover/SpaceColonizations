@@ -57,7 +57,7 @@ public abstract class Station implements Serializable {
             //TODO notification saying crew cannot be assigned
             return;
         }
-        if (this.crewMembers.size() < this.maxCrew) {
+        if (this.crewMembers != null && this.crewMembers.size() < this.maxCrew) {
 
             if (crew.getCurrentStation() != null) {
                 crew.getCurrentStation().removeCrew(crew);
@@ -75,7 +75,7 @@ public abstract class Station implements Serializable {
      * @param crew
      */
     public void removeCrew(@NonNull Crew crew){
-        if (this.crewMembers.remove(crew)) {
+        if (this.crewMembers != null && this.crewMembers.remove(crew)) {
 
             if (crew.getCurrentStation() == this) {
                 crew.setCurrentStation(null);
@@ -97,7 +97,7 @@ public abstract class Station implements Serializable {
             //TODO notification saying repairman cannot be assigned
             return;
         }
-        if (this.repairMan.size() < this.maxRepairmen) {
+        if (this.repairMan != null && this.repairMan.size() < this.maxRepairmen) {
 
             if (crew.getCurrentStation() != null) {
                 crew.getCurrentStation().removeCrew(crew);
@@ -117,7 +117,7 @@ public abstract class Station implements Serializable {
      * @param crew
      */
     private void removeRepairMan(@NonNull Crew crew) {
-        if (this.repairMan.remove(crew)) {
+        if (this.repairMan != null && this.repairMan.remove(crew)) {
 
             if (crew.getCurrentStation() == this) {
                 crew.setCurrentStation(Barracks.getInstance());
@@ -140,9 +140,11 @@ public abstract class Station implements Serializable {
         if (this.repairTimeRemaining <= 0){
             this.repairTimeRemaining = baseRepairtime;
         }
-        if (!this.repairMan.isEmpty()) {
-            repairHandler.removeCallbacks(repairRunnable);
-            repairHandler.post(repairRunnable);
+        if (this.repairMan != null && !this.repairMan.isEmpty()) {
+            if (repairHandler != null) {
+                repairHandler.removeCallbacks(repairRunnable);
+                repairHandler.post(repairRunnable);
+            }
         }
 
     }
@@ -155,7 +157,7 @@ public abstract class Station implements Serializable {
         float increment = 1;
         float totalEfficiency =  0;
 
-        if (this.repairMan.isEmpty()){
+        if (this.repairMan == null || this.repairMan.isEmpty()){
             this.repairEfficiency = 0;
             return;
         }
@@ -204,8 +206,10 @@ public abstract class Station implements Serializable {
     public void breakStation() {
         this.isUsable = false;
         this.breakTimeRemaining = 60000;
-        breakHandler.removeCallbacks(this.breakRunnable);
-        breakHandler.post(this.breakRunnable);
+        if (breakHandler != null) {
+            breakHandler.removeCallbacks(this.breakRunnable);
+            breakHandler.post(this.breakRunnable);
+        }
     }
 
     protected void initRepairHandler() {
@@ -213,7 +217,7 @@ public abstract class Station implements Serializable {
         repairRunnable = new Runnable() {
             @Override
             public void run() {
-                if (repairMan.isEmpty() || isUsable) {
+                if (repairMan == null || repairMan.isEmpty() || isUsable) {
                     return;
                 }
 
@@ -244,7 +248,7 @@ public abstract class Station implements Serializable {
         };
 
         //continue repair if game closed while repairing
-        if (!isUsable && !repairMan.isEmpty()) {
+        if (!isUsable && repairMan != null && !repairMan.isEmpty()) {
             this.repairStation();
         }
     }
@@ -277,19 +281,23 @@ public abstract class Station implements Serializable {
                         repairHandler.removeCallbacks(repairRunnable);
                     }
 
-                    for (int i = crewMembers.size() - 1; i >= 0; i--) {
-                        Crew crew = crewMembers.get(i);
-                        crew.setCurrentStation(null);
-                        CrewManager.removeCrew(crew);
+                    if (crewMembers != null) {
+                        for (int i = crewMembers.size() - 1; i >= 0; i--) {
+                            Crew crew = crewMembers.get(i);
+                            crew.setCurrentStation(null);
+                            CrewManager.removeCrew(crew);
+                        }
+                        crewMembers.clear();
                     }
-                    crewMembers.clear();
 
-                    for (int i = repairMan.size() - 1; i >= 0; i--) {
-                        Crew crew = repairMan.get(i);
-                        crew.setCurrentStation(null);
-                        CrewManager.removeCrew(crew);
+                    if (repairMan != null) {
+                        for (int i = repairMan.size() - 1; i >= 0; i--) {
+                            Crew crew = repairMan.get(i);
+                            crew.setCurrentStation(null);
+                            CrewManager.removeCrew(crew);
+                        }
+                        repairMan.clear();
                     }
-                    repairMan.clear();
 
                     clearPatients();
 
@@ -324,24 +332,20 @@ public abstract class Station implements Serializable {
 
         // Loading from file may cause duplicates so current station is set to transient
         // this will hopefully fix the issue
-        if (!this.crewMembers.isEmpty()) {
+        if (this.crewMembers != null) {
             for (Crew crew : this.crewMembers) {
                 crew.setCurrentStation(this);
             }
+        } else {
+            this.crewMembers = new ArrayList<>();
         }
 
-        if (!this.repairMan.isEmpty()) {
+        if (this.repairMan != null) {
             for (Crew crew : this.repairMan) {
                 crew.setCurrentStation(this);
             }
-        }
-
-        if (this instanceof MedBay) {
-            if (!((MedBay) this).getPatients().isEmpty()) {
-                for (Crew crew : ((MedBay) this).getPatients()) {
-                    crew.setCurrentStation(this);
-                }
-            }
+        } else {
+            this.repairMan = new ArrayList<>();
         }
 
         this.initRepairHandler();

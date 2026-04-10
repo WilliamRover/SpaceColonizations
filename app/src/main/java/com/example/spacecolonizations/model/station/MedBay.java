@@ -35,6 +35,10 @@ public class MedBay extends Station{
 
     public void addPatient(Crew crew) {
 
+        if (this.patients == null) {
+            this.patients = new ArrayList<>();
+        }
+
         if (!(this.patients.size() < this.maxPatients) || this.patients.contains(crew)) {
         //TODO notification saying patient cannot be assigned
             return;
@@ -70,7 +74,7 @@ public class MedBay extends Station{
     }
 
     /**
-     * kill the patients
+     * kill the patients if med-bay breaks
      */
     @Override
     protected void clearPatients(){
