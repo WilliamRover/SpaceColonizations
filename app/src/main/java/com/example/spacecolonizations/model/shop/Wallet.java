@@ -33,7 +33,7 @@ public class Wallet {
      * for use in shop
      * @param amount
      */
-    public void removeBalance(int amount) {
+    public void reduceBalance(int amount) {
         if (balance < amount) {
             return;
         }
