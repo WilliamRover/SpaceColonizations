@@ -76,14 +76,21 @@ public class ShipFragment extends Fragment {
     }
 
     private void showStationDetail(String name, Class<? extends Station> stationClass) {
-        Station station = friendlyShip.getStation(stationClass);
-        if (station != null) {
-            fragmentStationContainer.setVisibility(View.VISIBLE);
-            StationDetailFragment fragment = StationDetailFragment.newInstance(name, station.getCrewMembers());
-            getChildFragmentManager().beginTransaction()
-                    .replace(R.id.stationDetailContainer, fragment)
-                    .commit();
-        }
+        fragmentStationContainer.setVisibility(View.VISIBLE);
+        StationDetailFragment fragment = StationDetailFragment.newInstance(name, stationClass);
+        fragment.setOnStationNavigationListener(new StationDetailFragment.OnStationNavigationListener() {
+            @Override
+            public void onStationSelected(String name, Class<? extends Station> stationClass) {
+                showStationDetail(name, stationClass);
+            }
+
+            @Override
+            public void onDataChanged() {
+            }
+        });
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.stationDetailContainer, fragment)
+                .commit();
     }
 
     public void hideStationDetail() {
