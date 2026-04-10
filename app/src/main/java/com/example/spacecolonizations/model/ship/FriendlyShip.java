@@ -3,6 +3,7 @@ package com.example.spacecolonizations.model.ship;
 import android.widget.TextView;
 
 import com.example.spacecolonizations.model.crewmate.Crew;
+import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.station.Barracks;
 import com.example.spacecolonizations.model.station.CommandCenter;
 import com.example.spacecolonizations.model.station.MedBay;
@@ -24,6 +25,7 @@ public class FriendlyShip extends Ship {
     private FriendlyShip(int innitHullStrength) {
         super(innitHullStrength);
         this.crews = new ArrayList<>();
+        // this.stations = new ArrayList<>(CrewManager.getStations());
         this.stations = new ArrayList<>();
         initializeStations();
     }
@@ -40,6 +42,7 @@ public class FriendlyShip extends Ship {
         addStation(new Turret());
         addStation(new CommandCenter());
         addStation(new TrainingCenter());
+
     }
 
     public void recruitCrew(Crew c) {

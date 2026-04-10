@@ -139,5 +139,16 @@
             app:layout_constraintStart_toStartOf="@+id/crewLevelBar"
             app:layout_constraintTop_toBottomOf="@+id/crewLevelBar" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recViewStationList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtViewXpNum" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
