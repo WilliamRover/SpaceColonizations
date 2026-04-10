@@ -27,7 +27,7 @@ public class MapActivity extends AppCompatActivity {
             ((PauseFragment) fragment).setPauseOverlayListener(new PauseOverlayFragment.OnPauseActionListener() {
                 @Override
                 public void onResumeRequested() {
-                    // Handled by PauseFragment internally or via callback if needed
+                    // Literally does nothing
                 }
 
                 @Override

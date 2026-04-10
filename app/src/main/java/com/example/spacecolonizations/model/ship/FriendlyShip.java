@@ -25,9 +25,10 @@ public class FriendlyShip extends Ship {
     private FriendlyShip(int innitHullStrength) {
         super(innitHullStrength);
         this.crews = new ArrayList<>();
-        // this.stations = new ArrayList<>(CrewManager.getStations());
-        this.stations = new ArrayList<>();
-        initializeStations();
+         this.stations = new ArrayList<>();
+         this.stations = CrewManager.getStations();
+        // this.stations = new ArrayList<>();
+        // initializeStations();
     }
     public static FriendlyShip getShip() {
         if (ship == null) {
@@ -36,14 +37,14 @@ public class FriendlyShip extends Ship {
         return ship;
     }
 
-    private void initializeStations() {
-        addStation(Barracks.getInstance());
-        addStation(new MedBay());
-        addStation(new Turret());
-        addStation(new CommandCenter());
-        addStation(new TrainingCenter());
-
-    }
+//    private void initializeStations() {
+//        addStation(Barracks.getInstance());
+//        addStation(new MedBay());
+//        addStation(new Turret());
+//        addStation(new CommandCenter());
+//        addStation(new TrainingCenter());
+//
+//    }
 
     public void recruitCrew(Crew c) {
         crews.add(c);
