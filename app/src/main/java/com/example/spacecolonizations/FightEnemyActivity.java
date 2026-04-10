@@ -55,7 +55,7 @@ public class FightEnemyActivity extends AppCompatActivity {
     }
 
     private void innitEnemyView() {
-        enemyShip = new EnemyShip(120);
+        enemyShip = new EnemyShip((int) (100 + 100*Math.random()));
 
         enemyHpBar = findViewById(R.id.enemyShipHp);
         enemyShipImage = findViewById(R.id.enemyShipModel);

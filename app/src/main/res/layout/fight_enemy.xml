@@ -76,4 +76,12 @@
         app:layout_constraintBottom_toBottomOf="@+id/enemyShipHp"
         app:layout_constraintStart_toStartOf="@+id/enemyShipHp" />
 
+    <!-- Moved to the end so it is drawn on top of everything else -->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/pauseFragment"
+        android:name="com.example.spacecolonizations.fragments.PauseFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/pause_btn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
