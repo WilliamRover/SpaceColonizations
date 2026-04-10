@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.spacecolonizations.activities.MenuActivity;
 import com.example.spacecolonizations.R;
+import com.example.spacecolonizations.model.crewmate.CrewManager;
 
 public class PauseOverlayFragment extends Fragment {
 
@@ -44,12 +45,14 @@ public class PauseOverlayFragment extends Fragment {
         });
 
         view.findViewById(R.id.btnSaveGame).setOnClickListener(v -> {
+            CrewManager.saveTOFile(getContext());
             if (listener != null) {
                 listener.onSaveRequested();
             }
         });
 
         view.findViewById(R.id.btnGoMenu).setOnClickListener(v -> {
+            CrewManager.saveTOFile(getContext());
             Intent intent = new Intent(getActivity(), MenuActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

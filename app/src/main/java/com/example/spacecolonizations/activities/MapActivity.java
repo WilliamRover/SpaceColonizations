@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.spacecolonizations.R;
 import com.example.spacecolonizations.fragments.PauseFragment;
 import com.example.spacecolonizations.fragments.PauseOverlayFragment;
+import com.example.spacecolonizations.model.crewmate.CrewManager;
 
 public class MapActivity extends AppCompatActivity {
     @Override
@@ -33,7 +34,7 @@ public class MapActivity extends AppCompatActivity {
                 @Override
                 public void onSaveRequested() {
                     Toast.makeText(MapActivity.this, "Game Saved!", Toast.LENGTH_SHORT).show();
-                    // Do some shenanigans
+                    CrewManager.saveTOFile(MapActivity.this);
                 }
             });
         }

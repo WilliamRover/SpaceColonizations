@@ -135,6 +135,16 @@ public class CrewManager {
         }
     }
 
+    public static void deleteSave(Context context) {
+        context.deleteFile(saveFileName);
+        Statistics.getInstance().resetStatistics();
+        Wallet.getInstance().restoreBalance(100);
+
+        crewList = null;
+        stations = null;
+        rescueMissions = null;
+    }
+
     /**
      * Returns a list of stations. If stations list is empty in save file, the 5 stations will be initialized
      * @return List of Stations

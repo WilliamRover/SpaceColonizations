@@ -70,6 +70,15 @@ public class Statistics {
         return stats;
     }
 
+    public void resetStatistics() {
+        this.shipKills = 0;
+        this.numDeadCrews = 0;
+        this.numLivingCrews = 6;
+        this.numTotalCrews = 6;
+        this.numSuccessfulMissions = 0;
+        this.numFailedMissions = 0;
+    }
+
     // Setters
     public void setShipKills(int shipKills) {
         this.shipKills = shipKills;
