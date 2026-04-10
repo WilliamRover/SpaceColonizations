@@ -18,7 +18,7 @@ public class FriendlyShip extends Ship {
     private List<Station> stations;
     private static FriendlyShip ship;
     private int totalCrew = 0;
-    private int level;
+    private int shipKill;
     private TextView friendlyExplode;
 
     private FriendlyShip(int innitHullStrength) {
