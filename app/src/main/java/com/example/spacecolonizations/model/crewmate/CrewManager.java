@@ -3,6 +3,7 @@ package com.example.spacecolonizations.model.crewmate;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.spacecolonizations.model.Statistics;
 import com.example.spacecolonizations.model.mission.Rescue;
 import com.example.spacecolonizations.model.shop.Wallet;
 import com.example.spacecolonizations.model.station.Barracks;
@@ -30,6 +31,7 @@ public class CrewManager {
     private static final String saveFileName = "crew_data.ser";
     private static List<Station> stations;
     private static List<Rescue> rescueMissions;
+    private static HashMap<String, Integer> statistics;
 
 
     /**
@@ -45,6 +47,7 @@ public class CrewManager {
             stations = new ArrayList<>();
             rescueMissions = new ArrayList<>();
             loadedBalance = 100;
+            Statistics.getInstance();
             return;
         }
 
@@ -57,6 +60,11 @@ public class CrewManager {
             stations = (List<Station>) data.get("stationList");
             rescueMissions = (List<Rescue>) data.get("rescueMissionList");
             loadedBalance = (int) data.get("balance");
+
+            statistics = (HashMap<String, Integer>) data.get("gameStatistics");
+            if  (statistics != null){
+                setStatistics(statistics);
+            }
 
 
         } catch (FileNotFoundException e) {
@@ -93,6 +101,11 @@ public class CrewManager {
             if (loadedBalance == -1) {
                 loadedBalance = 100;
             }
+
+            if (statistics == null){
+                Statistics.getInstance();
+            }
+
             Wallet.getInstance().restoreBalance(loadedBalance);
         }
 
@@ -112,6 +125,7 @@ public class CrewManager {
             data.put("stationList", stations);
             data.put("rescueMissionList", rescueMissions);
             data.put("balance", Wallet.getInstance().getBalance());
+            data.put("gameStatistics", Statistics.getInstance().getStatistics());
             objectOutputStream.writeObject(data);
 
         } catch (FileNotFoundException e) {
@@ -195,6 +209,26 @@ public class CrewManager {
      */
     public static void removeRescueMission(Rescue mission){
         rescueMissions.remove(mission);
+    }
+
+
+    private static void setStatistics(HashMap<String, Integer> stats){
+        int shipKills = stats.get("shipKills");
+        int numDeadCrews = stats.get("numDeadCrews");
+        int numLivingCrews = stats.get("numLivingCrews");
+        int numTotalCrews = stats.get("numTotalCrews");
+        int numSuccessfulMissions = stats.get("numSuccessfulMissions");
+        int numFailedMissions = stats.get("numFailedMissions");
+
+        Statistics statsInstance = Statistics.getInstance();
+
+        statsInstance.setShipKills(shipKills);
+        statsInstance.setNumDeadCrews(numDeadCrews);
+        statsInstance.setNumLivingCrews(numLivingCrews);
+        statsInstance.setNumTotalCrews(numTotalCrews);
+        statsInstance.setNumSuccessfulMissions(numSuccessfulMissions);
+        statsInstance.setNumFailedMissions(numFailedMissions);
+
     }
 
 }
