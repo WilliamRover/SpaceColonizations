@@ -6,6 +6,7 @@ import android.os.Looper;
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.crewmate.Technician;
+import com.example.spacecolonizations.model.shop.Wallet;
 
 import org.jspecify.annotations.NonNull;
 
@@ -219,13 +220,22 @@ public abstract class Station implements Serializable {
                 repairTimeRemaining -= 1000 * repairEfficiency;
 
                 if (repairTimeRemaining <= 0) {
-                    repairTimeRemaining = 0;
+                    //stop break handler
+                    if (breakHandler != null){
+                        breakHandler.removeCallbacks(breakRunnable);
+                    }
+
                     isUsable = true;
+                    breakTimeRemaining = 60000;
+                    repairTimeRemaining = 30000;
+
                     setEfficiency();
 
                     for (int i = repairMan.size() - 1; i >= 0; i--) {
                         removeRepairMan(repairMan.get(i));
                     }
+
+                    Wallet.getInstance().addBalance(100);
                     return;
                 } else {
                     repairHandler.postDelayed(this, 1000);
@@ -262,6 +272,11 @@ public abstract class Station implements Serializable {
                 breakTimeRemaining -= 1000;
 
                 if (breakTimeRemaining <= 0) {
+                    //stop repair handler
+                    if (repairHandler != null){
+                        repairHandler.removeCallbacks(repairRunnable);
+                    }
+
                     for (int i = crewMembers.size() - 1; i >= 0; i--) {
                         Crew crew = crewMembers.get(i);
                         crew.setCurrentStation(null);
@@ -278,7 +293,7 @@ public abstract class Station implements Serializable {
 
                     clearPatients();
 
-                    breakTimeRemaining = 0;
+                    breakTimeRemaining = 60000;
                     repairTimeRemaining = 30000;
                     return;
 

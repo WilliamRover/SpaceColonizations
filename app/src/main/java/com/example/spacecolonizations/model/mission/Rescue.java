@@ -2,6 +2,7 @@ package com.example.spacecolonizations.model.mission;
 
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.CrewManager;
+import com.example.spacecolonizations.model.shop.Wallet;
 import com.example.spacecolonizations.model.station.Barracks;
 
 import java.util.ArrayList;
@@ -75,6 +76,10 @@ public class Rescue extends Mission {
         }
         // TODO update statistics
 
+        //reward
+        if (getComplete()){
+            Wallet.getInstance().addBalance(150);
+        }
         CrewManager.removeRescueMission(this);
 
         return tempCrew;

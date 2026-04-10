@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.spacecolonizations.model.mission.Rescue;
+import com.example.spacecolonizations.model.shop.Wallet;
 import com.example.spacecolonizations.model.station.Barracks;
 import com.example.spacecolonizations.model.station.CommandCenter;
 import com.example.spacecolonizations.model.station.MedBay;
@@ -31,18 +32,19 @@ public class CrewManager {
     private static List<Rescue> rescueMissions;
 
 
-
     /**
      * To be called when the app starts
      * @param context
      */
     public static void loadFromFile(Context context) {
         File file = new File(context.getFilesDir(), saveFileName);
+        int loadedBalance = -1;
 
         if (!file.exists()) {
             crewList = new ArrayList<>();
             stations = new ArrayList<>();
             rescueMissions = new ArrayList<>();
+            loadedBalance = 100;
             return;
         }
 
@@ -54,6 +56,7 @@ public class CrewManager {
             crewList = (List<Crew>) data.get("crewList");
             stations = (List<Station>) data.get("stationList");
             rescueMissions = (List<Rescue>) data.get("rescueMissionList");
+            loadedBalance = (int) data.get("balance");
 
 
         } catch (FileNotFoundException e) {
@@ -86,6 +89,11 @@ public class CrewManager {
                 rescueMissions = new ArrayList<>();
                 Log.w(TAG, "rescueMissions in file is null");
             }
+
+            if (loadedBalance == -1) {
+                loadedBalance = 100;
+            }
+            Wallet.getInstance().restoreBalance(loadedBalance);
         }
 
     }
@@ -103,6 +111,7 @@ public class CrewManager {
             data.put("crewList", crewList);
             data.put("stationList", stations);
             data.put("rescueMissionList", rescueMissions);
+            data.put("balance", Wallet.getInstance().getBalance());
             objectOutputStream.writeObject(data);
 
         } catch (FileNotFoundException e) {
