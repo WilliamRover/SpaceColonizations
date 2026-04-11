@@ -52,8 +52,8 @@ public class CrewManager {
         }
 
         try (
-            FileInputStream inputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream)) {
+                FileInputStream inputStream = new FileInputStream(file);
+                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream)) {
 
             HashMap<String, Object> data = (HashMap<String, Object>) objectInputStream.readObject();
             crewList = (List<Crew>) data.get("crewList");

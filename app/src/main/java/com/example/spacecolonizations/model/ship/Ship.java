@@ -51,10 +51,15 @@ public abstract class Ship implements Damagable {
     public void loseHealth(int damage) {
         this.hullStrength -= damage;
         if (this instanceof FriendlyShip) {
-            List<Station> stations = CrewManager.getStations();
+            List<Station> stations = new ArrayList<>(CrewManager.getStations());
             stations.remove(Barracks.getInstance());
-            List<Crew> crews = stations.get((int) round((Math.random()*stations.size()))).getCrewMembers();
-            crews.get((int) round((Math.random()*crews.size()))).loseHealth(10);
+            if (!stations.isEmpty()) {
+                Station randomStation = stations.get((int) (Math.random() * stations.size()));
+                List<Crew> crews = randomStation.getCrewMembers();
+                if (crews != null && !crews.isEmpty()) {
+                    crews.get((int) (Math.random() * crews.size())).loseHealth(10);
+                }
+            }
         }
     }
 }

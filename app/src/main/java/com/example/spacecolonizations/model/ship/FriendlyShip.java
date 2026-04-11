@@ -24,11 +24,10 @@ public class FriendlyShip extends Ship {
     private FriendlyShip(int innitHullStrength) {
         super(innitHullStrength);
         this.crews = new ArrayList<>();
-         this.stations = new ArrayList<>();
-         this.stations = CrewManager.getStations();
-        // this.stations = new ArrayList<>();
-        // initializeStations();
+        this.stations = new ArrayList<>();
+        this.stations = CrewManager.getStations();
     }
+
     public static FriendlyShip getShip() {
         if (ship == null) {
             ship = new FriendlyShip(100);
@@ -36,18 +35,17 @@ public class FriendlyShip extends Ship {
         return ship;
     }
 
-//    private void initializeStations() {
-//        addStation(Barracks.getInstance());
-//        addStation(new MedBay());
-//        addStation(new Turret());
-//        addStation(new CommandCenter());
-//        addStation(new TrainingCenter());
-//
-//    }
-
     public void recruitCrew(Crew c) {
         crews.add(c);
         CrewManager.addCrew(c);
+    }
+
+    public void resetShip() {
+        this.setHullStrength(this.getInnitHullStrength());
+        this.crews.clear();
+        this.shipKill = 0;
+        // The stations list in CrewManager is cleared and re-populated separately,
+        // but since this.stations points to it, it will be updated.
     }
 
     /**

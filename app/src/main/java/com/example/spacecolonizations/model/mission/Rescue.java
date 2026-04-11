@@ -7,20 +7,21 @@ import com.example.spacecolonizations.model.station.Barracks;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 // TODO increase crew limit depending on stats
 public class Rescue extends Mission {
     private ArrayList<Crew> crewMembers;
 
-    private int turnRequire;
+    private int timeRequire;
 
-    private int turnRightNow;
     public Rescue(String missionName){
         super(missionName);
         this.numCrew = 2;
         this.crewMembers = new ArrayList<>();
-        this.turnRequire = 2;
-        this.turnRightNow = 0;
+        this.timeRequire = 180;
         CrewManager.addRescueMission(this);
     }
     @Override
@@ -28,24 +29,10 @@ public class Rescue extends Mission {
         return "Rescue";
     }
 
-    public int getTurnRequire(){
-        return turnRequire;
+    public int getTimeRequire(){
+        return timeRequire;
     }
 
-    public int getTurnRightNow(){
-        return turnRightNow;
-    }
-
-    public void addTime(){
-        turnRightNow = turnRightNow + 1;
-    }
-
-    public boolean checkTime(){
-        if (turnRightNow >= turnRequire){
-            return true;
-        }
-        return false;
-    }
 
     public void damageCrew(){
         for (Crew c : crewMembers){
@@ -57,6 +44,17 @@ public class Rescue extends Mission {
                 c.loseHealth((int) ((c.getMaxHealthPoints())*(dice2/100)));
             }
         }
+    }
+    /**
+     * this is the main function with the timer foe the rescue mission
+     */
+    public void start(){
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.schedule(() -> {
+            returnCrew();
+        }, timeRequire, TimeUnit.SECONDS);
+        scheduler.shutdown();
+
     }
 
     /**

@@ -144,21 +144,23 @@ public class MapActivity extends AppCompatActivity {
         }
         btnEnemy1.setOnClickListener(v -> {
             Intent intent = null;
-            if (m.get(0) instanceof FightEnemy){
-                intent = new Intent(this, FightEnemyActivity.class);
-            } else if (m.get(0) instanceof PassObstacle) {
-                if (m.get(0).getMissionType().equals("Asteroid")){
-                    intent = new Intent(this, AsteroidActivity.class);
-                } else if (m.get(0).getMissionType().equals("EngineFailure")) {
-                    intent = new Intent(this, EngineFailureActivity.class);
-                }
-            } else if (m.get(0) instanceof Rescue) {
-
-            }
-
-            if (intent != null) {
-                startActivity(intent);
-            }
+            intent = new Intent(this, FightEnemyActivity.class); // Testing only. Delete after down
+            startActivity(intent);
+//            if (m.get(0) instanceof FightEnemy){
+//                intent = new Intent(this, FightEnemyActivity.class);
+//            } else if (m.get(0) instanceof PassObstacle) {
+//                if (m.get(0).getMissionType().equals("Asteroid")){
+//                    intent = new Intent(this, AsteroidActivity.class);
+//                } else if (m.get(0).getMissionType().equals("EngineFailure")) {
+//                    intent = new Intent(this, EngineFailureActivity.class);
+//                }
+//            } else if (m.get(0) instanceof Rescue) {
+//
+//            }
+//
+//            if (intent != null) {
+//                startActivity(intent);
+//            }
 
         });
 
