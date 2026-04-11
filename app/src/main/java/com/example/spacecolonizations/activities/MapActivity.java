@@ -76,16 +76,20 @@ public class MapActivity extends AppCompatActivity {
         m.add(m2);
 
         String chancefight1 = String.valueOf(mp1.get("FightEnemy"));
-        String chanceobstacle1 = String.valueOf(mp1.get("PassObstacle") + mp1.get("Rescue"));
+        String chanceobstacle1 = String.valueOf(mp1.get("PassObstacle"));
+        String chanceRescue1 = String.valueOf(mp1.get("Rescue"));
 
         String chancefight2 = String.valueOf(mp2.get("FightEnemy"));
-        String chanceobstacle2 = String.valueOf(mp2.get("PassObstacle") + mp2.get("Rescue"));
+        String chanceobstacle2 = String.valueOf(mp2.get("PassObstacle") );
+        String chanceRescue2 = String.valueOf(mp2.get("Rescue"));
 
         String txtfight1 = chancefight1 + " % Fight";
         String txtobstacle1 = chanceobstacle1 + " % obstacle";
+        String txtrescue1 = chanceRescue1 + " % rescue";
 
         String txtfight2 = chancefight2 + " % Fight";
         String txtobstacle2 = chanceobstacle2 + " % obstacle";
+        String txtrescue2 = chanceRescue2 + " % rescue";
 
         for (Crew c : CrewManager.getCrew()){
             if (c.getCurrentStation() instanceof CommandCenter && c instanceof Navigator ){
@@ -101,14 +105,18 @@ public class MapActivity extends AppCompatActivity {
         TextView txtEnemyLabel1 = findViewById(R.id.txtEnemyLabel1);
         TextView txtViewFightProb1 = findViewById(R.id.txtViewFightProb1);
         TextView txtViewObstacleProb1 = findViewById(R.id.txtViewObstacleProb1);
+        TextView txtVIewRescueProb1 = findViewById(R.id.txtViewRescueProb1);
 
         txtViewFightProb1.setText(txtfight1);
         txtViewObstacleProb1.setText(txtobstacle1);
+        txtVIewRescueProb1.setText(txtrescue1);
 
         if (navigatoronCommand){
             txtViewFightProb1.setText("");
             txtViewObstacleProb1.setText("");
+            txtVIewRescueProb1.setText("");
             if (m.get(0) instanceof FightEnemy){
+                txtViewFightProb1.setText("FightEnemy");
                 btnEnemy1.setBackgroundColor(
                         ContextCompat.getColor(this,R.color.red)
                 );
@@ -116,12 +124,22 @@ public class MapActivity extends AppCompatActivity {
                         ContextCompat.getColor(this,R.color.red)
                 );
             } else if (m.get(0) instanceof PassObstacle) {
+                txtViewFightProb1.setText(m.get(0).getMissionType());
                 btnEnemy1.setBackgroundColor(
                         ContextCompat.getColor(this,R.color.yellow)
                 );
                 txtEnemyLabel1.setBackgroundColor(
                         ContextCompat.getColor(this,R.color.yellow)
                 );
+            } else if (m.get(0) instanceof Rescue) {
+                txtViewFightProb1.setText("Rescue");
+                btnEnemy1.setBackgroundColor(
+                        ContextCompat.getColor(this,R.color.blue)
+                );
+                txtEnemyLabel1.setBackgroundColor(
+                        ContextCompat.getColor(this,R.color.blue)
+                );
+
             }
         }
         btnEnemy1.setOnClickListener(v -> {
@@ -148,14 +166,17 @@ public class MapActivity extends AppCompatActivity {
         TextView txtEnemyLabel2 = findViewById(R.id.txtEnemyLabel2);
         TextView txtViewFightProb2 = findViewById(R.id.txtViewFightProb2);
         TextView txtViewObstacleProb2 = findViewById(R.id.txtViewObstacleProb2);
+        TextView txtViewRescueProb2 = findViewById(R.id.txtViewRescueProb2);
 
         txtViewFightProb2.setText(txtfight2);
         txtViewObstacleProb2.setText(txtobstacle2);
+        txtViewRescueProb2.setText(txtrescue2);
 
         if (navigatoronCommand){
             txtViewFightProb2.setText("");
             txtViewObstacleProb2.setText("");
             if (m.get(1) instanceof FightEnemy){
+                txtViewFightProb1.setText("FightEnemy");
                 btnEnemy2.setBackgroundColor(
                         ContextCompat.getColor(this,R.color.red)
                 );
@@ -163,13 +184,22 @@ public class MapActivity extends AppCompatActivity {
                         ContextCompat.getColor(this,R.color.red)
                 );
             } else if (m.get(1) instanceof PassObstacle) {
+                txtViewFightProb1.setText(m.get(0).getMissionType());
                 btnEnemy2.setBackgroundColor(
                         ContextCompat.getColor(this,R.color.yellow)
                 );
                 txtEnemyLabel2.setBackgroundColor(
                         ContextCompat.getColor(this,R.color.yellow)
                 );
-            }
+            }else if (m.get(0) instanceof Rescue) {
+            txtViewFightProb2.setText("Rescue");
+            btnEnemy2.setBackgroundColor(
+                    ContextCompat.getColor(this,R.color.blue)
+            );
+            txtEnemyLabel2.setBackgroundColor(
+                    ContextCompat.getColor(this,R.color.blue)
+            );
+
 
         }
         btnEnemy2.setOnClickListener(v -> {
@@ -190,5 +220,6 @@ public class MapActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
     }
 }
