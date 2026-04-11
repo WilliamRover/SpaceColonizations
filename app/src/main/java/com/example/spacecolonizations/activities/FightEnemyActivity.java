@@ -2,6 +2,7 @@ package com.example.spacecolonizations.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ImageView;
@@ -66,8 +67,23 @@ public class FightEnemyActivity extends AppCompatActivity {
 
         // Set max values
         enemyHpBar.setMax(enemyShip.getInnitHullStrength());
-        enemyHpBar.setProgress(enemyShip.getHullStrength());
-        
-        enemyHpTxt.setText(String.format(Locale.US, "%d/%d", enemyShip.getHullStrength(), enemyShip.getInnitHullStrength()));
+        updateEnemyUI();
+    }
+
+    public void updateEnemyUI() {
+        if (enemyShip != null) {
+            enemyHpBar.setProgress(enemyShip.getHullStrength());
+            enemyHpTxt.setText(String.format(Locale.US, "%d/%d", enemyShip.getHullStrength(), enemyShip.getInnitHullStrength()));
+            
+            if (enemyShip.getHullStrength() <= 0) {
+                enemyExplode.setVisibility(View.VISIBLE);
+                enemyExplode.setAlpha(1.0f);
+                enemyShipImage.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+    public EnemyShip getEnemyShip() {
+        return enemyShip;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.spacecolonizations.adapter;
 
+import static java.lang.Math.round;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spacecolonizations.R;
+import com.example.spacecolonizations.activities.FightEnemyActivity;
 import com.example.spacecolonizations.model.crewmate.Commander;
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.Gunner;
 import com.example.spacecolonizations.model.crewmate.Medic;
 import com.example.spacecolonizations.model.crewmate.Navigator;
 import com.example.spacecolonizations.model.crewmate.Technician;
+import com.example.spacecolonizations.model.ship.EnemyShip;
 import com.example.spacecolonizations.model.ship.FriendlyShip;
 import com.example.spacecolonizations.model.station.Barracks;
 import com.example.spacecolonizations.model.station.CommandCenter;
@@ -75,7 +79,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
         
         holder.levelTxt.setText(String.valueOf(crew.getLevel()));
         
-        int currentExp = Math.round(crew.getExp()); 
+        int currentExp = round(crew.getExp());
         int requiredExp = (int) (1000 * Math.exp(crew.getLevel()));
         
         holder.xpTxt.setText(String.format(Locale.US, "%d/%d", currentExp, requiredExp));
@@ -107,21 +111,24 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
                 if (currentPos == RecyclerView.NO_POSITION) return;
 
                 boolean wasInList = crewList.contains(crew);
-                performCrewAction(crew, stationName);
+                boolean success = performCrewAction(crew, stationName, holder.itemView);
                 boolean stillInList = crewList.contains(crew);
 
-                if (wasInList && !stillInList) {
-                    expandedPosition = -1;
-                    notifyItemRemoved(currentPos);
-                    if (movedListener != null) {
-                        movedListener.onCrewMoved();
+                if (success) {
+                    if (!stillInList && wasInList) {
+                        expandedPosition = -1;
+                        notifyItemRemoved(currentPos);
+                        if (movedListener != null) {
+                            movedListener.onCrewMoved();
+                        }
+                    } else {
+                        expandedPosition = -1;
+                        notifyItemChanged(currentPos);
                     }
                 } else {
                     expandedPosition = -1;
                     notifyItemChanged(currentPos);
-                    if (wasInList && stillInList) {
-                        Toast.makeText(holder.itemView.getContext(), "Action failed", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(holder.itemView.getContext(), "Action failed", Toast.LENGTH_SHORT).show();
                 }
             });
             holder.recViewStationList.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.VERTICAL, false));
@@ -148,7 +155,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
         });
     }
 
-    private void performCrewAction(Crew crew, String actionName) {
+    private boolean performCrewAction(Crew crew, String actionName, View view) {
         FriendlyShip ship = FriendlyShip.getShip();
         Station targetStation = null;
 
@@ -156,10 +163,34 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
             MedBay medBay = (MedBay) ship.getStation(MedBay.class);
             if (medBay != null) {
                 medBay.addPatient(crew);
+                return true;
             }
-            return;
+            return false;
         }
 
+        if ("Deal damage to enemy".equals(actionName)) {
+            if (view.getContext() instanceof FightEnemyActivity) {
+                FightEnemyActivity activity = (FightEnemyActivity) view.getContext();
+                Turret turret = (Turret) ship.getStation(Turret.class);
+                if (turret != null) {
+                    if (turret.getCrewMembers().contains(crew)) {
+                        EnemyShip enemyShip = activity.getEnemyShip();
+                        if (enemyShip != null) {
+                            turret.dealDamage(enemyShip);
+                            Toast.makeText(view.getContext(), "Dealt " + round(turret.getdamage()) + " damages", Toast.LENGTH_SHORT).show();
+                            activity.updateEnemyUI();
+                            return true;
+                        }
+                    } else {
+                        Toast.makeText(view.getContext(), "Crew not in Turret", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } else {
+                Toast.makeText(view.getContext(), "Can only deal damage during combat", Toast.LENGTH_SHORT).show();
+            }
+            return false;
+        }
+        
         switch (actionName) {
             case "Move to Turret":
                 targetStation = ship.getStation(Turret.class);
@@ -179,8 +210,12 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
         }
 
         if (targetStation != null) {
+            Station oldStation = crew.getCurrentStation();
             targetStation.assignCrew(crew);
+            return crew.getCurrentStation() != oldStation || crew.getCurrentStation() == targetStation;
         }
+        
+        return false;
     }
 
     @Override
