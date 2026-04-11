@@ -17,7 +17,7 @@ import java.util.List;
 public class FunctionListAdapter extends RecyclerView.Adapter<FunctionListAdapter.FunctionViewHolder> {
 
     private final List<String> moveStations = Arrays.asList("Move to Turret", "Move to Training Center", "Move to Med Bay", "Move to Barracks", "Move to Command Center");
-    private final List<String> availableStations;
+    private final List<String> availableFunctions;
     private final OnStationClickListener listener;
 
     public interface OnStationClickListener {
@@ -26,15 +26,15 @@ public class FunctionListAdapter extends RecyclerView.Adapter<FunctionListAdapte
 
     public FunctionListAdapter(String currentStation, OnStationClickListener listener) {
         this.listener = listener;
-        this.availableStations = new ArrayList<>();
+        this.availableFunctions = new ArrayList<>();
         for (String station : moveStations) {
             if (!station.equalsIgnoreCase(currentStation) && !station.equalsIgnoreCase("Move to " + currentStation)) {
-                availableStations.add(station);
+                availableFunctions.add(station);
             }
         }
 
-        availableStations.add("Assign to be patient");
-
+        availableFunctions.add("Assign to be patient");
+        availableFunctions.add("Deal damage to enemy");
     }
 
     @NonNull
@@ -46,7 +46,7 @@ public class FunctionListAdapter extends RecyclerView.Adapter<FunctionListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull FunctionViewHolder holder, int position) {
-        String stationName = availableStations.get(position);
+        String stationName = availableFunctions.get(position);
         holder.functionName.setText(stationName);
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
@@ -57,7 +57,7 @@ public class FunctionListAdapter extends RecyclerView.Adapter<FunctionListAdapte
 
     @Override
     public int getItemCount() {
-        return availableStations.size();
+        return availableFunctions.size();
     }
 
     public static class FunctionViewHolder extends RecyclerView.ViewHolder {
