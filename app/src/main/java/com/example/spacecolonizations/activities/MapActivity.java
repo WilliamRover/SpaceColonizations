@@ -100,7 +100,7 @@ public class MapActivity extends AppCompatActivity {
         Button btnEnemy1 = findViewById(R.id.btnEnemy1);
         TextView txtEnemyLabel1 = findViewById(R.id.txtEnemyLabel1);
         TextView txtViewFightProb1 = findViewById(R.id.txtViewFightProb1);
-        TextView txtViewObstacleProb1 = findViewById(R.id.txtViewObstacleProb3);
+        TextView txtViewObstacleProb1 = findViewById(R.id.txtViewObstacleProb1);
 
         txtViewFightProb1.setText(txtfight1);
         txtViewObstacleProb1.setText(txtobstacle1);
