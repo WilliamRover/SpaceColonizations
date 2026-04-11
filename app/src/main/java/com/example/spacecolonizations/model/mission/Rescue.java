@@ -92,6 +92,7 @@ public class Rescue extends Mission {
 
         if (crew.getCurrentStation() != null){
             crew.getCurrentStation().removeCrew(crew);
+            crew.setCurrentStation(null);
         }
 
         crewMembers.add(crew);

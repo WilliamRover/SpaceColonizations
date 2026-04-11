@@ -56,6 +56,7 @@ public abstract class Crew implements Damagable, Serializable {
         healthPoints = healthPoints-damage;
         if (healthPoints<0){
             healthPoints = 0;
+            this.canWork = false;
         }
     }
 

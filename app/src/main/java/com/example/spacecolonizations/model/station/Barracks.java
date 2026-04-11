@@ -3,6 +3,8 @@ package com.example.spacecolonizations.model.station;
 
 import com.example.spacecolonizations.model.crewmate.Crew;
 
+import org.jspecify.annotations.NonNull;
+
 public class Barracks extends Station{
     private static Barracks instance;
 
@@ -42,6 +44,31 @@ public class Barracks extends Station{
         return true;
     }
 
+    /**
+     * Assign a crew to the station.
+     * @param crew
+     */
+    @Override
+    public void assignCrew(@NonNull Crew crew){
+        if (crewMembers.contains(crew)) {
+            crew.setCurrentStation(this);
+            return;
+        }
+        if (crew.getCurrentStation() == this) {
+            return;
+        }
+
+        if (this.crewMembers.size() < this.maxCrew) {
+
+            if (crew.getCurrentStation() != null) {
+                crew.getCurrentStation().removeCrew(crew);
+            }
+
+            crew.setCurrentStation(this);
+            this.crewMembers.add(crew);
+        }
+
+    }
 
     // used to resolve serialization issues with singleton pattern and possible ghost objects
     private Object readResolve() {
