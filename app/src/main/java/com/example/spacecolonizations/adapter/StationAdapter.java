@@ -30,7 +30,6 @@ import com.example.spacecolonizations.model.station.Station;
 import com.example.spacecolonizations.model.station.TrainingCenter;
 import com.example.spacecolonizations.model.station.Turret;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
-import com.example.spacecolonizations.model.mission.TurnBase;
 
 import java.util.List;
 import java.util.Locale;

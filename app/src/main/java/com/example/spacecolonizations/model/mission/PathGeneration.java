@@ -28,9 +28,9 @@ public class PathGeneration {
         Rescue r = new Rescue("Rescue");
         FightEnemy fe = new FightEnemy("Fight Enemy");
 
-        missionSelection.add(po);
-        missionSelection.add(r);
-        missionSelection.add(fe);
+        missionRandom.add(po);
+        missionRandom.add(r);
+        missionRandom.add(fe);
 
     }
 
@@ -93,10 +93,10 @@ public class PathGeneration {
         missionSelection.clear();
 
         for (int i =0; i<numMission;i++){
-            missionRandom.add(missionSelection.get((int)(Math.random() * missionSelection.size())));
+            missionSelection.add(missionRandom.get((int)(Math.random() * missionRandom.size())));
         }
 
-        return missionRandom;
+        return missionSelection;
 
     }
 }
