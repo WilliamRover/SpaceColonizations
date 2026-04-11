@@ -57,6 +57,15 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
     @Override
     public void onBindViewHolder(@NonNull StationViewHolder holder, int position) {
         Crew crew = crewList.get(position);
+        FriendlyShip friendlyShip = FriendlyShip.getShip();
+        MedBay medBay = (MedBay) friendlyShip.getStation(MedBay.class);
+
+        if (medBay != null && medBay.getPatients() != null && medBay.getPatients().contains(crew)) {
+            holder.isPatient.setText("Yes");
+        } else {
+            holder.isPatient.setText("No");
+        }
+
         holder.nameTxt.setText(crew.getName());
         holder.jobTxt.setText(crew.getClass().getSimpleName());
         
@@ -97,10 +106,11 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
                 int currentPos = holder.getAdapterPosition();
                 if (currentPos == RecyclerView.NO_POSITION) return;
 
-                Station oldStation = crew.getCurrentStation();
-                moveCrewToStation(crew, stationName);
+                boolean wasInList = crewList.contains(crew);
+                performCrewAction(crew, stationName);
+                boolean stillInList = crewList.contains(crew);
 
-                if (crew.getCurrentStation() != oldStation) {
+                if (wasInList && !stillInList) {
                     expandedPosition = -1;
                     notifyItemRemoved(currentPos);
                     if (movedListener != null) {
@@ -109,7 +119,9 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
                 } else {
                     expandedPosition = -1;
                     notifyItemChanged(currentPos);
-                    Toast.makeText(holder.itemView.getContext(), "Move failed", Toast.LENGTH_SHORT).show();
+                    if (wasInList && stillInList) {
+                        Toast.makeText(holder.itemView.getContext(), "Action failed", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             holder.recViewStationList.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.VERTICAL, false));
@@ -136,11 +148,19 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
         });
     }
 
-    private void moveCrewToStation(Crew crew, String stationName) {
+    private void performCrewAction(Crew crew, String actionName) {
         FriendlyShip ship = FriendlyShip.getShip();
         Station targetStation = null;
 
-        switch (stationName) {
+        if ("Assign to be patient".equals(actionName)) {
+            MedBay medBay = (MedBay) ship.getStation(MedBay.class);
+            if (medBay != null) {
+                medBay.addPatient(crew);
+            }
+            return;
+        }
+
+        switch (actionName) {
             case "Move to Turret":
                 targetStation = ship.getStation(Turret.class);
                 break;
@@ -169,7 +189,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
     }
 
     public static class StationViewHolder extends RecyclerView.ViewHolder {
-        private TextView nameTxt, hpTxt, jobTxt, levelTxt, xpTxt;
+        private TextView nameTxt, hpTxt, jobTxt, levelTxt, xpTxt, isPatient;
         private LinearProgressIndicator hpBar, levelBar;
         private ImageView crewImg;
         private RecyclerView recViewStationList;
@@ -179,6 +199,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
             nameTxt = itemView.findViewById(R.id.txtViewName);
             hpTxt = itemView.findViewById(R.id.crewHpTxt);
             jobTxt = itemView.findViewById(R.id.txtViewCrewJob);
+            isPatient = itemView.findViewById(R.id.txtViewIsPatient);
             levelTxt = itemView.findViewById(R.id.txtViewLevelNum);
             xpTxt = itemView.findViewById(R.id.txtViewXpNum);
             hpBar = itemView.findViewById(R.id.crewHpBar);

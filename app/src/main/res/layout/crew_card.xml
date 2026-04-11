@@ -77,6 +77,17 @@
             app:layout_constraintTop_toBottomOf="@+id/crewHpBar" />
 
         <TextView
+            android:id="@+id/txtViewJob2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="1dp"
+            android:text="Patient:"
+            android:textColor="#8AA8DBFF"
+            android:textSize="8sp"
+            app:layout_constraintEnd_toStartOf="@+id/txtViewIsPatient"
+            app:layout_constraintTop_toTopOf="@+id/txtViewJob" />
+
+        <TextView
             android:id="@+id/txtViewCrewJob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,6 +98,17 @@
             android:textSize="8sp"
             app:layout_constraintStart_toEndOf="@+id/txtViewJob"
             app:layout_constraintTop_toBottomOf="@+id/crewHpBar" />
+
+        <TextView
+            android:id="@+id/txtViewIsPatient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:text="Yes"
+            android:textColor="#8AA8DBFF"
+            android:textSize="8sp"
+            app:layout_constraintEnd_toEndOf="@+id/crewHpBar"
+            app:layout_constraintTop_toTopOf="@+id/txtViewJob2" />
 
         <TextView
             android:id="@+id/txtViewLevel"

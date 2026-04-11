@@ -55,7 +55,7 @@ public class ShipFragment extends Fragment {
 
         friendlyShip = FriendlyShip.getShip();
         wallet = Wallet.getInstance();
-
+        
         // Only add sample crews if they don't exist yet to avoid duplicates
 //        if (friendlyShip.getShip().getStations().get(0).getCrewMembers().isEmpty() &&
 //            Barracks.getInstance().getCrewMembers().isEmpty()) {
@@ -88,7 +88,7 @@ public class ShipFragment extends Fragment {
 
     private void updateUI() {
         if (friendlyShip == null || wallet == null) return;
-
+        
         shipHpBar.setMax(friendlyShip.getInnitHullStrength());
         shipHpBar.setProgress(friendlyShip.getHullStrength());
         friendlyHpTxt.setText(String.format(Locale.US, "%d/%d", friendlyShip.getHullStrength(), friendlyShip.getInnitHullStrength()));

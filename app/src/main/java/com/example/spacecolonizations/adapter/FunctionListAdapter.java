@@ -28,10 +28,13 @@ public class FunctionListAdapter extends RecyclerView.Adapter<FunctionListAdapte
         this.listener = listener;
         this.availableStations = new ArrayList<>();
         for (String station : moveStations) {
-            if (!station.equalsIgnoreCase(currentStation)) {
+            if (!station.equalsIgnoreCase(currentStation) && !station.equalsIgnoreCase("Move to " + currentStation)) {
                 availableStations.add(station);
             }
         }
+
+        availableStations.add("Assign to be patient");
+
     }
 
     @NonNull
