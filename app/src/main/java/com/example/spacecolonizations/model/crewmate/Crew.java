@@ -66,7 +66,7 @@ public abstract class Crew implements Damagable, Serializable {
 
     private void checkExp() {
         while (true) {
-            double requiredExp = 1000 * Math.exp(level);
+            double requiredExp = (1000 * Math.exp(level))/2;
 
             if (exp < requiredExp) {
                 break;
