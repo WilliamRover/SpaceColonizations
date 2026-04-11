@@ -120,7 +120,7 @@ public class MapActivity extends AppCompatActivity {
                 btnEnemy1.setBackgroundColor(
                         ContextCompat.getColor(this,R.color.red)
                 );
-                txtEnemyLabel1.setBackgroundColor(
+                txtEnemyLabel1.setTextColor(
                         ContextCompat.getColor(this,R.color.red)
                 );
             } else if (m.get(0) instanceof PassObstacle) {
@@ -128,7 +128,7 @@ public class MapActivity extends AppCompatActivity {
                 btnEnemy1.setBackgroundColor(
                         ContextCompat.getColor(this,R.color.yellow)
                 );
-                txtEnemyLabel1.setBackgroundColor(
+                txtEnemyLabel1.setTextColor(
                         ContextCompat.getColor(this,R.color.yellow)
                 );
             } else if (m.get(0) instanceof Rescue) {
@@ -136,7 +136,7 @@ public class MapActivity extends AppCompatActivity {
                 btnEnemy1.setBackgroundColor(
                         ContextCompat.getColor(this,R.color.blue)
                 );
-                txtEnemyLabel1.setBackgroundColor(
+                txtEnemyLabel1.setTextColor(
                         ContextCompat.getColor(this,R.color.blue)
                 );
 
@@ -175,12 +175,13 @@ public class MapActivity extends AppCompatActivity {
         if (navigatoronCommand){
             txtViewFightProb2.setText("");
             txtViewObstacleProb2.setText("");
+            txtVIewRescueProb1.setText("");
             if (m.get(1) instanceof FightEnemy){
                 txtViewFightProb1.setText("FightEnemy");
                 btnEnemy2.setBackgroundColor(
                         ContextCompat.getColor(this,R.color.red)
                 );
-                txtEnemyLabel2.setBackgroundColor(
+                txtEnemyLabel2.setTextColor(
                         ContextCompat.getColor(this,R.color.red)
                 );
             } else if (m.get(1) instanceof PassObstacle) {
@@ -188,16 +189,16 @@ public class MapActivity extends AppCompatActivity {
                 btnEnemy2.setBackgroundColor(
                         ContextCompat.getColor(this,R.color.yellow)
                 );
-                txtEnemyLabel2.setBackgroundColor(
-                        ContextCompat.getColor(this,R.color.yellow)
+                txtEnemyLabel2.setTextColor(
+                        ContextCompat.getColor(this,R.color.white)
                 );
             }else if (m.get(0) instanceof Rescue) {
             txtViewFightProb2.setText("Rescue");
             btnEnemy2.setBackgroundColor(
                     ContextCompat.getColor(this,R.color.blue)
             );
-            txtEnemyLabel2.setBackgroundColor(
-                    ContextCompat.getColor(this,R.color.blue)
+            txtEnemyLabel2.setTextColor(
+                    ContextCompat.getColor(this,R.color.white)
             );
 
 
