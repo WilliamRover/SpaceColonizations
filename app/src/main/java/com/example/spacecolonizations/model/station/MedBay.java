@@ -63,6 +63,7 @@ public class MedBay extends Station{
 
             if (crew.getCurrentStation() == this) {
                 crew.setCurrentStation(Barracks.getInstance());
+                Barracks.getInstance().assignCrew(crew);
             }
             crew.setCanWork(true);
 
