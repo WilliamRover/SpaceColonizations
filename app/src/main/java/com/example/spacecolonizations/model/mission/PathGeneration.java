@@ -20,7 +20,7 @@ public class PathGeneration {
         this.missionRandom = new ArrayList<>();
         this.numMission = 3;
 
-        PassObstacle po = new PassObstacle("PassObstacle");
+        PassObstacle po = new PassObstacle("Pass Obstacle");
         Rescue r = new Rescue("Rescue");
         FightEnemy fe = new FightEnemy("Fight Enemy");
 

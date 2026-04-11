@@ -28,7 +28,7 @@ public class TrainingCenter extends Station{
         return;
     }
 
-    public void train(){
+    protected void train(){
         trainHandler.removeCallbacks(trainRunnable);
         trainHandler.post(trainRunnable);
     }

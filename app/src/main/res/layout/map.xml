@@ -84,8 +84,8 @@
         android:id="@+id/btnShop"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="316dp"
-        android:layout_marginEnd="388dp"
+        android:layout_marginTop="264dp"
+        android:layout_marginEnd="344dp"
         android:backgroundTint="#60D32F"
         android:insetLeft="0dp"
         android:insetTop="0dp"
@@ -143,6 +143,15 @@
         app:layout_constraintTop_toBottomOf="@+id/txtViewFightProb1" />
 
 
+    <TextView
+        android:id="@+id/txtViewObstacleProb3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="num% Obstacle"
+        app:layout_constraintEnd_toEndOf="@+id/btnEnemy1"
+        app:layout_constraintStart_toStartOf="@+id/btnEnemy1"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewFightProb1" />
+
     <View
         android:id="@+id/arrow1"
         android:layout_width="0dp"
@@ -171,11 +180,19 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="36dp"
+        android:layout_marginEnd="30dp"
         android:background="@android:color/darker_gray"
-        android:rotation="25"
+        android:rotation="10"
         app:layout_constraintEnd_toEndOf="@+id/btnShop"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/crewImg"
         app:layout_constraintTop_toBottomOf="@+id/crewImg" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/pauseFragment2"
+        android:name="com.example.spacecolonizations.fragments.PauseFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/pause_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

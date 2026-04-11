@@ -28,12 +28,16 @@ public class MedBay extends Station{
         this.initMedBayHandler();
     }
 
-    public void heal(){
+    private void heal(){
         handler.removeCallbacks(healRunnable);
         handler.post(healRunnable);
     }
 
     public void addPatient(Crew crew) {
+
+        if (this.patients == null) {
+            this.patients = new ArrayList<>();
+        }
 
         if (!(this.patients.size() < this.maxPatients) || this.patients.contains(crew)) {
         //TODO notification saying patient cannot be assigned
@@ -59,18 +63,19 @@ public class MedBay extends Station{
 
             if (crew.getCurrentStation() == this) {
                 crew.setCurrentStation(Barracks.getInstance());
+                Barracks.getInstance().assignCrew(crew);
             }
             crew.setCanWork(true);
 
         }
     }
 
-    protected List<Crew> getPatients() {
+    public List<Crew> getPatients() {
         return this.patients;
     }
 
     /**
-     * kill the patients
+     * kill the patients if med-bay breaks
      */
     @Override
     protected void clearPatients(){

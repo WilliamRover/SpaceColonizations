@@ -3,6 +3,7 @@ package com.example.spacecolonizations.model.ship;
 import android.widget.TextView;
 
 import com.example.spacecolonizations.model.crewmate.Crew;
+import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.station.Barracks;
 import com.example.spacecolonizations.model.station.CommandCenter;
 import com.example.spacecolonizations.model.station.MedBay;
@@ -16,42 +17,37 @@ import java.util.List;
 public class FriendlyShip extends Ship {
     private List<Crew> crews;
     private List<Station> stations;
-    private int totalCrew;
-    private int money;
-
+    private static FriendlyShip ship;
+    private int shipKill;
     private TextView friendlyExplode;
 
-    public FriendlyShip(int innitHullStrength) {
+    private FriendlyShip(int innitHullStrength) {
         super(innitHullStrength);
         this.crews = new ArrayList<>();
-        this.stations = new ArrayList<>();
-        this.money = 0;
-        initializeStations();
+         this.stations = new ArrayList<>();
+         this.stations = CrewManager.getStations();
+        // this.stations = new ArrayList<>();
+        // initializeStations();
+    }
+    public static FriendlyShip getShip() {
+        if (ship == null) {
+            ship = new FriendlyShip(100);
+        }
+        return ship;
     }
 
-    private void initializeStations() {
-        addStation(Barracks.getInstance());
-        addStation(new MedBay());
-        addStation(new Turret());
-        addStation(new CommandCenter());
-        addStation(new TrainingCenter());
-    }
-
-    public int getMoney() {
-        return money;
-    }
-
-    public void addMoney(int n){
-        money = money+n;
-    }
-
-    public void reduceMoney(int n){
-        money = money-n;
-    }
+//    private void initializeStations() {
+//        addStation(Barracks.getInstance());
+//        addStation(new MedBay());
+//        addStation(new Turret());
+//        addStation(new CommandCenter());
+//        addStation(new TrainingCenter());
+//
+//    }
 
     public void recruitCrew(Crew c) {
         crews.add(c);
-        totalCrew++;
+        CrewManager.addCrew(c);
     }
 
     /**
@@ -83,9 +79,5 @@ public class FriendlyShip extends Ship {
 
     public List<Station> getStations() {
         return stations;
-    }
-
-    public List<Crew> getCrews() {
-        return crews;
     }
 }

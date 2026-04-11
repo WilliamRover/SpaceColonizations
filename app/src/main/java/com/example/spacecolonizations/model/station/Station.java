@@ -6,6 +6,7 @@ import android.os.Looper;
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.crewmate.Technician;
+import com.example.spacecolonizations.model.shop.Wallet;
 
 import org.jspecify.annotations.NonNull;
 
@@ -50,6 +51,10 @@ public abstract class Station implements Serializable {
      * @param crew
      */
     public void assignCrew(@NonNull Crew crew){
+        if (crewMembers.contains(crew)) {
+            crew.setCurrentStation(this);
+            return;
+        }
         if (crew.getCurrentStation() == this) {
             return;
         } else if (!crew.getCanWork()) {
@@ -65,6 +70,10 @@ public abstract class Station implements Serializable {
             crew.setCurrentStation(this);
             this.crewMembers.add(crew);
             this.setEfficiency();
+
+            if (this instanceof TrainingCenter){
+                ((TrainingCenter) this).train();
+            }
         }
 
     }
@@ -219,13 +228,22 @@ public abstract class Station implements Serializable {
                 repairTimeRemaining -= 1000 * repairEfficiency;
 
                 if (repairTimeRemaining <= 0) {
-                    repairTimeRemaining = 0;
+                    //stop break handler
+                    if (breakHandler != null){
+                        breakHandler.removeCallbacks(breakRunnable);
+                    }
+
                     isUsable = true;
+                    breakTimeRemaining = 60000;
+                    repairTimeRemaining = 30000;
+
                     setEfficiency();
 
                     for (int i = repairMan.size() - 1; i >= 0; i--) {
                         removeRepairMan(repairMan.get(i));
                     }
+
+                    Wallet.getInstance().addBalance(100);
                     return;
                 } else {
                     repairHandler.postDelayed(this, 1000);
@@ -243,7 +261,9 @@ public abstract class Station implements Serializable {
      * TO be overridden by medbay.
      * no for any other class
      */
-    protected void clearPatients(){ return;}
+    protected void clearPatients(){
+        return;
+    }
 
     /**
      * Timer and crew death logic for breaking the station
@@ -260,6 +280,11 @@ public abstract class Station implements Serializable {
                 breakTimeRemaining -= 1000;
 
                 if (breakTimeRemaining <= 0) {
+                    //stop repair handler
+                    if (repairHandler != null){
+                        repairHandler.removeCallbacks(repairRunnable);
+                    }
+
                     for (int i = crewMembers.size() - 1; i >= 0; i--) {
                         Crew crew = crewMembers.get(i);
                         crew.setCurrentStation(null);
@@ -276,7 +301,7 @@ public abstract class Station implements Serializable {
 
                     clearPatients();
 
-                    breakTimeRemaining = 0;
+                    breakTimeRemaining = 60000;
                     repairTimeRemaining = 30000;
                     return;
 
@@ -292,27 +317,41 @@ public abstract class Station implements Serializable {
         }
     }
 
+    protected boolean isSingleton() {
+        return false;
+    }
+
     // Add this special method to re-initialize transient fields after loading
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
 
-        // Loading from file may cause dupliates so curret station is set to transient
+        if (isSingleton()) {
+            return;
+        }
+
+
+        // Loading from file may cause duplicates so current station is set to transient
         // this will hopefully fix the issue
-        if (!this.crewMembers.isEmpty()) {
+        if (this.crewMembers != null && !this.crewMembers.isEmpty()) {
             for (Crew crew : this.crewMembers) {
                 crew.setCurrentStation(this);
             }
+        } else if (this.crewMembers == null) {
+            this.crewMembers = new ArrayList<>();
         }
 
-        if (!this.repairMan.isEmpty()) {
+        if (this.repairMan != null && !this.repairMan.isEmpty()) {
             for (Crew crew : this.repairMan) {
                 crew.setCurrentStation(this);
             }
+        } else if (this.repairMan == null) {
+            this.repairMan = new ArrayList<>();
         }
 
         if (this instanceof MedBay) {
-            if (!((MedBay) this).getPatients().isEmpty()) {
-                for (Crew crew : ((MedBay) this).getPatients()) {
+            List<Crew> patients = ((MedBay) this).getPatients();
+            if (patients != null && !patients.isEmpty()) {
+                for (Crew crew : patients) {
                     crew.setCurrentStation(this);
                 }
             }

@@ -24,4 +24,6 @@ public class FightEnemy extends Mission {
 
     }
 
+    // TODO remember to pick a random crew from a random station and damage them a bit
+
 }

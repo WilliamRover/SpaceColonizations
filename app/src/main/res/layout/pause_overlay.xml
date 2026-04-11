@@ -1,6 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#346A6A6A">
+
+    <View
+        android:id="@+id/simple_square"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.3"
+        android:background="@android:color/darker_gray"
+        android:backgroundTint="#3B63B5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/simple_square2"
+        android:layout_width="500dp"
+        android:layout_height="160dp"
+        app:cardBackgroundColor="#2A4987"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:strokeColor="#4873C9"
+        app:strokeWidth="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="PAUSE"
+        android:textColor="#4873C9"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/simple_square2"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/simple_square2"
+        app:layout_constraintTop_toTopOf="@+id/simple_square2" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGoMenu"
+        android:layout_width="94dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#364C77"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintStart_toStartOf="@+id/simple_square2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:strokeColor="#3B63B5"
+        app:strokeWidth="2dp" />
+
+    <ImageView
+        android:id="@+id/imgGoMenu"
+        android:layout_width="36dp"
+        android:layout_height="33dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnGoMenu"
+        app:layout_constraintEnd_toEndOf="@+id/btnGoMenu"
+        app:layout_constraintStart_toStartOf="@+id/btnGoMenu"
+        app:layout_constraintTop_toTopOf="@+id/btnGoMenu"
+        app:srcCompat="@drawable/home" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnResume"
+        android:layout_width="150dp"
+        android:layout_height="46dp"
+        android:backgroundTint="#364C77"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnSaveGame"
+        app:layout_constraintStart_toEndOf="@+id/btnGoMenu"
+        app:layout_constraintTop_toTopOf="@+id/btnGoMenu"
+        app:strokeColor="#3B63B5"
+        app:strokeWidth="2dp" />
+
+    <ImageView
+        android:id="@+id/imgResume"
+        android:layout_width="36dp"
+        android:layout_height="33dp"
+        app:layout_constraintBottom_toBottomOf="@id/btnResume"
+        app:layout_constraintEnd_toEndOf="@id/btnResume"
+        app:layout_constraintStart_toStartOf="@id/btnResume"
+        app:layout_constraintTop_toTopOf="@id/btnResume"
+        app:srcCompat="@drawable/resume" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSaveGame"
+        android:layout_width="94dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="40dp"
+        android:backgroundTint="#364C77"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        app:cornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/simple_square2"
+        app:layout_constraintTop_toTopOf="@+id/btnGoMenu"
+        app:strokeColor="#3B63B5"
+        app:strokeWidth="2dp" />
+
+    <ImageView
+        android:id="@+id/imgSaveGame"
+        android:layout_width="36dp"
+        android:layout_height="33dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSaveGame"
+        app:layout_constraintEnd_toEndOf="@+id/btnSaveGame"
+        app:layout_constraintStart_toStartOf="@+id/btnSaveGame"
+        app:layout_constraintTop_toTopOf="@+id/btnSaveGame"
+        app:srcCompat="@drawable/savegame" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="You can only save game in jump drive"
+        android:textColor="#4873C9"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@+id/btnSaveGame"
+        app:layout_constraintStart_toStartOf="@+id/btnSaveGame"
+        app:layout_constraintTop_toBottomOf="@+id/btnSaveGame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
