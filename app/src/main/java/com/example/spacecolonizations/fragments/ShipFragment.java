@@ -61,7 +61,7 @@ public class ShipFragment extends Fragment {
 //            Barracks.getInstance().getCrewMembers().isEmpty()) {
 //            addSampleCrews();
 //        }
-        addSampleCrews();
+//        addSampleCrews();
 
         shipHpBar = view.findViewById(R.id.shipHpBar);
         friendlyHpTxt = view.findViewById(R.id.friendlyHpTxt);
