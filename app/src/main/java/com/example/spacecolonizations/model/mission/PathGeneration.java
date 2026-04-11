@@ -18,7 +18,7 @@ public class PathGeneration {
     public PathGeneration(){
         this.missionSelection = new ArrayList<>();
         this.missionRandom = new ArrayList<>();
-        this.numMission = 3;
+        this.numMission = 2;
 
         PassObstacle po = new PassObstacle("Pass Obstacle");
         Rescue r = new Rescue("Rescue");
