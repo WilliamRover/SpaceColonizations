@@ -8,6 +8,7 @@ import com.example.spacecolonizations.model.mission.PassObstacle;
 import com.example.spacecolonizations.model.mission.Rescue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PathGeneration {
 
@@ -15,10 +16,13 @@ public class PathGeneration {
     private ArrayList<Mission> missionRandom;
     private int numMission;
 
+    private HashMap<Mission,Integer> missionPercent;
+
     public PathGeneration(){
         this.missionSelection = new ArrayList<>();
         this.missionRandom = new ArrayList<>();
         this.numMission = 2;
+        this.missionPercent = new HashMap<>();
 
         PassObstacle po = new PassObstacle("Pass Obstacle");
         Rescue r = new Rescue("Rescue");
@@ -37,14 +41,42 @@ public class PathGeneration {
         numMission = n;
     }
 
-    public ArrayList<Mission> GenerateControlPath(float PassObstacleChance, float RescueChance, float FightEnemyChance){
+    public HashMap<Mission,Integer> randomMissionPercent(){
+        HashMap<Mission,Integer> hm = new HashMap<>();
+        int fullper = 100;
+        int FightEnemyChance = (int) (Math.random()*100);
+        int PassObstacleRescueChance = 100 - FightEnemyChance;
+        int PassObstacleChance = (int) (Math.random()*PassObstacleRescueChance);
+        int RescueChance = PassObstacleRescueChance-PassObstacleChance;
+
+        hm.put(missionRandom.get(2),FightEnemyChance);
+        hm.put(missionRandom.get(0),PassObstacleChance);
+        hm.put(missionRandom.get(1),RescueChance);
+        return hm;
+
+    }
+
+    /**
+     * please use this function after properRandomGeneration to get the percent of the mission of thoese mission tpe
+     *
+     */
+    public HashMap<Mission,Integer> getMissionPercent(){
+        return missionPercent;
+    }
+    public ArrayList<Mission> properRandomGeneration(){
+        missionPercent = randomMissionPercent();
+        return GenerateControlPath(missionPercent.get(missionRandom.get(0)),missionPercent.get(missionRandom.get(1)),missionPercent.get(missionRandom.get(2)));
+
+    }
+
+    public ArrayList<Mission> GenerateControlPath(int PassObstacleChance, int RescueChance, int FightEnemyChance){
 
         missionSelection.clear();
 
-        float chanceOfEverything = PassObstacleChance + RescueChance + FightEnemyChance;
+        int chanceOfEverything = PassObstacleChance + RescueChance + FightEnemyChance;
 
         for (int i =0; i<numMission;i++){
-            float RandomChance = (float) Math.random()*chanceOfEverything;
+            int RandomChance = (int) (Math.random()*chanceOfEverything);
             if (RandomChance<PassObstacleChance){
                 missionSelection.add(missionRandom.get(0));
             } else if (RandomChance<(PassObstacleChance+RescueChance)) {
