@@ -3,6 +3,7 @@ package com.example.spacecolonizations.model.station;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.example.spacecolonizations.model.Statistics;
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.crewmate.Technician;
@@ -244,6 +245,8 @@ public abstract class Station implements Serializable {
                     }
 
                     Wallet.getInstance().addBalance(100);
+                    Statistics stats = Statistics.getInstance();
+                    stats.setNumSuccessfulMissions(stats.getNumSuccessfulMissions() + 1);
                     return;
                 } else {
                     repairHandler.postDelayed(this, 1000);
@@ -284,6 +287,10 @@ public abstract class Station implements Serializable {
                     if (repairHandler != null){
                         repairHandler.removeCallbacks(repairRunnable);
                     }
+
+                    Statistics stats = Statistics.getInstance();
+                    stats.setNumDeadCrews(stats.getNumDeadCrews() + crewMembers.size() + repairMan.size());
+                    stats.setNumFailedMissions(stats.getNumFailedMissions() + 1);
 
                     for (int i = crewMembers.size() - 1; i >= 0; i--) {
                         Crew crew = crewMembers.get(i);

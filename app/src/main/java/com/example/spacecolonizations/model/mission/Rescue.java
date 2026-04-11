@@ -1,7 +1,9 @@
 package com.example.spacecolonizations.model.mission;
 
+import com.example.spacecolonizations.model.Statistics;
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.CrewManager;
+import com.example.spacecolonizations.model.ship.FriendlyShip;
 import com.example.spacecolonizations.model.shop.Wallet;
 import com.example.spacecolonizations.model.station.Barracks;
 
@@ -19,7 +21,12 @@ public class Rescue extends Mission {
 
     public Rescue(String missionName){
         super(missionName);
-        this.numCrew = 2;
+        if (Statistics.getInstance().getShipKills() >= 3) {
+            this.numCrew = 3;
+        } else {
+            this.numCrew = 2;
+        }
+
         this.crewMembers = new ArrayList<>();
         this.timeRequire = 180;
         CrewManager.addRescueMission(this);

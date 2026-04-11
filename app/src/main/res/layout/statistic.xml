@@ -5,13 +5,145 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="show save stats here"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="266dp"
+        android:layout_height="249dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textViewShipKills"
+            android:layout_width="150dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="80dp"
+            android:text="Ship kills:"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.085" />
+
+        <TextView
+            android:id="@+id/textViewMissionSuccess"
+            android:layout_width="150dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="80dp"
+            android:text="Successul Missions:"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.903" />
+
+        <TextView
+            android:id="@+id/textViewMissionFail"
+            android:layout_width="150dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="80dp"
+            android:text="Failed Missions:"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.75" />
+
+        <TextView
+            android:id="@+id/textViewTotalCrew"
+            android:layout_width="150dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="80dp"
+            android:text="Total Crew:"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.598" />
+
+        <TextView
+            android:id="@+id/textViewDeadCrew"
+            android:layout_width="150dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="80dp"
+            android:text="Dead Crew:"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.44" />
+
+        <TextView
+            android:id="@+id/textViewLivingCrew"
+            android:layout_width="150dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="80dp"
+            android:text="Living Crew: "
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.27" />
+
+        <TextView
+            android:id="@+id/numKills"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewShipKills"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewShipKills"
+            app:layout_constraintTop_toTopOf="@+id/textViewShipKills" />
+
+        <TextView
+            android:id="@+id/numAlive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewLivingCrew"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewLivingCrew"
+            app:layout_constraintTop_toTopOf="@+id/textViewLivingCrew" />
+
+        <TextView
+            android:id="@+id/numDead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewDeadCrew"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewDeadCrew"
+            app:layout_constraintTop_toTopOf="@+id/textViewDeadCrew" />
+
+        <TextView
+            android:id="@+id/numTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewTotalCrew"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewTotalCrew"
+            app:layout_constraintTop_toTopOf="@+id/textViewTotalCrew" />
+
+        <TextView
+            android:id="@+id/numFail7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewMissionFail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewMissionFail"
+            app:layout_constraintTop_toTopOf="@+id/textViewMissionFail" />
+
+        <TextView
+            android:id="@+id/numSuccess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewMissionSuccess"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewMissionSuccess"
+            app:layout_constraintTop_toTopOf="@+id/textViewMissionSuccess" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
