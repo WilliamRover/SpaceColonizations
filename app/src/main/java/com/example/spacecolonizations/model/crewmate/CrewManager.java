@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.spacecolonizations.model.Statistics;
 import com.example.spacecolonizations.model.mission.Rescue;
+import com.example.spacecolonizations.model.ship.FriendlyShip;
 import com.example.spacecolonizations.model.shop.Wallet;
 import com.example.spacecolonizations.model.station.Barracks;
 import com.example.spacecolonizations.model.station.CommandCenter;
@@ -12,26 +13,30 @@ import com.example.spacecolonizations.model.station.MedBay;
 import com.example.spacecolonizations.model.station.Station;
 import com.example.spacecolonizations.model.station.TrainingCenter;
 import com.example.spacecolonizations.model.station.Turret;
+import com.example.spacecolonizations.util.JsonUtil;
 
+import org.json.JSONException;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class CrewManager {
     private static final String TAG = "CrewManager";
-    private static List<Crew> crewList;
-    private static final String saveFileName = "crew_data.ser";
-    private static List<Station> stations;
-    private static List<Rescue> rescueMissions;
-    private static HashMap<String, Integer> statistics;
+    private static final List<Crew> crewList = new ArrayList<>();
+    private static final String saveFileName = "crew_data.json";
+    private static final List<Station> stations = new ArrayList<>();
+    private static final List<Rescue> rescueMissions = new ArrayList<>();
 
 
     /**
@@ -40,77 +45,67 @@ public class CrewManager {
      */
     public static void loadFromFile(Context context) {
         File file = new File(context.getFilesDir(), saveFileName);
+        Log.d(TAG, "Attempting to load from: " + file.getAbsolutePath());
         int loadedBalance = -1;
+        Map<String, Integer> loadedStats = null;
 
         if (!file.exists()) {
-            crewList = new ArrayList<>();
-            stations = new ArrayList<>();
-            rescueMissions = new ArrayList<>();
+            crewList.clear();
+            stations.clear();
+            rescueMissions.clear();
             loadedBalance = 100;
             Statistics.getInstance();
             return;
         }
 
-        try (
-                FileInputStream inputStream = new FileInputStream(file);
-                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream)) {
-
-            HashMap<String, Object> data = (HashMap<String, Object>) objectInputStream.readObject();
-            crewList = (List<Crew>) data.get("crewList");
-            stations = (List<Station>) data.get("stationList");
-            rescueMissions = (List<Rescue>) data.get("rescueMissionList");
-            loadedBalance = (int) data.get("balance");
-
-            statistics = (HashMap<String, Integer>) data.get("gameStatistics");
-            if  (statistics != null){
-                setStatistics(statistics);
+        StringBuilder stringBuilder = new StringBuilder();
+        try (FileInputStream fis = context.openFileInput(saveFileName);
+             InputStreamReader isr = new InputStreamReader(fis);
+             BufferedReader reader = new BufferedReader(isr)) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
             }
 
-            Log.d(TAG, "crew_data.ser loaded");
+            Map<String, Object> data = JsonUtil.fromJsonResponse(stringBuilder.toString());
 
+            List<Crew> loadedCrews = (List<Crew>) data.get("crewList");
+            crewList.clear();
+            if (loadedCrews != null) crewList.addAll(loadedCrews);
+
+            List<Station> loadedStations = (List<Station>) data.get("stationList");
+            stations.clear();
+            if (loadedStations != null) stations.addAll(loadedStations);
+
+            List<Rescue> loadedRescues = (List<Rescue>) data.get("rescueMissionList");
+            rescueMissions.clear();
+            if (loadedRescues != null) rescueMissions.addAll(loadedRescues);
+
+            loadedBalance = (int) data.get("balance");
+            loadedStats = (Map<String, Integer>) data.get("gameStatistics");
+
+            if (loadedStats != null) {
+                setStatistics(loadedStats);
+            }
+
+            Log.d(TAG, "crew_data.json loaded successfully");
 
         } catch (FileNotFoundException e) {
-            crewList = new ArrayList<>();
-            stations = new ArrayList<>();
-            rescueMissions = new ArrayList<>();
-            Log.w(TAG, "crew_data.ser not found", e);
-
-        } catch (IOException e) {
-            Log.w(TAG, "IO Exception occurred", e);
-
-        } catch (ClassNotFoundException e) {
-            crewList = new ArrayList<>();
-            stations = new ArrayList<>();
-            rescueMissions = new ArrayList<>();
-            Log.w(TAG, "crew_data.ser did not have the save data", e);
-
+            crewList.clear();
+            stations.clear();
+            rescueMissions.clear();
+            Log.w(TAG, "crew_data.json not found", e);
+        } catch (IOException | JSONException e) {
+            Log.e(TAG, "Error loading crew_data.json", e);
         } finally {
-            if (crewList == null) {
-                crewList = new ArrayList<>();
-                Log.w(TAG, "crewList in file is null");
-            }
-
-            if (stations == null) {
-                stations = new ArrayList<>();
-                Log.w(TAG, "stations in file is null");
-            }
-
-            if (rescueMissions == null) {
-                rescueMissions = new ArrayList<>();
-                Log.w(TAG, "rescueMissions in file is null");
-            }
-
             if (loadedBalance == -1) {
                 loadedBalance = 100;
             }
-
-            if (statistics == null){
+            if (loadedStats == null) {
                 Statistics.getInstance();
             }
-
             Wallet.getInstance().restoreBalance(loadedBalance);
         }
-
     }
 
 
@@ -119,23 +114,23 @@ public class CrewManager {
      * @param context
      */
     public static void saveTOFile(Context context) {
-        try (FileOutputStream outputStream = context.openFileOutput(saveFileName, Context.MODE_PRIVATE);
-             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
+        File file = new File(context.getFilesDir(), saveFileName);
+        Log.d(TAG, "Attempting to save to: " + file.getAbsolutePath());
+        try (FileOutputStream fos = context.openFileOutput(saveFileName, Context.MODE_PRIVATE);
+             PrintWriter writer = new PrintWriter(fos)) {
 
-            HashMap<String, Object> data = new HashMap<>();
-            data.put("crewList", crewList);
-            data.put("stationList", stations);
-            data.put("rescueMissionList", rescueMissions);
-            data.put("balance", Wallet.getInstance().getBalance());
-            data.put("gameStatistics", Statistics.getInstance().getStatistics());
-            objectOutputStream.writeObject(data);
+            String json = JsonUtil.toJsonResponse(
+                    crewList,
+                    getStations(),
+                    rescueMissions,
+                    Wallet.getInstance().getBalance(),
+                    Statistics.getInstance().getStatistics()
+            );
+            writer.print(json);
+            Log.d(TAG, "crew_data.json saved successfully");
 
-            Log.d(TAG, "crew_data.ser saved");
-
-        } catch (FileNotFoundException e) {
-            Log.w(TAG, "crew_data.ser not found", e);
-        } catch (IOException e) {
-            Log.w(TAG, "IO Exception occurred", e);
+        } catch (IOException | JSONException e) {
+            Log.e(TAG, "Error saving crew_data.json", e);
         }
     }
 
@@ -144,15 +139,11 @@ public class CrewManager {
         Statistics.getInstance().resetStatistics();
         Wallet.getInstance().restoreBalance(100);
 
-        if (crewList != null) {
-            crewList.clear();
-        }
-        if (stations != null) {
-            stations.clear();
-        }
-        if (rescueMissions != null) {
-            rescueMissions.clear();
-        }
+        FriendlyShip.getShip().resetShip();
+
+        crewList.clear();
+        stations.clear();
+        rescueMissions.clear();
     }
 
     /**
@@ -258,13 +249,13 @@ public class CrewManager {
     }
 
 
-    private static void setStatistics(HashMap<String, Integer> stats){
-        int shipKills = stats.get("shipKills");
-        int numDeadCrews = stats.get("numDeadCrews");
-        int numLivingCrews = stats.get("numLivingCrews");
-        int numTotalCrews = stats.get("numTotalCrews");
-        int numSuccessfulMissions = stats.get("numSuccessfulMissions");
-        int numFailedMissions = stats.get("numFailedMissions");
+    private static void setStatistics(Map<String, Integer> stats){
+        int shipKills = getStatOrDefault(stats, "shipKills", 0);
+        int numDeadCrews = getStatOrDefault(stats, "numDeadCrews", 0);
+        int numLivingCrews = getStatOrDefault(stats, "numLivingCrews", 0);
+        int numTotalCrews = getStatOrDefault(stats, "numTotalCrews", 0);
+        int numSuccessfulMissions = getStatOrDefault(stats, "numSuccessfulMissions", 0);
+        int numFailedMissions = getStatOrDefault(stats, "numFailedMissions", 0);
 
         Statistics statsInstance = Statistics.getInstance();
 
@@ -275,6 +266,11 @@ public class CrewManager {
         statsInstance.setNumSuccessfulMissions(numSuccessfulMissions);
         statsInstance.setNumFailedMissions(numFailedMissions);
 
+    }
+
+    private static int getStatOrDefault(Map<String, Integer> map, String key, int defaultValue) {
+        Integer value = map.get(key);
+        return value != null ? value : defaultValue;
     }
 
 }
