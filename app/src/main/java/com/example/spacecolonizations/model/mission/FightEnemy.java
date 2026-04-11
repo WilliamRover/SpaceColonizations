@@ -1,5 +1,6 @@
 package com.example.spacecolonizations.model.mission;
 
+import com.example.spacecolonizations.activities.FightEnemyActivity;
 import com.example.spacecolonizations.model.ship.EnemyShip;
 
 import java.util.ArrayList;
@@ -20,7 +21,6 @@ public class FightEnemy extends Mission {
     }
 
     public void setUp(){
-        EnemyShip enemyShip = new EnemyShip(120);
 
     }
 
