@@ -241,6 +241,7 @@ public abstract class Station implements Serializable {
                     setEfficiency();
 
                     for (int i = repairMan.size() - 1; i >= 0; i--) {
+                        repairMan.get(i).receiveExp(100F);
                         removeRepairMan(repairMan.get(i));
                     }
 
