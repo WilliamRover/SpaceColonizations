@@ -1,6 +1,8 @@
 package com.example.spacecolonizations.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +42,24 @@ public class StationDetailFragment extends Fragment {
     private Class<? extends Station> stationClass;
     private OnStationNavigationListener navigationListener;
     private RecyclerView recyclerView;
+    private RecyclerView patientRecyclerView;
+    private TextView patientHeader;
     private RecyclerView navRecyclerView;
+
+    // Real-time update handler
+    private final Handler updateHandler = new Handler(Looper.getMainLooper());
+    private final Runnable updateRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (recyclerView != null && recyclerView.getAdapter() != null) {
+                recyclerView.getAdapter().notifyDataSetChanged();
+            }
+            if (patientRecyclerView != null && patientRecyclerView.getAdapter() != null) {
+                patientRecyclerView.getAdapter().notifyDataSetChanged();
+            }
+            updateHandler.postDelayed(this, 1000); // Refresh every second
+        }
+    };
 
     public static StationDetailFragment newInstance(String stationName, Class<? extends Station> stationClass) {
         StationDetailFragment fragment = new StationDetailFragment();
@@ -71,14 +90,31 @@ public class StationDetailFragment extends Fragment {
 
         TextView nameTxt = view.findViewById(R.id.txtViewStationName);
         recyclerView = view.findViewById(R.id.recViewCrew);
+        patientRecyclerView = view.findViewById(R.id.recViewPatients);
+        patientHeader = view.findViewById(R.id.txtViewPatientHeader);
 
         nameTxt.setText(stationName);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        if (patientRecyclerView != null) {
+            patientRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
         
         refreshCrewList();
         setupNavigation();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateHandler.post(updateRunnable); // Start real-time updates
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        updateHandler.removeCallbacks(updateRunnable); // Stop updates to save resources
     }
 
     private void setupNavigation() {
@@ -111,7 +147,25 @@ public class StationDetailFragment extends Fragment {
                     if (navigationListener != null) {
                         navigationListener.onDataChanged();
                     }
+                    refreshCrewList();
                 }));
+
+                if (station instanceof MedBay) {
+                    MedBay medBay = (MedBay) station;
+                    if (patientRecyclerView != null && patientHeader != null) {
+                        patientHeader.setVisibility(View.VISIBLE);
+                        patientRecyclerView.setVisibility(View.VISIBLE);
+                        patientRecyclerView.setAdapter(new StationAdapter(medBay.getPatients(), "Med Bay Patients", () -> {
+                            if (navigationListener != null) {
+                                navigationListener.onDataChanged();
+                            }
+                            refreshCrewList();
+                        }));
+                    }
+                } else {
+                    if (patientHeader != null) patientHeader.setVisibility(View.GONE);
+                    if (patientRecyclerView != null) patientRecyclerView.setVisibility(View.GONE);
+                }
             }
         }
     }

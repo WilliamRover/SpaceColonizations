@@ -1,6 +1,8 @@
 package com.example.spacecolonizations.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,15 @@ public class ShipFragment extends Fragment {
     private TextView moneyTxt;
     private View fragmentStationContainer;
 
+    private final Handler refreshHandler = new Handler(Looper.getMainLooper());
+    private final Runnable refreshRunnable = new Runnable() {
+        @Override
+        public void run() {
+            updateUI();
+            refreshHandler.postDelayed(this, 1000); // Refresh every second
+        }
+    };
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,6 +55,12 @@ public class ShipFragment extends Fragment {
 
         friendlyShip = FriendlyShip.getShip();
         wallet = Wallet.getInstance();
+        
+        // Only add sample crews if they don't exist yet to avoid duplicates
+//        if (friendlyShip.getShip().getStations().get(0).getCrewMembers().isEmpty() &&
+//            Barracks.getInstance().getCrewMembers().isEmpty()) {
+//            addSampleCrews();
+//        }
         addSampleCrews();
 
         shipHpBar = view.findViewById(R.id.shipHpBar);
@@ -57,7 +74,21 @@ public class ShipFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshHandler.post(refreshRunnable);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        refreshHandler.removeCallbacks(refreshRunnable);
+    }
+
     private void updateUI() {
+        if (friendlyShip == null || wallet == null) return;
+        
         shipHpBar.setMax(friendlyShip.getInnitHullStrength());
         shipHpBar.setProgress(friendlyShip.getHullStrength());
         friendlyHpTxt.setText(String.format(Locale.US, "%d/%d", friendlyShip.getHullStrength(), friendlyShip.getInnitHullStrength()));
@@ -71,7 +102,6 @@ public class ShipFragment extends Fragment {
         view.findViewById(R.id.turretBtn).setOnClickListener(v -> showStationDetail("Turret", Turret.class));
         view.findViewById(R.id.medBayBtn).setOnClickListener(v -> showStationDetail("Med Bay", MedBay.class));
 
-        // Root view listener to hide detail
         view.setOnClickListener(v -> hideStationDetail());
     }
 
@@ -86,6 +116,7 @@ public class ShipFragment extends Fragment {
 
             @Override
             public void onDataChanged() {
+                updateUI();
             }
         });
         getChildFragmentManager().beginTransaction()
@@ -98,13 +129,12 @@ public class ShipFragment extends Fragment {
         if (fragment != null) {
             getChildFragmentManager().beginTransaction().remove(fragment).commit();
             fragmentStationContainer.setVisibility(View.GONE);
+            updateUI();
         }
     }
-
     public FriendlyShip getShip() {
         return friendlyShip;
     }
-
     private void addSampleCrews() {
         // Create sample crew members
         Gunner crew1 = new Gunner("Jew Burner", 100, 100);

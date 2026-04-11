@@ -28,7 +28,7 @@ public class MedBay extends Station{
         this.initMedBayHandler();
     }
 
-    public void heal(){
+    private void heal(){
         handler.removeCallbacks(healRunnable);
         handler.post(healRunnable);
     }
@@ -69,7 +69,7 @@ public class MedBay extends Station{
         }
     }
 
-    protected List<Crew> getPatients() {
+    public List<Crew> getPatients() {
         return this.patients;
     }
 
