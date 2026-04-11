@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.spacecolonizations.R;
 import com.example.spacecolonizations.model.crewmate.CrewManager;
+import com.example.spacecolonizations.model.station.Barracks;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -22,6 +23,9 @@ public class MenuActivity extends AppCompatActivity {
         Button btnContinue = findViewById(R.id.btnContinue);
         btnContinue.setOnClickListener(v -> {
             CrewManager.loadFromFile(this);
+            CrewManager.getStations();
+            CrewManager.getCrew();
+
             Intent intent = new Intent(this, MapActivity.class);
             startActivity(intent);
         });
@@ -30,6 +34,11 @@ public class MenuActivity extends AppCompatActivity {
         btnNewGame.setOnClickListener(v -> {
             CrewManager.deleteSave(this);
             CrewManager.loadFromFile(this);
+            CrewManager.getStations();
+            if (!Barracks.getInstance().getCrewMembers().isEmpty()){
+                Barracks.getInstance().getCrewMembers().clear();
+            }
+            CrewManager.getCrew();
 
             Intent intent = new Intent(this, MapActivity.class);
             startActivity(intent);

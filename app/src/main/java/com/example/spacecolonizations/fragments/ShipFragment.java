@@ -44,7 +44,7 @@ public class ShipFragment extends Fragment {
 
         friendlyShip = FriendlyShip.getShip();
         wallet = Wallet.getInstance();
-        addSampleCrews();
+        //addSampleCrews();
 
         shipHpBar = view.findViewById(R.id.shipHpBar);
         friendlyHpTxt = view.findViewById(R.id.friendlyHpTxt);

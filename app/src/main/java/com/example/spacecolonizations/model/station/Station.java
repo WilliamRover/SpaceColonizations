@@ -51,6 +51,10 @@ public abstract class Station implements Serializable {
      * @param crew
      */
     public void assignCrew(@NonNull Crew crew){
+        if (crewMembers.contains(crew)) {
+            crew.setCurrentStation(this);
+            return;
+        }
         if (crew.getCurrentStation() == this) {
             return;
         } else if (!crew.getCanWork()) {
@@ -58,10 +62,6 @@ public abstract class Station implements Serializable {
             return;
         }
         if (this.crewMembers.size() < this.maxCrew) {
-            if (crewMembers.contains(crew)) {
-                crew.setCurrentStation(this);
-                return;
-            }
 
             if (crew.getCurrentStation() != null) {
                 crew.getCurrentStation().removeCrew(crew);
@@ -70,6 +70,10 @@ public abstract class Station implements Serializable {
             crew.setCurrentStation(this);
             this.crewMembers.add(crew);
             this.setEfficiency();
+
+            if (this instanceof TrainingCenter){
+                ((TrainingCenter) this).train();
+            }
         }
 
     }

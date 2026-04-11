@@ -172,7 +172,18 @@ public class CrewManager {
      */
     public static List<Crew> getCrew(){
         if (crewList.isEmpty()){
-            // TODO ask java to create crew with the name gen thingy majigy
+            crewList.add(new Gunner("Jew Burner", 100, 100));
+            crewList.add(new Medic("Black Plague", 80, 100));
+            crewList.add(new Commander("Captain Failure", 120, 120));
+            crewList.add(new Technician("I dont have sleep", 100, 100));
+            crewList.add(new Navigator("Nigger", 100, 100));
+
+            if (!Barracks.getInstance().getCrewMembers().isEmpty()){
+                Barracks.getInstance().getCrewMembers().clear();
+            }
+            for (Crew crew: crewList) {
+                Barracks.getInstance().assignCrew(crew);
+            }
         }
 
         return crewList;
