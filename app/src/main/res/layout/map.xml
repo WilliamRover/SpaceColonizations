@@ -143,15 +143,6 @@
         app:layout_constraintTop_toBottomOf="@+id/txtViewFightProb1" />
 
 
-    <TextView
-        android:id="@+id/txtViewObstacleProb3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="num% Obstacle"
-        app:layout_constraintEnd_toEndOf="@+id/btnEnemy1"
-        app:layout_constraintStart_toStartOf="@+id/btnEnemy1"
-        app:layout_constraintTop_toBottomOf="@+id/txtViewFightProb1" />
-
     <View
         android:id="@+id/arrow1"
         android:layout_width="0dp"
@@ -187,6 +178,24 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/crewImg"
         app:layout_constraintTop_toBottomOf="@+id/crewImg" />
+
+    <TextView
+        android:id="@+id/txtViewRescueProb1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="num% Rescue"
+        app:layout_constraintEnd_toEndOf="@+id/btnEnemy1"
+        app:layout_constraintStart_toStartOf="@+id/btnEnemy1"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewObstacleProb1" />
+
+    <TextView
+        android:id="@+id/txtViewRescueProb2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="num% Rescue"
+        app:layout_constraintEnd_toEndOf="@+id/btnEnemy2"
+        app:layout_constraintStart_toStartOf="@+id/btnEnemy2"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewObstacleProb2" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/pauseFragment2"
