@@ -44,7 +44,12 @@ public class ShipFragment extends Fragment {
 
         friendlyShip = FriendlyShip.getShip();
         wallet = Wallet.getInstance();
-        //addSampleCrews();
+        // Only add sample crews if they don't exist yet to avoid duplicates
+//        if (friendlyShip.getShip().getStations().get(0).getCrewMembers().isEmpty() &&
+//            Barracks.getInstance().getCrewMembers().isEmpty()) {
+//            addSampleCrews();
+//        }
+//        addSampleCrews();
 
         shipHpBar = view.findViewById(R.id.shipHpBar);
         friendlyHpTxt = view.findViewById(R.id.friendlyHpTxt);
