@@ -60,10 +60,11 @@ public class MedBay extends Station{
 
     private void removePatient(Crew crew) {
         if (this.patients.remove(crew)) {
-
+            System.out.println("crew removed");
             if (crew.getCurrentStation() == this) {
-                crew.setCurrentStation(Barracks.getInstance());
+                crew.setCurrentStation(null);
                 Barracks.getInstance().assignCrew(crew);
+                System.out.println("assigned to barracks");
             }
             crew.setCanWork(true);
 

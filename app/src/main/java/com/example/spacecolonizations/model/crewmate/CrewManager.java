@@ -144,9 +144,15 @@ public class CrewManager {
         Statistics.getInstance().resetStatistics();
         Wallet.getInstance().restoreBalance(100);
 
-        crewList = null;
-        stations = null;
-        rescueMissions = null;
+        if (crewList != null) {
+            crewList.clear();
+        }
+        if (stations != null) {
+            stations.clear();
+        }
+        if (rescueMissions != null) {
+            rescueMissions.clear();
+        }
     }
 
     /**
