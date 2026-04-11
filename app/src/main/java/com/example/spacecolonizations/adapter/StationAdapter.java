@@ -30,6 +30,7 @@ import com.example.spacecolonizations.model.station.Station;
 import com.example.spacecolonizations.model.station.TrainingCenter;
 import com.example.spacecolonizations.model.station.Turret;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.example.spacecolonizations.model.mission.TurnBase;
 
 import java.util.List;
 import java.util.Locale;
@@ -215,6 +216,31 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
             return crew.getCurrentStation() != oldStation || crew.getCurrentStation() == targetStation;
         }
         
+        return false;
+    }
+
+    public boolean attack(View view){
+        FriendlyShip ship = FriendlyShip.getShip();
+        if (view.getContext() instanceof FightEnemyActivity) {
+            FightEnemyActivity activity = (FightEnemyActivity) view.getContext();
+            Turret turret = (Turret) ship.getStation(Turret.class);
+            if (turret != null) {
+                if (!turret.getCrewMembers().isEmpty()) {
+                    EnemyShip enemyShip = activity.getEnemyShip();
+                    if (enemyShip != null) {
+                        turret.dealDamage(enemyShip);
+                        Toast.makeText(view.getContext(), "Dealt " + round(turret.getdamage()) + " damages", Toast.LENGTH_SHORT).show();
+                        activity.updateEnemyUI();
+                        return true;
+
+                    }
+                } else {
+                    Toast.makeText(view.getContext(), "No one in Turret", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else {
+            Toast.makeText(view.getContext(), "Can only deal damage during combat", Toast.LENGTH_SHORT).show();
+        }
         return false;
     }
 
