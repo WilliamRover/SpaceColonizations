@@ -41,7 +41,7 @@ public abstract class Ship implements Damagable {
     public void attackShip(Ship ship, View shipModel, View kaboom, ProgressBar hpProgress, TextView hpTxt, int shipDps) {
 
     }
-    private void explode(View shipModel, View kaboom) {
+    public void explode(View shipModel, View kaboom) {
         kaboom.setVisibility(View.VISIBLE);
         kaboom.setAlpha(1.0f);
         shipModel.setVisibility(View.INVISIBLE);

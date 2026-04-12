@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.spacecolonizations.R;
 import com.example.spacecolonizations.fragments.ShipFragment;
+import com.example.spacecolonizations.model.Statistics;
 import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.ship.EnemyShip;
 import com.example.spacecolonizations.model.ship.FriendlyShip;
@@ -71,7 +72,11 @@ public class FightEnemyActivity extends AppCompatActivity {
         scheduler.scheduleWithFixedDelay(() -> {
             if (enemyShipHealth.get() != enemyShip.getHullStrength()) {
                 enemyShipHealth.set(enemyShip.getHullStrength());
-                friendlyShip.loseHealth(20 + (int) (Math.random() * 20));
+                int progessiveDamage = (int) (Statistics.getInstance().getShipKills()/10);
+                if (progessiveDamage>20){
+                    progessiveDamage = 20;
+                }
+                friendlyShip.loseHealth(20 + progessiveDamage);
                 if (Math.random() < 0.5) {
                     while (true) {
 
@@ -96,8 +101,13 @@ public class FightEnemyActivity extends AppCompatActivity {
 
                 }
             }
-            if (FriendlyShip.getShip().getHullStrength()<=0 || enemyShip.getHullStrength()<=0){
-            scheduler.shutdown();
+            if (FriendlyShip.getShip().getHullStrength()<=0){
+                FriendlyShip.getShip().explode();
+                scheduler.shutdown();
+            }
+            if (enemyShip.getHullStrength()<=0){
+                Statistics.getInstance().setShipKills(Statistics.getInstance().getShipKills() + 1);
+                scheduler.shutdown();
             }
         }, 0, 1, TimeUnit.SECONDS);
     }
