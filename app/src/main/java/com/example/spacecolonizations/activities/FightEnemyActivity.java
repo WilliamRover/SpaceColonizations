@@ -45,9 +45,6 @@ public class FightEnemyActivity extends AppCompatActivity {
     private TextView enemyHpTxt;
 
     private TextView friendlyExplode;
-    
-    private AtomicInteger enemyShipHealth;
-    private ScheduledExecutorService scheduler;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -70,29 +67,26 @@ public class FightEnemyActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-    }
 
-    public void enemyAttack() {
         //new code for damage friendily ship and module
-        showAttackOverlay();
+        AtomicInteger enemyShipHealth = new AtomicInteger(enemyShip.getHullStrength());
 
-        if (scheduler != null && !scheduler.isShutdown()) {
-            return;
-        }
-
-        scheduler = Executors.newScheduledThreadPool(1);
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleWithFixedDelay(() -> {
             if (enemyShipHealth.get() != enemyShip.getHullStrength()) {
                 enemyShipHealth.set(enemyShip.getHullStrength());
+                showAttackOverlay();
                 int progessiveDamage = (int) (Statistics.getInstance().getShipKills() / 10);
                 if (progessiveDamage > 20) {
                     progessiveDamage = 20;
                 }
-                
+
                 // Damage the singleton instance to ensure consistency
                 FriendlyShip.getShip().loseHealth(20 + progessiveDamage);
-                Log.w("Friendly ship", String.valueOf(FriendlyShip.getShip().getHullStrength()));
-                
+                Log.e("Enemy Health", String.valueOf(enemyShip.getHullStrength()));
+
+
+                // UI updates must happen on the Main Thread
                 runOnUiThread(() -> {
                     if (shipFragment != null) {
                         shipFragment.updateUI();
@@ -134,13 +128,12 @@ public class FightEnemyActivity extends AppCompatActivity {
         }, 0, 1, TimeUnit.SECONDS);
 
     }
+
+    public void enemyAttack() {
+
+    }
     private void innitEnemyView() {
         enemyShip = new EnemyShip((int) (100 + 100 * Math.random()));
-        if (enemyShipHealth == null) {
-            enemyShipHealth = new AtomicInteger(enemyShip.getHullStrength());
-        } else {
-            enemyShipHealth.set(enemyShip.getHullStrength());
-        }
 
         enemyHpBar = findViewById(R.id.enemyShipHp);
         enemyShipImage = findViewById(R.id.enemyShipModel);
@@ -169,12 +162,14 @@ public class FightEnemyActivity extends AppCompatActivity {
         }
     }
 
-    private void showAttackOverlay() {
+    public void showAttackOverlay() {
         if (attackOverlay != null) {
-            attackOverlay.setVisibility(View.VISIBLE);
-            new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                attackOverlay.setVisibility(View.GONE);
-            }, 2000);
+            runOnUiThread(() -> {
+                attackOverlay.setVisibility(View.VISIBLE);
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                    attackOverlay.setVisibility(View.GONE);
+                }, 2000);
+            });
         }
     }
 
