@@ -19,5 +19,6 @@ public class EngineFailureActivity extends AppCompatActivity {
         PassObstacle passObstacle = new PassObstacle(NameGen.nGen((int) ((Math.random()*5) + 3)));
         EngineFailure ef = new EngineFailure();
         passObstacle.setObstaclesType(ef);
+        passObstacle.finallisePassObstacle();
     }
 }

@@ -19,5 +19,6 @@ public class AsteroidActivity extends AppCompatActivity {
         PassObstacle passObstacle = new PassObstacle(NameGen.nGen((int) ((Math.random()*5) + 3)));
         Asteroid as = new Asteroid();
         passObstacle.setObstaclesType(as);
+        passObstacle.finallisePassObstacle();
     }
 }
