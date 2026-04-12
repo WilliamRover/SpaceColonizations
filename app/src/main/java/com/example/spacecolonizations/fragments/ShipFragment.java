@@ -38,6 +38,7 @@ public class ShipFragment extends Fragment {
     private TextView friendlyHpTxt;
     private TextView moneyTxt;
     private View fragmentStationContainer;
+    private View statisticsContainer;
 
     private final Handler refreshHandler = new Handler(Looper.getMainLooper());
     private final Runnable refreshRunnable = new Runnable() {
@@ -60,6 +61,7 @@ public class ShipFragment extends Fragment {
         friendlyHpTxt = view.findViewById(R.id.friendlyHpTxt);
         moneyTxt = view.findViewById(R.id.txtViewMoneyNum);
         fragmentStationContainer = view.findViewById(R.id.stationDetailContainer);
+        statisticsContainer = view.findViewById(R.id.statisticsContainer);
 
         updateUI();
         setupButtons(view);
@@ -95,7 +97,10 @@ public class ShipFragment extends Fragment {
         view.findViewById(R.id.turretBtn).setOnClickListener(v -> showStationDetail("Turret", Turret.class));
         view.findViewById(R.id.medBayBtn).setOnClickListener(v -> showStationDetail("Med Bay", MedBay.class));
 
-        view.setOnClickListener(v -> hideStationDetail());
+        view.setOnClickListener(v -> {
+            hideStationDetail();
+            hideStatistics();
+        });
     }
 
     private void showStationDetail(String name, Class<? extends Station> stationClass) {
@@ -111,6 +116,11 @@ public class ShipFragment extends Fragment {
             public void onDataChanged() {
                 updateUI();
             }
+
+            @Override
+            public void onShowStatistics() {
+                showStatistics();
+            }
         });
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.stationDetailContainer, fragment)
@@ -125,6 +135,23 @@ public class ShipFragment extends Fragment {
             updateUI();
         }
     }
+
+    private void showStatistics() {
+        statisticsContainer.setVisibility(View.VISIBLE);
+        StatisticsOverlayFragment fragment = new StatisticsOverlayFragment();
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.statisticsContainer, fragment)
+                .commit();
+    }
+
+    public void hideStatistics() {
+        Fragment fragment = getChildFragmentManager().findFragmentById(R.id.statisticsContainer);
+        if (fragment != null) {
+            getChildFragmentManager().beginTransaction().remove(fragment).commit();
+            statisticsContainer.setVisibility(View.GONE);
+        }
+    }
+
     public FriendlyShip getShip() {
         return friendlyShip;
     }

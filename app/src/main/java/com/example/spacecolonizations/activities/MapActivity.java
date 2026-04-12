@@ -116,7 +116,7 @@ public class MapActivity extends AppCompatActivity {
             txtViewObstacleProb1.setText("");
             txtVIewRescueProb1.setText("");
             if (m.get(0) instanceof FightEnemy){
-                txtViewFightProb1.setText("FightEnemy");
+                txtViewFightProb1.setText("Fight Enemy");
                 btnEnemy1.setBackgroundColor(
                         ContextCompat.getColor(this,R.color.red)
                 );
@@ -144,23 +144,21 @@ public class MapActivity extends AppCompatActivity {
         }
         btnEnemy1.setOnClickListener(v -> {
             Intent intent = null;
-            intent = new Intent(this, FightEnemyActivity.class); // Testing only. Delete after down
-            startActivity(intent);
-//            if (m.get(0) instanceof FightEnemy){
-//                intent = new Intent(this, FightEnemyActivity.class);
-//            } else if (m.get(0) instanceof PassObstacle) {
-//                if (m.get(0).getMissionType().equals("Asteroid")){
-//                    intent = new Intent(this, AsteroidActivity.class);
-//                } else if (m.get(0).getMissionType().equals("EngineFailure")) {
-//                    intent = new Intent(this, EngineFailureActivity.class);
-//                }
-//            } else if (m.get(0) instanceof Rescue) {
-//
-//            }
-//
-//            if (intent != null) {
-//                startActivity(intent);
-//            }
+            if (m.get(0) instanceof FightEnemy){
+                intent = new Intent(this, FightEnemyActivity.class);
+            } else if (m.get(0) instanceof PassObstacle) {
+                if (m.get(0).getMissionType().equals("Asteroid")){
+                    intent = new Intent(this, AsteroidActivity.class);
+                } else if (m.get(0).getMissionType().equals("EngineFailure")) {
+                    intent = new Intent(this, EngineFailureActivity.class);
+                }
+            } else if (m.get(0) instanceof Rescue) {
+                intent = new Intent(this, RescueActivity.class);
+            }
+
+            if (intent != null) {
+                startActivity(intent);
+            }
 
         });
 
@@ -177,9 +175,9 @@ public class MapActivity extends AppCompatActivity {
         if (navigatoronCommand){
             txtViewFightProb2.setText("");
             txtViewObstacleProb2.setText("");
-            txtVIewRescueProb1.setText("");
+            txtViewRescueProb2.setText("");
             if (m.get(1) instanceof FightEnemy){
-                txtViewFightProb1.setText("FightEnemy");
+                txtViewFightProb2.setText("Fight Enemy");
                 btnEnemy2.setBackgroundColor(
                         ContextCompat.getColor(this,R.color.red)
                 );
@@ -187,23 +185,22 @@ public class MapActivity extends AppCompatActivity {
                         ContextCompat.getColor(this,R.color.red)
                 );
             } else if (m.get(1) instanceof PassObstacle) {
-                txtViewFightProb1.setText(m.get(0).getMissionType());
+                txtViewFightProb2.setText(m.get(1).getMissionType());
                 btnEnemy2.setBackgroundColor(
                         ContextCompat.getColor(this,R.color.yellow)
                 );
                 txtEnemyLabel2.setTextColor(
-                        ContextCompat.getColor(this,R.color.white)
+                        ContextCompat.getColor(this,R.color.yellow)
                 );
-            }else if (m.get(0) instanceof Rescue) {
-            txtViewFightProb2.setText("Rescue");
-            btnEnemy2.setBackgroundColor(
-                    ContextCompat.getColor(this,R.color.blue)
-            );
-            txtEnemyLabel2.setTextColor(
-                    ContextCompat.getColor(this,R.color.white)
-            );
-
-
+            } else if (m.get(1) instanceof Rescue) {
+                txtViewFightProb2.setText("Rescue");
+                btnEnemy2.setBackgroundColor(
+                        ContextCompat.getColor(this,R.color.blue)
+                );
+                txtEnemyLabel2.setTextColor(
+                        ContextCompat.getColor(this,R.color.blue)
+                );
+            }
         }
         btnEnemy2.setOnClickListener(v -> {
             Intent intent = null;
@@ -216,13 +213,12 @@ public class MapActivity extends AppCompatActivity {
                     intent = new Intent(this, EngineFailureActivity.class);
                 }
             } else if (m.get(1) instanceof Rescue) {
-
+                intent = new Intent(this, RescueActivity.class);
             }
 
             if (intent != null) {
                 startActivity(intent);
             }
         });
-    }
     }
 }

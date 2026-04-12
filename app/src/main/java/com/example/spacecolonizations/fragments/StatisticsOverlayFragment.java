@@ -41,12 +41,12 @@ public class StatisticsOverlayFragment extends Fragment {
 
     private void updateText(){
         Statistics stats= Statistics.getInstance();
-        numAlive.setText(String.format(Locale.US, "%d $", stats.getNumLivingCrews()));
-        numDead.setText(String.format(Locale.US, "%d $", stats.getNumDeadCrews()));
-        numTotal.setText(String.format(Locale.US, "%d $", stats.getNumTotalCrews()));
-        numSuccess.setText(String.format(Locale.US, "%d $", stats.getNumSuccessfulMissions()));
-        numFail.setText(String.format(Locale.US, "%d $", stats.getNumFailedMissions()));
-        numShipKills.setText(String.format(Locale.US, "%d $", stats.getShipKills()));
+        numAlive.setText(String.format(Locale.US, "%d", stats.getNumLivingCrews()));
+        numDead.setText(String.format(Locale.US, "%d", stats.getNumDeadCrews()));
+        numTotal.setText(String.format(Locale.US, "%d", stats.getNumTotalCrews()));
+        numSuccess.setText(String.format(Locale.US, "%d", stats.getNumSuccessfulMissions()));
+        numFail.setText(String.format(Locale.US, "%d", stats.getNumFailedMissions()));
+        numShipKills.setText(String.format(Locale.US, "%d", stats.getShipKills()));
     }
 
 }

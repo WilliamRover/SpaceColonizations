@@ -35,6 +35,7 @@ public class FunctionListAdapter extends RecyclerView.Adapter<FunctionListAdapte
 
         availableFunctions.add("Assign to be patient");
         availableFunctions.add("Deal damage to enemy");
+        availableFunctions.add("Show statistics");
     }
 
     @NonNull
