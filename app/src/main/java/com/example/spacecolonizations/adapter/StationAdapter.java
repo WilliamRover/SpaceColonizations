@@ -199,6 +199,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
                             turret.dealDamage(enemyShip);
                             Toast.makeText(view.getContext(), "Dealt " + round(turret.getdamage()) + " damages", Toast.LENGTH_SHORT).show();
                             activity.updateEnemyUI();
+                            activity.showAttackOverlay();
                             return true;
                         }
                     } else {
@@ -250,6 +251,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
                         turret.dealDamage(enemyShip);
                         Toast.makeText(view.getContext(), "Dealt " + round(turret.getdamage()) + " damages", Toast.LENGTH_SHORT).show();
                         activity.updateEnemyUI();
+                        activity.showAttackOverlay();
                         return true;
 
                     }

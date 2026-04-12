@@ -1,5 +1,7 @@
 package com.example.spacecolonizations.model.crewmate;
 
+import static com.example.spacecolonizations.NameGen.generateName;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -169,26 +171,12 @@ public class CrewManager {
      */
     public static List<Crew> getCrew(){
         if (crewList.isEmpty()){
-            crewList.add(new Gunner("Jew Burner", 100, 100));
-            crewList.add(new Medic("Black Plague", 80, 100));
-            crewList.add(new Commander("Captain Failure", 120, 120));
-            crewList.add(new Technician("I dont have sleep", 100, 100));
-            crewList.add(new Navigator("Nigger", 100, 100));
-            crewList.add(new Navigator("Best pilot", 10, 222));
-            crewList.add(new Gunner("Allahu Akbar", 100, 100));
-            crewList.add(new Gunner("Slave", 100, 100));
-            crewList.add(new Commander("Corrupted", 200, 500));
-            crewList.add(new Technician("Im alone mf", 20, 200));
-            crewList.add(new Technician("Engineering Student 1", 20, 200));
-            crewList.add(new Technician("Engineering Student 2", 20, 200));
-            crewList.add(new Technician("Engineering Student 3", 20, 200));
-            crewList.add(new Technician("Engineering Student 4", 20, 200));
-            crewList.add(new Technician("Engineering Student 5", 20, 200));
-            crewList.add(new Technician("Engineering Student 6", 20, 200));
-            crewList.add(new Technician("Engineering Student 7", 20, 200));
-            crewList.add(new Technician("Engineering Student 8", 20, 200));
-            crewList.add(new Technician("Engineering Student 9", 20, 200));
-            crewList.add(new Technician("Engineering Student 10", 20, 200));
+            crewList.add(new Gunner(generateName(), 100, 100));
+            crewList.add(new Medic(generateName(), 80, 100));
+            crewList.add(new Commander(generateName(), 120, 120));
+            crewList.add(new Technician(generateName(), 100, 100));
+            crewList.add(new Navigator(generateName(), 100, 100));
+
 
             if (!Barracks.getInstance().getCrewMembers().isEmpty()){
                 Barracks.getInstance().getCrewMembers().clear();
