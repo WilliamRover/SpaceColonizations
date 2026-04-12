@@ -65,14 +65,15 @@ public class FightEnemyActivity extends AppCompatActivity {
 
 
         //new code for damage friendinl ship and module
-        List<Station> station =  CrewManager.getStations();
-        station.remove(Barracks.getInstance());
+
 
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleWithFixedDelay(() -> {
             friendlyShip.loseHealth(20+(int) (Math.random()*20));
             if (Math.random()<0.5){
                 while (true) {
+                    List<Station> station =  CrewManager.getStations();
+                    station.remove(Barracks.getInstance());
                     Station selectedStation = station.get((int) (Math.random() * station.size()));
                     if (selectedStation.getisUsable()){
                         selectedStation.breakStation();
