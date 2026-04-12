@@ -15,10 +15,18 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.spacecolonizations.R;
 import com.example.spacecolonizations.fragments.ShipFragment;
+import com.example.spacecolonizations.model.crewmate.Crew;
+import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.ship.EnemyShip;
 import com.example.spacecolonizations.model.ship.FriendlyShip;
+import com.example.spacecolonizations.model.station.Barracks;
+import com.example.spacecolonizations.model.station.Station;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class FightEnemyActivity extends AppCompatActivity {
     // Ship attributes from Fragment
@@ -54,6 +62,28 @@ public class FightEnemyActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
+        //new code for damage friendinl ship and module
+        List<Station> station =  CrewManager.getStations();
+        station.remove(Barracks.getInstance());
+
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.scheduleWithFixedDelay(() -> {
+            friendlyShip.loseHealth(20+(int) (Math.random()*20));
+            if (Math.random()<0.5){
+                while (true) {
+                    Station selectedStation = station.get((int) (Math.random() * station.size()));
+                    if (selectedStation.getisUsable()){
+                        selectedStation.breakStation();
+                        break;
+                    }
+                }
+            }
+            if (FriendlyShip.getShip().getHullStrength()<=0){
+            scheduler.shutdown();
+            }
+        }, 3, 10, TimeUnit.SECONDS);
     }
 
     private void innitEnemyView() {

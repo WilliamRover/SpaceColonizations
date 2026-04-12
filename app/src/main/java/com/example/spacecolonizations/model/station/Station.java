@@ -216,6 +216,10 @@ public abstract class Station implements Serializable {
         breakHandler.post(this.breakRunnable);
     }
 
+    public boolean getisUsable() {
+        return this.isUsable;
+    }
+
     protected void initRepairHandler() {
         repairHandler = new Handler(Looper.getMainLooper());
         repairRunnable = new Runnable() {
