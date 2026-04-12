@@ -77,9 +77,11 @@ public class FightEnemyActivity extends AppCompatActivity {
                     Station selectedStation = station.get((int) (Math.random() * station.size()));
                     if (selectedStation.getisUsable()){
                         selectedStation.breakStation();
+                        station.add(Barracks.getInstance());
                         break;
                     }
                 }
+
             }
             if (FriendlyShip.getShip().getHullStrength()<=0 || enemyShip.getHullStrength()<=0){
             scheduler.shutdown();
