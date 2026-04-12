@@ -35,10 +35,15 @@ public class MenuActivity extends AppCompatActivity {
             CrewManager.deleteSave(this);
             CrewManager.loadFromFile(this);
             CrewManager.getStations();
-            if (!Barracks.getInstance().getCrewMembers().isEmpty()){
+            
+            if (Barracks.getInstance() != null && !Barracks.getInstance().getCrewMembers().isEmpty()){
                 Barracks.getInstance().getCrewMembers().clear();
             }
+            
             CrewManager.getCrew();
+            
+            // Force save immediately so the file appears in Device File Explorer
+            CrewManager.saveTOFile(this);
 
             Intent intent = new Intent(this, MapActivity.class);
             startActivity(intent);

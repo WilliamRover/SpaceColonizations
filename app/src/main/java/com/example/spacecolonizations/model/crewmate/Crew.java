@@ -65,6 +65,10 @@ public abstract class Crew implements Damagable, Serializable {
         return level;
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     private void checkExp() {
         while (true) {
             double requiredExp = (1000 * Math.exp(level))/2;
@@ -91,6 +95,11 @@ public abstract class Crew implements Damagable, Serializable {
     public Float getExp() {
         return exp;
     }
+
+    public void setExp(Float exp) {
+        this.exp = exp;
+    }
+
     public Station getCurrentStation(){
         return this.currentStation;
     }
@@ -112,6 +121,11 @@ public abstract class Crew implements Damagable, Serializable {
         canWork = n;
     }
 
+    public boolean isPatient() {
+        return isPatient;
+    }
 
-
+    public void setPatient(boolean patient) {
+        isPatient = patient;
+    }
 }

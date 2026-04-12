@@ -3,6 +3,7 @@ package com.example.spacecolonizations.model.station;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.example.spacecolonizations.model.Statistics;
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.crewmate.Medic;
@@ -80,8 +81,10 @@ public class MedBay extends Station{
      */
     @Override
     protected void clearPatients(){
-        for (int i = patients.size() - 1; i >= 0; i--) {
-            Crew crew = patients.get(i);
+        Statistics stats = Statistics.getInstance();
+        stats.setNumDeadCrews(stats.getNumDeadCrews() + this.patients.size());
+        for (int i = this.patients.size() - 1; i >= 0; i--) {
+            Crew crew = this.patients.get(i);
             crew.setCurrentStation(null);
             CrewManager.removeCrew(crew);
         }

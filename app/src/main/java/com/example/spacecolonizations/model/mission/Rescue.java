@@ -1,5 +1,6 @@
 package com.example.spacecolonizations.model.mission;
 
+import com.example.spacecolonizations.model.Statistics;
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.shop.Wallet;
@@ -7,7 +8,9 @@ import com.example.spacecolonizations.model.station.Barracks;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 // TODO increase crew limit depending on stats
 public class Rescue extends Mission {
@@ -17,7 +20,12 @@ public class Rescue extends Mission {
 
     public Rescue(String missionName){
         super(missionName);
-        this.numCrew = 2;
+        if (Statistics.getInstance().getShipKills() >= 3) {
+            this.numCrew = 3;
+        } else {
+            this.numCrew = 2;
+        }
+
         this.crewMembers = new ArrayList<>();
         this.timeRequire = 180;
         CrewManager.addRescueMission(this);
@@ -43,7 +51,6 @@ public class Rescue extends Mission {
             }
         }
     }
-
     /**
      * this is the main function with the timer foe the rescue mission
      */
@@ -58,20 +65,27 @@ public class Rescue extends Mission {
 
     /**
      * To be called when mission is complete
+     * Also hands out rewards exp if mission is omplete
      * @return The list of crew members that were assigned to the mission
      */
     public ArrayList<Crew> returnCrew(){
         damageCrew();
         ArrayList<Crew> tempCrew = new ArrayList<>(crewMembers);
-        for (int i = crewMembers.size() - 1; i >= 0; i--){
-
-            Crew c = crewMembers.get(i);
-            if (c.getHealthPoints()>0){
+        for (Crew crew: crewMembers){
+            if (crew.getHealthPoints()>0){
                 setComplete(true);
             }
-            removeCrew(c);
         }
-        // TODO update statistics
+
+        if (this.getComplete()) {
+            for (int i = crewMembers.size() - 1; i >= 0; i--) {
+                Crew crew = crewMembers.get(i);
+                if (crew.getHealthPoints() > 0) {
+                    crew.receiveExp(200F);
+                }
+                removeCrew(crew);
+            }
+        }
 
         //reward
         if (getComplete()){

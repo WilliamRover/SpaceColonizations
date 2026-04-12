@@ -38,14 +38,15 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
 
     private List<Crew> crewList;
     private int expandedPosition = -1;
-    private final OnCrewMovedListener movedListener;
+    private final OnActionRequests movedListener;
     private final String currentStationName;
 
-    public interface OnCrewMovedListener {
+    public interface OnActionRequests {
         void onCrewMoved();
+        void onShowStatisticsRequested();
     }
 
-    public StationAdapter(List<Crew> crewList, String currentStationName, OnCrewMovedListener movedListener) {
+    public StationAdapter(List<Crew> crewList, String currentStationName, OnActionRequests movedListener) {
         this.crewList = crewList;
         this.currentStationName = currentStationName;
         this.movedListener = movedListener;
@@ -128,7 +129,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
                 } else {
                     expandedPosition = -1;
                     notifyItemChanged(currentPos);
-                    Toast.makeText(holder.itemView.getContext(), "Action failed", Toast.LENGTH_SHORT).show();
+                    // performCrewAction already shows Toast on failure for specific reasons
                 }
             });
             holder.recViewStationList.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.VERTICAL, false));
@@ -158,7 +159,26 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
     private boolean performCrewAction(Crew crew, String actionName, View view) {
         FriendlyShip ship = FriendlyShip.getShip();
         Station targetStation = null;
+        
+        if ("Show statistics".equals(actionName)) {
+            if (!(crew instanceof Commander)) {
+                Toast.makeText(view.getContext(), "Only a Commander can access statistics", Toast.LENGTH_SHORT).show();
+                return false;
+            }
 
+            CommandCenter commandCenter = (CommandCenter) ship.getStation(CommandCenter.class);
+            if (commandCenter != null) {
+                if (commandCenter.getCrewMembers().contains(crew)) {
+                    if (movedListener != null) {
+                        movedListener.onShowStatisticsRequested();
+                        return true;
+                    }
+                } else {
+                    Toast.makeText(view.getContext(), "Commander must be in Command Center", Toast.LENGTH_SHORT).show();
+                }
+            }
+            return false;
+        }
         if ("Assign to be patient".equals(actionName)) {
             MedBay medBay = (MedBay) ship.getStation(MedBay.class);
             if (medBay != null) {

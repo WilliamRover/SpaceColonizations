@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.spacecolonizations.R;
 import com.example.spacecolonizations.adapter.FunctionListAdapter;
 import com.example.spacecolonizations.adapter.StationAdapter;
-import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.ship.FriendlyShip;
 import com.example.spacecolonizations.model.station.Barracks;
 import com.example.spacecolonizations.model.station.CommandCenter;
@@ -26,13 +25,12 @@ import com.example.spacecolonizations.model.station.Station;
 import com.example.spacecolonizations.model.station.TrainingCenter;
 import com.example.spacecolonizations.model.station.Turret;
 
-import java.util.List;
-
 public class StationDetailFragment extends Fragment {
 
     public interface OnStationNavigationListener {
         void onStationSelected(String name, Class<? extends Station> stationClass);
         void onDataChanged();
+        void onShowStatistics();
     }
 
     private static final String ARG_STATION_NAME = "station_name";
@@ -143,11 +141,21 @@ public class StationDetailFragment extends Fragment {
         if (stationClass != null && recyclerView != null) {
             Station station = FriendlyShip.getShip().getStation(stationClass);
             if (station != null) {
-                recyclerView.setAdapter(new StationAdapter(station.getCrewMembers(), stationName, () -> {
-                    if (navigationListener != null) {
-                        navigationListener.onDataChanged();
+                recyclerView.setAdapter(new StationAdapter(station.getCrewMembers(), stationName, new StationAdapter.OnActionRequests() {
+                    @Override
+                    public void onCrewMoved() {
+                        if (navigationListener != null) {
+                            navigationListener.onDataChanged();
+                        }
+                        refreshCrewList();
                     }
-                    refreshCrewList();
+
+                    @Override
+                    public void onShowStatisticsRequested() {
+                        if (navigationListener != null) {
+                            navigationListener.onShowStatistics();
+                        }
+                    }
                 }));
 
                 if (station instanceof MedBay) {
@@ -155,11 +163,21 @@ public class StationDetailFragment extends Fragment {
                     if (patientRecyclerView != null && patientHeader != null) {
                         patientHeader.setVisibility(View.VISIBLE);
                         patientRecyclerView.setVisibility(View.VISIBLE);
-                        patientRecyclerView.setAdapter(new StationAdapter(medBay.getPatients(), "Med Bay Patients", () -> {
-                            if (navigationListener != null) {
-                                navigationListener.onDataChanged();
+                        patientRecyclerView.setAdapter(new StationAdapter(medBay.getPatients(), "Med Bay Patients", new StationAdapter.OnActionRequests() {
+                            @Override
+                            public void onCrewMoved() {
+                                if (navigationListener != null) {
+                                    navigationListener.onDataChanged();
+                                }
+                                refreshCrewList();
                             }
-                            refreshCrewList();
+
+                            @Override
+                            public void onShowStatisticsRequested() {
+                                if (navigationListener != null) {
+                                    navigationListener.onShowStatistics();
+                                }
+                            }
                         }));
                     }
                 } else {

@@ -1,6 +1,8 @@
 package com.example.spacecolonizations.model.mission;
 
+import com.example.spacecolonizations.model.Statistics;
 import com.example.spacecolonizations.model.crewmate.Crew;
+import com.example.spacecolonizations.model.shop.Wallet;
 import com.example.spacecolonizations.model.station.Station;
 
 import java.io.Serializable;
@@ -31,6 +33,13 @@ public class Mission implements Serializable {
         return Complete;
     }
     public void setComplete(Boolean n){
+        Statistics stats = Statistics.getInstance();
+        if (n){
+            stats.setNumSuccessfulMissions(stats.getNumSuccessfulMissions() + 1);
+            Wallet.getInstance().addBalance(100);
+        } else {
+            stats.setNumFailedMissions(stats.getNumFailedMissions() + 1);
+        }
         Complete = n;
     }
 

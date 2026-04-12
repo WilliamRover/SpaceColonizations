@@ -1,17 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView4"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="show save stats here"
+        android:alpha="0.85"
+        app:cardBackgroundColor="#415C7E"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#00FFFFFF">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:alpha="1"
+            android:background="@android:color/transparent"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textViewShipKills"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ship kills:"
+                android:textColor="#8AA8DB"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/textViewLivingCrew"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread" />
+
+            <TextView
+                android:id="@+id/numKills"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="numHere"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewShipKills"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewShipKills" />
+
+            <TextView
+                android:id="@+id/textViewLivingCrew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Living Crew: "
+                android:textColor="#8AA8DB"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDeadCrew"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewShipKills" />
+
+            <TextView
+                android:id="@+id/numAlive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="numHere"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewLivingCrew"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewLivingCrew" />
+
+            <TextView
+                android:id="@+id/textViewDeadCrew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dead Crew:"
+                android:textColor="#8AA8DB"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/textViewTotalCrew"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewLivingCrew" />
+
+            <TextView
+                android:id="@+id/numDead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="numHere"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewDeadCrew"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewDeadCrew" />
+
+            <TextView
+                android:id="@+id/textViewTotalCrew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Crew:"
+                android:textColor="#8AA8DB"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/textViewMissionFail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDeadCrew" />
+
+            <TextView
+                android:id="@+id/numTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="numHere"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewTotalCrew"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewTotalCrew" />
+
+            <TextView
+                android:id="@+id/textViewMissionFail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Failed Missions:"
+                android:textColor="#8AA8DB"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/textViewMissionSuccess"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTotalCrew" />
+
+            <TextView
+                android:id="@+id/numFail7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="numHere"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewMissionFail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewMissionFail" />
+
+            <TextView
+                android:id="@+id/textViewMissionSuccess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Successful Missions:"
+                android:textColor="#8AA8DB"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewMissionFail" />
+
+            <TextView
+                android:id="@+id/numSuccess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="numHere"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewMissionSuccess"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewMissionSuccess" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

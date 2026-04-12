@@ -52,6 +52,11 @@
             android:name=".activities.ShopActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
+        <!-- Rescue -->
+        <activity
+            android:name=".activities.RescueActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
 
     </application>
 
