@@ -109,7 +109,7 @@ public class MedBay extends Station{
             totalEfficiency += increment;
 
             if (crew instanceof Medic) {
-                totalEfficiency += 0.15F;
+                totalEfficiency += (float) (0.15F + crew.getLevel() * 0.01);
             }
 
             increment /= 2;

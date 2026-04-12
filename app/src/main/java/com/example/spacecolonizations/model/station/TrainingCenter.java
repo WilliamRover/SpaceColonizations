@@ -44,7 +44,7 @@ public class TrainingCenter extends Station{
                 }
 
                 for (Crew crew: crewMembers) {
-                    crew.receiveExp(expIncrement);
+                    crew.receiveExp((float) (expIncrement * (1 + crew.getLevel() * 0.05)));
                 }
                 trainHandler.postDelayed(this, 1000);
             }
