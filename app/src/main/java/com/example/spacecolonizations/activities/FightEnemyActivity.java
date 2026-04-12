@@ -102,7 +102,7 @@ public class FightEnemyActivity extends AppCompatActivity {
                 }
             }
             if (FriendlyShip.getShip().getHullStrength()<=0){
-                FriendlyShip.getShip().explode();
+                //FriendlyShip.getShip().explode();
                 scheduler.shutdown();
             }
             if (enemyShip.getHullStrength()<=0){

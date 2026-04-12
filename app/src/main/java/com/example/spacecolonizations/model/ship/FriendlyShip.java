@@ -1,15 +1,15 @@
 package com.example.spacecolonizations.model.ship;
 
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.spacecolonizations.activities.MenuActivity;
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.CrewManager;
-import com.example.spacecolonizations.model.station.Barracks;
-import com.example.spacecolonizations.model.station.CommandCenter;
-import com.example.spacecolonizations.model.station.MedBay;
 import com.example.spacecolonizations.model.station.Station;
-import com.example.spacecolonizations.model.station.TrainingCenter;
-import com.example.spacecolonizations.model.station.Turret;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,5 +77,23 @@ public class FriendlyShip extends Ship {
 
     public List<Station> getStations() {
         return stations;
+    }
+
+    @Override
+    public void explode(View shipModel, View kaboom) {
+        kaboom.setVisibility(View.VISIBLE);
+        kaboom.setAlpha(1.0f);
+        shipModel.setVisibility(View.INVISIBLE);
+
+        Context context = shipModel.getContext();
+
+        CrewManager.deleteSave(context);
+
+        Toast.makeText(context, "Game Over! Your ship was destroyed.", Toast.LENGTH_LONG).show();
+
+        //force the player to the main menu
+        Intent intent = new Intent(context, MenuActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(intent);
     }
 }

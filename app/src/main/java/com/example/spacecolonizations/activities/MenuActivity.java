@@ -54,5 +54,12 @@ public class MenuActivity extends AppCompatActivity {
             Intent intent = new Intent(this, CreditActivity.class);
             startActivity(intent);
         }));
+
+        Button btnExit  = findViewById(R.id.btnExit);
+        btnCredits.setOnClickListener(v -> {
+            CrewManager.saveTOFile(this);
+            finishAffinity();
+            System.exit(0);
+        });
     }
 }
