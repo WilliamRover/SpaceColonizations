@@ -3,8 +3,10 @@ package com.example.spacecolonizations.model.shop;
 import static com.example.spacecolonizations.NameGen.generateName;
 
 import com.example.spacecolonizations.NameGen;
+import com.example.spacecolonizations.model.Statistics;
 import com.example.spacecolonizations.model.crewmate.Commander;
 import com.example.spacecolonizations.model.crewmate.Crew;
+import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.crewmate.Gunner;
 import com.example.spacecolonizations.model.crewmate.Medic;
 import com.example.spacecolonizations.model.crewmate.Navigator;
@@ -12,6 +14,7 @@ import com.example.spacecolonizations.model.crewmate.Technician;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Shop {
     private HashMap<Crew,Integer> shopableCrew;
@@ -31,9 +34,8 @@ public class Shop {
         generatableCrew.add(md);
     }
 
-    public HashMap<Crew,Integer> generateShopableCrew(){
-        HashMap<Crew,Integer> shopableCrew = new HashMap<Crew,Integer>();
-
+    public void generateShopableCrew(){
+        shopableCrew.clear();
 
         while (shopableCrew.size()>3){
             Crew selected = generatableCrew.get((int)(Math.random()*generatableCrew.size()));
@@ -58,11 +60,33 @@ public class Shop {
             }
         }
 
-        return shopableCrew;
     }
 
-    public void setUp(){
-        shopableCrew = generateShopableCrew();
+    /**
+     * input the index from 0 to 2
+     *
+     */
+    public boolean buyCrew(int numberInShop){
+        List<Integer> prices = new ArrayList<>(shopableCrew.values());
+        int price = prices.get(numberInShop);
+
+        if (Wallet.getInstance().getBalance()>price){
+
+            Wallet.getInstance().reduceBalance(price);
+
+            List<Crew> crew = new ArrayList<>(shopableCrew.keySet());
+            Crew c = crew.get(numberInShop);
+
+            CrewManager.addCrew(c);
+            Statistics.getInstance().setNumLivingCrews(Statistics.getInstance().getNumLivingCrews()+1);
+
+            shopableCrew.remove(c);
+
+            return true;
+        }
+
+
+        return false;
     }
 
     public HashMap<Crew,Integer> getShopableCrew(){
