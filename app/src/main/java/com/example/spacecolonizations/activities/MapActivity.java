@@ -99,7 +99,12 @@ public class MapActivity extends AppCompatActivity {
         }
 
 
+        Button btnShop = findViewById(R.id.btnShop);
+        btnShop.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ShopActivity.class);
+            startActivity(intent);
 
+        });
 
         Button btnEnemy1 = findViewById(R.id.btnEnemy1);
         TextView txtEnemyLabel1 = findViewById(R.id.txtEnemyLabel1);

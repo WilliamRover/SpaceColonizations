@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/simple_square5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.3"
+        android:background="@android:color/darker_gray"
+        android:backgroundTint="#3B63B5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView2"
+        android:layout_width="188dp"
+        android:layout_height="256dp"
+        android:layout_marginStart="110dp"
+        android:alpha="0.95"
+        app:cardBackgroundColor="#415C7E"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#00FFFFFF">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/showCrewImg1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/txtViewShopName1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="16dp"
+                android:text="Name:"
+                android:textColor="#8AA8DB"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/showCrewImg1" />
+
+            <TextView
+                android:id="@+id/txtViewJob1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Job:"
+                android:textColor="#8AA8DB"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/txtViewShopName1"
+                app:layout_constraintTop_toBottomOf="@+id/txtViewShopName1" />
+
+            <TextView
+                android:id="@+id/txtViewCrewShopName1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:text="TextView"
+                android:textColor="#F5FFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/txtViewShopName1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtViewShopName1" />
+
+            <TextView
+                android:id="@+id/txtViewCrewShopJob1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="#F5FFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/txtViewJob1"
+                app:layout_constraintEnd_toEndOf="@+id/txtViewCrewShopName1"
+                app:layout_constraintTop_toTopOf="@+id/txtViewJob1" />
+
+            <TextView
+                android:id="@+id/txtViewCrewShopPrice1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="cost $"
+                android:textColor="#E9D19B"
+                app:layout_constraintBottom_toBottomOf="@+id/textCost1"
+                app:layout_constraintEnd_toEndOf="@+id/txtViewCrewShopName1"
+                app:layout_constraintTop_toTopOf="@+id/textCost1" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBuy1"
+                android:layout_width="156dp"
+                android:layout_height="39dp"
+                android:layout_marginTop="5dp"
+                android:text="Buy crew"
+                android:textColor="#FFD434"
+                app:backgroundTint="#CF9836"
+                app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textCost1" />
+
+            <TextView
+                android:id="@+id/textCost1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Cost:"
+                android:textColor="#D9BA40"
+                android:textColorLink="#E6D634"
+                app:layout_constraintStart_toStartOf="@+id/txtViewJob1"
+                app:layout_constraintTop_toBottomOf="@+id/txtViewJob1" />
+
+            <TextView
+                android:id="@+id/txtViewPoor1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.6"
+                android:text="not enough money"
+                android:textColor="#FFDDDD"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnBuy1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView4"
+        android:layout_width="188dp"
+        android:layout_height="256dp"
+        android:alpha="0.95"
+        app:cardBackgroundColor="#415C7E"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/materialCardView3"
+        app:layout_constraintStart_toEndOf="@+id/materialCardView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#00FFFFFF">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/showCrewImg2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/txtViewShopName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="16dp"
+                android:text="Name:"
+                android:textColor="#8AA8DB"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/showCrewImg2" />
+
+            <TextView
+                android:id="@+id/txtViewJob2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Job:"
+                android:textColor="#8AA8DB"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/txtViewShopName2"
+                app:layout_constraintTop_toBottomOf="@+id/txtViewShopName2" />
+
+            <TextView
+                android:id="@+id/txtViewCrewShopName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:text="TextView"
+                android:textColor="#F5FFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/txtViewShopName2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtViewShopName2" />
+
+            <TextView
+                android:id="@+id/txtViewCrewShopJob2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="#F5FFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/txtViewJob2"
+                app:layout_constraintEnd_toEndOf="@+id/txtViewCrewShopName2"
+                app:layout_constraintTop_toTopOf="@+id/txtViewJob2" />
+
+            <TextView
+                android:id="@+id/txtViewCrewShopPrice2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="cost $"
+                android:textColor="#E9D19B"
+                app:layout_constraintBottom_toBottomOf="@+id/textCost2"
+                app:layout_constraintEnd_toEndOf="@+id/txtViewCrewShopName2"
+                app:layout_constraintTop_toTopOf="@+id/textCost2" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBuy2"
+                android:layout_width="156dp"
+                android:layout_height="39dp"
+                android:layout_marginTop="5dp"
+                android:text="Buy crew"
+                android:textColor="#FFD434"
+                app:backgroundTint="#CF9836"
+                app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textCost2" />
+
+            <TextView
+                android:id="@+id/textCost2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Cost:"
+                android:textColor="#D9BA40"
+                android:textColorLink="#E6D634"
+                app:layout_constraintStart_toStartOf="@+id/txtViewJob2"
+                app:layout_constraintTop_toBottomOf="@+id/txtViewJob2" />
+
+            <TextView
+                android:id="@+id/txtViewPoor2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.6"
+                android:text="not enough money"
+                android:textColor="#FFDDDD"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnBuy2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView3"
+        android:layout_width="188dp"
+        android:layout_height="256dp"
+        android:layout_marginEnd="110dp"
+        android:alpha="0.95"
+        app:cardBackgroundColor="#415C7E"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#00FFFFFF">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/showCrewImg3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/txtViewShopName3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="16dp"
+                android:text="Name:"
+                android:textColor="#8AA8DB"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/showCrewImg3" />
+
+            <TextView
+                android:id="@+id/txtViewJob3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Job:"
+                android:textColor="#8AA8DB"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/txtViewShopName3"
+                app:layout_constraintTop_toBottomOf="@+id/txtViewShopName3" />
+
+            <TextView
+                android:id="@+id/txtViewCrewShopName3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:text="TextView"
+                android:textColor="#F5FFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/txtViewShopName3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtViewShopName3" />
+
+            <TextView
+                android:id="@+id/txtViewCrewShopJob3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="#F5FFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/txtViewJob3"
+                app:layout_constraintEnd_toEndOf="@+id/txtViewCrewShopName3"
+                app:layout_constraintTop_toTopOf="@+id/txtViewJob3" />
+
+            <TextView
+                android:id="@+id/txtViewCrewShopPrice3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="cost $"
+                android:textColor="#E9D19B"
+                app:layout_constraintBottom_toBottomOf="@+id/textCost3"
+                app:layout_constraintEnd_toEndOf="@+id/txtViewCrewShopName3"
+                app:layout_constraintTop_toTopOf="@+id/textCost3" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBuy3"
+                android:layout_width="156dp"
+                android:layout_height="39dp"
+                android:layout_marginTop="5dp"
+                android:text="Buy crew"
+                android:textColor="#FFD434"
+                app:backgroundTint="#CF9836"
+                app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textCost3" />
+
+            <TextView
+                android:id="@+id/textCost3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Cost:"
+                android:textColor="#D9BA40"
+                android:textColorLink="#E6D634"
+                app:layout_constraintStart_toStartOf="@+id/txtViewJob3"
+                app:layout_constraintTop_toBottomOf="@+id/txtViewJob3" />
+
+            <TextView
+                android:id="@+id/txtViewPoor3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.6"
+                android:text="not enough money"
+                android:textColor="#FFDDDD"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnBuy3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/btnExitShop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#415C7E"
+        android:text="Exit shop"
+        android:textColor="#8AA8DB"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/simple_square5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView4" />
+</androidx.constraintlayout.widget.ConstraintLayout>

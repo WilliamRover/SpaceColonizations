@@ -14,13 +14,14 @@ import com.example.spacecolonizations.model.crewmate.Technician;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Shop {
-    private HashMap<Crew,Integer> shopableCrew;
+    private LinkedHashMap<Crew,Integer> shopableCrew;
     private ArrayList<Crew> generatableCrew;
     public Shop(){
-        shopableCrew = new HashMap<Crew,Integer>();
+        shopableCrew = new LinkedHashMap<Crew,Integer>();
         generatableCrew = new ArrayList<>();
         Commander cm = new Commander("cm",1,1);
         Navigator nv = new Navigator("nv",1,1);
@@ -37,7 +38,7 @@ public class Shop {
     public void generateShopableCrew(){
         shopableCrew.clear();
 
-        while (shopableCrew.size()>3){
+        while (shopableCrew.size()<3){
             Crew selected = generatableCrew.get((int)(Math.random()*generatableCrew.size()));
             int maxHealth =(int) ((Math.random()*40)+80);
             int currentHealth = (int) (maxHealth - (maxHealth*(Math.random()*2/10)));
@@ -62,10 +63,6 @@ public class Shop {
 
     }
 
-    /**
-     * input the index from 0 to 2
-     *
-     */
     public boolean buyCrew(int numberInShop){
         List<Integer> prices = new ArrayList<>(shopableCrew.values());
         int price = prices.get(numberInShop);
@@ -80,7 +77,7 @@ public class Shop {
             CrewManager.addCrew(c);
             Statistics.getInstance().setNumLivingCrews(Statistics.getInstance().getNumLivingCrews()+1);
 
-            shopableCrew.remove(c);
+//            shopableCrew.remove(c);
 
             return true;
         }
