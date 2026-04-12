@@ -45,6 +45,11 @@ public class PassObstacle extends Mission {
         return obstacles.get(randomIndex);
     }
 
+
+    public void setObstaclesType(Obstacle o){
+        e = o;
+    }
+
     @Override
     public String getMissionType(){
         return e.returnType();
