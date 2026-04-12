@@ -76,7 +76,7 @@ public class FightEnemyActivity extends AppCompatActivity {
             if (enemyShipHealth.get() != enemyShip.getHullStrength()) {
                 enemyShipHealth.set(enemyShip.getHullStrength());
                 showAttackOverlay();
-                int progessiveDamage = (int) (Statistics.getInstance().getShipKills() / 10);
+                int progessiveDamage = (int) (Statistics.getInstance().getShipKills() / 1.1);
                 if (progessiveDamage > 20) {
                     progessiveDamage = 20;
                 }
