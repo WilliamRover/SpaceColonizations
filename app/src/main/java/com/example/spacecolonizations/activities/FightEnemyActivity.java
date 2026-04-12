@@ -15,7 +15,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.spacecolonizations.R;
 import com.example.spacecolonizations.fragments.ShipFragment;
-import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.ship.EnemyShip;
 import com.example.spacecolonizations.model.ship.FriendlyShip;
@@ -27,6 +26,7 @@ import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FightEnemyActivity extends AppCompatActivity {
     // Ship attributes from Fragment
@@ -64,29 +64,42 @@ public class FightEnemyActivity extends AppCompatActivity {
         });
 
 
-        //new code for damage friendinl ship and module
-
+        //new code for damage friendily ship and module
+        AtomicInteger enemyShipHealth = new AtomicInteger(enemyShip.getHullStrength());
 
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleWithFixedDelay(() -> {
-            friendlyShip.loseHealth(20+(int) (Math.random()*20));
-            if (Math.random()<0.5){
-                while (true) {
-                    List<Station> station =  CrewManager.getStations();
-                    station.remove(Barracks.getInstance());
-                    Station selectedStation = station.get((int) (Math.random() * station.size()));
-                    if (selectedStation.getisUsable()){
-                        selectedStation.breakStation();
-                        station.add(Barracks.getInstance());
-                        break;
-                    }
-                }
+            if (enemyShipHealth.get() != enemyShip.getHullStrength()) {
+                enemyShipHealth.set(enemyShip.getHullStrength());
+                friendlyShip.loseHealth(20 + (int) (Math.random() * 20));
+                if (Math.random() < 0.5) {
+                    while (true) {
 
+                        List<Station> station = CrewManager.getStations();
+                        station.remove(Barracks.getInstance());
+                        boolean i = true;
+                        for (Station s: station){
+                            if (s.getisUsable()){
+                                i = false;
+                            }
+                        }
+                        if (i){
+                            break;
+                        }
+                        Station selectedStation = station.get((int) (Math.random() * station.size()));
+                        if (selectedStation.getisUsable()) {
+                            selectedStation.breakStation();
+                            station.add(Barracks.getInstance());
+                            break;
+                        }
+                    }
+
+                }
             }
             if (FriendlyShip.getShip().getHullStrength()<=0 || enemyShip.getHullStrength()<=0){
             scheduler.shutdown();
             }
-        }, 3, 10, TimeUnit.SECONDS);
+        }, 0, 1, TimeUnit.SECONDS);
     }
 
     private void innitEnemyView() {

@@ -97,6 +97,7 @@ public class PassObstacle extends Mission {
         List<Station> stations = CrewManager.getStations();
         stations.remove(Barracks.getInstance());
         stations.get((int) (Math.random()*stations.size())).breakStation();
+        stations.add(Barracks.getInstance());
 
     }
 
