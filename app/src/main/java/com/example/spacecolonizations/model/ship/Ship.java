@@ -49,7 +49,7 @@ public abstract class Ship implements Damagable {
 
     @Override
     public void loseHealth(int damage) {
-        this.hullStrength -= damage;
+        setHullStrength(this.hullStrength - damage);
         if (this instanceof FriendlyShip) {
             List<Station> stations = new ArrayList<>(CrewManager.getStations());
             stations.remove(Barracks.getInstance());
