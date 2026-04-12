@@ -67,7 +67,7 @@ public class Shop {
         List<Integer> prices = new ArrayList<>(shopableCrew.values());
         int price = prices.get(numberInShop);
 
-        if (Wallet.getInstance().getBalance()>price){
+        if (Wallet.getInstance().getBalance()>=price){
 
             Wallet.getInstance().reduceBalance(price);
 

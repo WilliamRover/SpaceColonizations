@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,10 +50,13 @@ public class CrewManager {
         int loadedBalance = -1;
         Map<String, Integer> loadedStats = null;
 
+        // Reset all static/singleton state before loading
+        crewList.clear();
+        stations.clear();
+        rescueMissions.clear();
+        Barracks.getInstance().getCrewMembers().clear();
+
         if (!file.exists()) {
-            crewList.clear();
-            stations.clear();
-            rescueMissions.clear();
             loadedBalance = 100;
             Statistics.getInstance();
             return;
@@ -72,15 +74,12 @@ public class CrewManager {
             Map<String, Object> data = JsonUtil.fromJsonResponse(stringBuilder.toString());
 
             List<Crew> loadedCrews = (List<Crew>) data.get("crewList");
-            crewList.clear();
             if (loadedCrews != null) crewList.addAll(loadedCrews);
 
             List<Station> loadedStations = (List<Station>) data.get("stationList");
-            stations.clear();
             if (loadedStations != null) stations.addAll(loadedStations);
 
             List<Rescue> loadedRescues = (List<Rescue>) data.get("rescueMissionList");
-            rescueMissions.clear();
             if (loadedRescues != null) rescueMissions.addAll(loadedRescues);
 
             loadedBalance = (int) data.get("balance");
@@ -93,9 +92,6 @@ public class CrewManager {
             Log.d(TAG, "crew_data.json loaded successfully");
 
         } catch (FileNotFoundException e) {
-            crewList.clear();
-            stations.clear();
-            rescueMissions.clear();
             Log.w(TAG, "crew_data.json not found", e);
         } catch (IOException | JSONException e) {
             Log.e(TAG, "Error loading crew_data.json", e);
@@ -146,6 +142,7 @@ public class CrewManager {
         crewList.clear();
         stations.clear();
         rescueMissions.clear();
+        Barracks.getInstance().getCrewMembers().clear();
     }
 
     /**
@@ -178,9 +175,9 @@ public class CrewManager {
             crewList.add(new Navigator(generateName(), 100, 100));
 
 
-            if (!Barracks.getInstance().getCrewMembers().isEmpty()){
-                Barracks.getInstance().getCrewMembers().clear();
-            }
+            // Clear Barracks before adding initial crew to prevent duplicates
+            Barracks.getInstance().getCrewMembers().clear();
+
             for (Crew crew: crewList) {
                 Barracks.getInstance().assignCrew(crew);
             }
