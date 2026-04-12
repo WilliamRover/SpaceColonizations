@@ -5,15 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/backgroundImage3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/txtViewGameTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="268dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="56dp"
         android:text="SPACE COLONIZATION"
+        android:textColor="#8FB2FA"
         android:textSize="34sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,30 +35,42 @@
         android:id="@+id/btnContinue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="392dp"
         android:layout_marginTop="32dp"
+        android:backgroundTint="#2A4987"
         android:text="Continue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtViewGameTitle" />
+        android:textColor="#8FB2FA"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/txtViewGameTitle"
+        app:layout_constraintStart_toStartOf="@+id/txtViewGameTitle"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewGameTitle"
+        app:strokeColor="#3B63B5" />
 
     <Button
         android:id="@+id/btnNewGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="384dp"
         android:layout_marginTop="16dp"
+        android:backgroundTint="#2A4987"
         android:text="New Game"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnContinue" />
+        android:textColor="#8FB2FA"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/btnContinue"
+        app:layout_constraintStart_toStartOf="@+id/btnContinue"
+        app:layout_constraintTop_toBottomOf="@+id/btnContinue"
+        app:strokeColor="#3B63B5" />
 
     <Button
         android:id="@+id/btnCredits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="396dp"
         android:layout_marginTop="16dp"
+        android:backgroundTint="#2A4987"
         android:text="Credits"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnNewGame" />
+        android:textColor="#8FB2FA"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/btnNewGame"
+        app:layout_constraintStart_toStartOf="@+id/btnNewGame"
+        app:layout_constraintTop_toBottomOf="@+id/btnNewGame"
+        app:strokeColor="#3B63B5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

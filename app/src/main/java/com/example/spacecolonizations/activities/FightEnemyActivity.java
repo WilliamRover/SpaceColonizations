@@ -2,6 +2,8 @@ package com.example.spacecolonizations.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,14 +35,14 @@ public class FightEnemyActivity extends AppCompatActivity {
     // Ship attributes from Fragment
     private FriendlyShip friendlyShip;
     private ShipFragment shipFragment;
-    
+    private View attackOverlay;
     // Enemy attributes
     private EnemyShip enemyShip;
     private ImageView enemyShipImage;
     private ProgressBar enemyHpBar;
     private TextView enemyExplode;
     private TextView enemyHpTxt;
-    
+
     private TextView friendlyExplode;
 
     @SuppressLint("MissingInflatedId")
@@ -57,6 +59,7 @@ public class FightEnemyActivity extends AppCompatActivity {
         }
 
         innitEnemyView();
+        attackOverlay = findViewById(R.id.attackOverlay);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -72,8 +75,8 @@ public class FightEnemyActivity extends AppCompatActivity {
         scheduler.scheduleWithFixedDelay(() -> {
             if (enemyShipHealth.get() != enemyShip.getHullStrength()) {
                 enemyShipHealth.set(enemyShip.getHullStrength());
-                int progessiveDamage = (int) (Statistics.getInstance().getShipKills()/10);
-                if (progessiveDamage>20){
+                int progessiveDamage = (int) (Statistics.getInstance().getShipKills() / 10);
+                if (progessiveDamage > 20) {
                     progessiveDamage = 20;
                 }
                 friendlyShip.loseHealth(20 + progessiveDamage);
@@ -83,12 +86,12 @@ public class FightEnemyActivity extends AppCompatActivity {
                         List<Station> station = CrewManager.getStations();
                         station.remove(Barracks.getInstance());
                         boolean i = true;
-                        for (Station s: station){
-                            if (s.getisUsable()){
+                        for (Station s : station) {
+                            if (s.getisUsable()) {
                                 i = false;
                             }
                         }
-                        if (i){
+                        if (i) {
                             break;
                         }
                         Station selectedStation = station.get((int) (Math.random() * station.size()));
@@ -101,11 +104,11 @@ public class FightEnemyActivity extends AppCompatActivity {
 
                 }
             }
-            if (FriendlyShip.getShip().getHullStrength()<=0){
-                FriendlyShip.getShip().explode();
+            if (FriendlyShip.getShip().getHullStrength() <= 0) {
+//                FriendlyShip.getShip().explode();
                 scheduler.shutdown();
             }
-            if (enemyShip.getHullStrength()<=0){
+            if (enemyShip.getHullStrength() <= 0) {
                 Statistics.getInstance().setShipKills(Statistics.getInstance().getShipKills() + 1);
                 scheduler.shutdown();
             }
@@ -113,7 +116,7 @@ public class FightEnemyActivity extends AppCompatActivity {
     }
 
     private void innitEnemyView() {
-        enemyShip = new EnemyShip((int) (100 + 100*Math.random()));
+        enemyShip = new EnemyShip((int) (100 + 100 * Math.random()));
 
         enemyHpBar = findViewById(R.id.enemyShipHp);
         enemyShipImage = findViewById(R.id.enemyShipModel);
@@ -129,13 +132,28 @@ public class FightEnemyActivity extends AppCompatActivity {
     public void updateEnemyUI() {
         if (enemyShip != null) {
             enemyHpBar.setProgress(enemyShip.getHullStrength());
-            enemyHpTxt.setText(String.format(Locale.US, "%d/%d", enemyShip.getHullStrength(), enemyShip.getInnitHullStrength()));
-            
-            if (enemyShip.getHullStrength() <= 0) {
-                enemyExplode.setVisibility(View.VISIBLE);
-                enemyExplode.setAlpha(1.0f);
-                enemyShipImage.setVisibility(View.INVISIBLE);
+            if (enemyShip != null) {
+                enemyHpBar.setProgress(enemyShip.getHullStrength());
+                if (enemyShip.getHullStrength() <= 0) {
+                    enemyHpTxt.setText(String.format(Locale.US, "%d/%d", 0, enemyShip.getInnitHullStrength()));
+                } else {
+                    enemyHpTxt.setText(String.format(Locale.US, "%d/%d", enemyShip.getHullStrength(), enemyShip.getInnitHullStrength()));
+                }
+                if (enemyShip.getHullStrength() <= 0) {
+                    enemyExplode.setVisibility(View.VISIBLE);
+                    enemyExplode.setAlpha(1.0f);
+                    enemyShipImage.setVisibility(View.INVISIBLE);
+                }
             }
+        }
+
+    }
+    public void showAttackOverlay() {
+        if (attackOverlay != null) {
+            attackOverlay.setVisibility(View.VISIBLE);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                attackOverlay.setVisibility(View.GONE);
+            }, 2000);
         }
     }
 
