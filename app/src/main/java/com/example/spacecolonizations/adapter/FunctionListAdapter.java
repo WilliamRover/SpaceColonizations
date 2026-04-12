@@ -27,15 +27,20 @@ public class FunctionListAdapter extends RecyclerView.Adapter<FunctionListAdapte
     public FunctionListAdapter(String currentStation, OnStationClickListener listener) {
         this.listener = listener;
         this.availableFunctions = new ArrayList<>();
+        
+        // Add movement options
         for (String station : moveStations) {
             if (!station.equalsIgnoreCase(currentStation) && !station.equalsIgnoreCase("Move to " + currentStation)) {
                 availableFunctions.add(station);
             }
         }
-
-        availableFunctions.add("Assign to be patient");
-        availableFunctions.add("Deal damage to enemy");
-        availableFunctions.add("Show statistics");
+        if ("Turret".equalsIgnoreCase(currentStation)) {
+            availableFunctions.add("Deal damage to enemy");
+        }
+        
+        if ("Command Center".equalsIgnoreCase(currentStation)) {
+            availableFunctions.add("Show statistics");
+        }
     }
 
     @NonNull
