@@ -80,7 +80,7 @@ public class FightEnemyActivity extends AppCompatActivity {
                     }
                 }
             }
-            if (FriendlyShip.getShip().getHullStrength()<=0){
+            if (FriendlyShip.getShip().getHullStrength()<=0 || enemyShip.getHullStrength()<=0){
             scheduler.shutdown();
             }
         }, 3, 10, TimeUnit.SECONDS);
