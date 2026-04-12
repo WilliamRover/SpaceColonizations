@@ -5,15 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/backgroundImage4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/misc_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/btnBack"
         android:layout_width="83dp"
         android:layout_height="40dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="30dp"
+        android:backgroundTint="#2A4987"
         android:text="Back"
+        android:textColor="#8FB2FA"
+        app:cornerRadius="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#3B63B5" />
 
     <TextView
         android:id="@+id/cred1"
@@ -21,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="Thuan Bui: Front end, design"
+        android:textColor="#8FB2FA"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/btnBack"
         app:layout_constraintTop_toBottomOf="@+id/btnBack" />
@@ -30,6 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Umesh Handuge: Back end"
+        android:textColor="#8FB2FA"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/cred1"
         app:layout_constraintTop_toBottomOf="@+id/cred1" />
@@ -39,6 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Aitiwit Noodat: Back end"
+        android:textColor="#8FB2FA"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/cred2"
         app:layout_constraintTop_toBottomOf="@+id/cred2" />

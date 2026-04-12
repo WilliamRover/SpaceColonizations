@@ -87,6 +87,13 @@
         app:layout_constraintBottom_toBottomOf="@+id/enemyShipHp"
         app:layout_constraintStart_toStartOf="@+id/enemyShipHp" />
 
+    <include
+        android:id="@+id/attackOverlay"
+        layout="@layout/enemy_attack_in_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <!-- Moved to the end so it is drawn on top of everything else -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/pauseFragment"
