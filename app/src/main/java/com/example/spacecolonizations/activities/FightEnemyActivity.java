@@ -17,14 +17,19 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.spacecolonizations.NameGen;
 import com.example.spacecolonizations.R;
 import com.example.spacecolonizations.fragments.ShipFragment;
 import com.example.spacecolonizations.model.Statistics;
+import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.CrewManager;
+import com.example.spacecolonizations.model.mission.FightEnemy;
+import com.example.spacecolonizations.model.mission.Mission;
 import com.example.spacecolonizations.model.ship.EnemyShip;
 import com.example.spacecolonizations.model.ship.FriendlyShip;
 import com.example.spacecolonizations.model.station.Barracks;
 import com.example.spacecolonizations.model.station.Station;
+import com.example.spacecolonizations.model.station.Turret;
 
 import java.util.List;
 import java.util.Locale;
@@ -69,6 +74,11 @@ public class FightEnemyActivity extends AppCompatActivity {
             return insets;
         });
 
+        //mission control code
+        Mission fightEnemy = new FightEnemy(NameGen.nGen((int) ((Math.random()*5) + 3)));
+
+
+
         //new code for damage friendily ship and module
         AtomicInteger enemyShipHealth = new AtomicInteger(enemyShip.getHullStrength());
 
@@ -111,6 +121,14 @@ public class FightEnemyActivity extends AppCompatActivity {
                         Station selectedStation = station.get((int) (Math.random() * station.size()));
                         if (selectedStation.getisUsable()) {
                             selectedStation.breakStation();
+                            List<Crew>crew = selectedStation.getCrewMembers();
+                            for (Crew c : crew){
+                                int progessiveHealthLost = (int) (Statistics.getInstance().getShipKills() / 2);
+                                if (progessiveDamage > 4) {
+                                    progessiveDamage = 4;
+                                }
+                                c.loseHealth(8 + progessiveHealthLost);
+                            }
                             station.add(Barracks.getInstance());
                             break;
                         }
@@ -120,9 +138,18 @@ public class FightEnemyActivity extends AppCompatActivity {
             }
             if (FriendlyShip.getShip().getHullStrength() <= 0) {
 //                FriendlyShip.getShip().explode();
+                fightEnemy.setComplete(false);
                 scheduler.shutdown();
             }
             if (enemyShip.getHullStrength() <= 0) {
+                fightEnemy.setComplete(true);
+                for (Station s : CrewManager.getStations()){
+                    if (s instanceof Turret){
+                        for (Crew c : s.getCrewMembers()){
+                            c.receiveExp(100F);
+                        }
+                    }
+                }
                 // Statistics.getInstance().setShipKills(Statistics.getInstance().getShipKills() + 1); // Handled in updateEnemyUI
                 scheduler.shutdown();
             }
