@@ -33,9 +33,6 @@ public abstract class Station implements Serializable {
     protected transient Runnable breakRunnable;
 
 
-    //TODO remove health and tie it to isuseable
-    //TODO redo repairStation
-
     public Station() {
         this.efficiency = 0;
         this.crewMembers = new ArrayList<>();
@@ -59,7 +56,6 @@ public abstract class Station implements Serializable {
         if (crew.getCurrentStation() == this) {
             return;
         } else if (!crew.getCanWork()) {
-            //TODO notification saying crew cannot be assigned
             return;
         }
         if (this.crewMembers.size() < this.maxCrew) {
@@ -99,11 +95,9 @@ public abstract class Station implements Serializable {
      */
     public void addRepairMan(@NonNull Crew crew) {
         if (this.isUsable) {
-            //TODO notification saying station is not damaged
             return;
 
         } else if (!crew.getCanWork()) {
-            //TODO notification saying repairman cannot be assigned
             return;
         }
         if (this.repairMan.size() < this.maxRepairmen) {
@@ -140,7 +134,7 @@ public abstract class Station implements Serializable {
     /**
      *Try to repair the Station
      */
-    public void repairStation(){
+    private void repairStation(){
         if (this.isUsable) {
             this.repairTimeRemaining = 0;
             return;
@@ -160,7 +154,7 @@ public abstract class Station implements Serializable {
     /**
      * Calculate the repair efficiency of the station.
      */
-    protected void setRepairEfficiency() {
+    private void setRepairEfficiency() {
         float increment = 1;
         float totalEfficiency =  0;
 
@@ -204,7 +198,7 @@ public abstract class Station implements Serializable {
      * Set the efficiency of the station.
      * This method should be overridden by subclasses.
      */
-    public abstract void setEfficiency();
+    protected abstract void setEfficiency();
 
 
     /**

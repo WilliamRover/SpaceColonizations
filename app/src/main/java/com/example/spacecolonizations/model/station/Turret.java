@@ -29,7 +29,7 @@ public class Turret extends Station{
     }
 
     @Override
-    public void setEfficiency() {
+    protected void setEfficiency() {
         float increment = 1;
         float ttotalEfficiency =  0;
 

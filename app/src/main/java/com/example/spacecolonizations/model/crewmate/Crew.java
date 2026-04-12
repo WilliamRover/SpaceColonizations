@@ -18,11 +18,7 @@ public abstract class Crew implements Damagable, Serializable {
     //The above attribute is used to figure out if the crew member is able to be assigned for jobs at station
     //They will not be able to be assigned if they are a patient or they are in mission.
 
-    //TODO update this logic when missions are merged to main in the missions folder
 
-
-    //TODO figure out a way to temporarily remove the crew from ship into rescue missions
-    //TODO keep multiplier as possible future implementation
     public Crew(String name, int healthPoints, int maxHealthPoints){
         this.name = name;
         this.healthPoints = healthPoints;

@@ -41,7 +41,6 @@ public class MedBay extends Station{
         }
 
         if (!(this.patients.size() < this.maxPatients) || this.patients.contains(crew)) {
-        //TODO notification saying patient cannot be assigned
             return;
 
         }
@@ -93,7 +92,7 @@ public class MedBay extends Station{
     }
 
     @Override
-    public void setEfficiency() {
+    protected void setEfficiency() {
         float increment = 1;
         float totalEfficiency =  0;
 

@@ -1,11 +1,7 @@
 package com.example.spacecolonizations.model.ship;
 
-import static java.lang.Math.round;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 

@@ -22,7 +22,7 @@ public class Barracks extends Station{
     }
 
     @Override
-    public void setEfficiency() {
+    protected void setEfficiency() {
         return;
     }
 

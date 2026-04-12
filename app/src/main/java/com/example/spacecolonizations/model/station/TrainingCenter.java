@@ -9,7 +9,6 @@ import java.io.IOException;
 
 
 public class TrainingCenter extends Station{
-    //TODO remove multiplier stuff and implement xp
 
     private float expIncrement;
 
@@ -24,7 +23,7 @@ public class TrainingCenter extends Station{
     }
 
     @Override
-    public void setEfficiency() {
+    protected void setEfficiency() {
         return;
     }
 
