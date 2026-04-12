@@ -41,7 +41,7 @@ public class Shop {
             Crew selected = generatableCrew.get((int)(Math.random()*generatableCrew.size()));
             int maxHealth =(int) ((Math.random()*40)+80);
             int currentHealth = (int) (maxHealth - (maxHealth*(Math.random()*2/10)));
-            int price = (int) (Math.random()*30)+20;
+            int price = (int) (Math.random()*50)+100;
             if (selected instanceof Commander){
                 Commander cm = new Commander(generateName(),currentHealth,maxHealth);
                 shopableCrew.put(cm,price);
