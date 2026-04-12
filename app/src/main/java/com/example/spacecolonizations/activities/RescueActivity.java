@@ -39,5 +39,7 @@ public class RescueActivity extends AppCompatActivity {
         }
         String outRescueTxt = crewName.get(0) + " and " + crewName.get(1) + " have been sent to aid ally ships";
         textView5.setText(outRescueTxt);
+
+        rescue.start();
     }
 }
