@@ -73,4 +73,19 @@
         app:layout_constraintTop_toBottomOf="@+id/btnNewGame"
         app:strokeColor="#3B63B5" />
 
+
+    <Button
+        android:id="@+id/btnExit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#2A4987"
+        android:text="Exit"
+        android:textColor="#8FB2FA"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/btnCredits"
+        app:layout_constraintStart_toStartOf="@+id/btnCredits"
+        app:layout_constraintTop_toBottomOf="@+id/btnCredits"
+        app:strokeColor="#3B63B5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

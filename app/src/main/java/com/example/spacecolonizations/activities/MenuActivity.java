@@ -56,7 +56,7 @@ public class MenuActivity extends AppCompatActivity {
         }));
 
         Button btnExit  = findViewById(R.id.btnExit);
-        btnCredits.setOnClickListener(v -> {
+        btnExit.setOnClickListener(v -> {
             CrewManager.saveTOFile(this);
             finishAffinity();
             System.exit(0);
