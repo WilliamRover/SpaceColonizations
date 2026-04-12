@@ -81,7 +81,7 @@ public class ShipFragment extends Fragment {
         refreshHandler.removeCallbacks(refreshRunnable);
     }
 
-    private void updateUI() {
+    public void updateUI() {
         if (friendlyShip == null || wallet == null) return;
         
         shipHpBar.setMax(friendlyShip.getInnitHullStrength());
