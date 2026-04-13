@@ -99,10 +99,10 @@ public class PassObstacle extends Mission {
     }
 
     public void damageStation(){
-        List<Station> stations = new ArrayList<>(CrewManager.getStations());
+        List<Station> stations = CrewManager.getStations();
         stations.remove(Barracks.getInstance());
         stations.get((int) (Math.random()*stations.size())).breakStation();
-
+        stations.add(Barracks.getInstance());
     }
 
     public void finallisePassObstacle(){

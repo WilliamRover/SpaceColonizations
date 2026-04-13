@@ -59,7 +59,6 @@ public class Rescue extends Mission {
             returnCrew();
         }, timeRequire, TimeUnit.SECONDS);
         scheduler.shutdown();
-
     }
 
     /**

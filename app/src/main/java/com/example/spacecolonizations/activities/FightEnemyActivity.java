@@ -108,7 +108,7 @@ public class FightEnemyActivity extends AppCompatActivity {
                     while (true) {
 
                         List<Station> station = CrewManager.getStations();
-                        station.remove(Barracks.getInstance());
+
                         boolean i = true;
                         for (Station s : station) {
                             if (s.getisUsable()) {
@@ -118,6 +118,7 @@ public class FightEnemyActivity extends AppCompatActivity {
                         if (i) {
                             break;
                         }
+                        station.remove(Barracks.getInstance());
                         Station selectedStation = station.get((int) (Math.random() * station.size()));
                         if (selectedStation.getisUsable()) {
                             selectedStation.breakStation();
@@ -131,7 +132,10 @@ public class FightEnemyActivity extends AppCompatActivity {
                             }
                             station.add(Barracks.getInstance());
                             break;
+                        } else{
+                            station.add(Barracks.getInstance());
                         }
+
                     }
 
                 }
