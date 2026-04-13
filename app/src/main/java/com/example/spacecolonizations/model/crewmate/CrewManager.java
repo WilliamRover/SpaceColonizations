@@ -169,7 +169,7 @@ public class CrewManager {
     public static List<Crew> getCrew(){
         if (crewList.isEmpty()){
             crewList.add(new Gunner(generateName(), 100, 100));
-            crewList.add(new Medic(generateName(), 80, 100));
+            crewList.add(new Medic(generateName(), 100, 100));
             crewList.add(new Commander(generateName(), 120, 120));
             crewList.add(new Technician(generateName(), 100, 100));
             crewList.add(new Navigator(generateName(), 100, 100));

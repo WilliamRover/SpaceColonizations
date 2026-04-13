@@ -69,11 +69,21 @@ public class Rescue extends Mission {
     public ArrayList<Crew> returnCrew(){
         damageCrew();
         ArrayList<Crew> tempCrew = new ArrayList<>(crewMembers);
+        boolean back = true;
         for (Crew crew: crewMembers){
             if (crew.getHealthPoints()>0){
                 setComplete(true);
+                back = false;
+                break;
             }
         }
+        if (back){
+            setComplete(false);
+            Statistics.getInstance().setNumLivingCrews(Statistics.getInstance().getNumLivingCrews()-2);
+            Statistics.getInstance().setNumDeadCrews(Statistics.getInstance().getNumDeadCrews()+2);
+
+        }
+        //exp
 
         if (this.getComplete()) {
             for (int i = crewMembers.size() - 1; i >= 0; i--) {

@@ -1,16 +1,18 @@
 package com.example.spacecolonizations.model.station;
 
 
+import com.example.spacecolonizations.model.Statistics;
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.Gunner;
 import com.example.spacecolonizations.model.ship.EnemyShip;
+import com.example.spacecolonizations.model.ship.FriendlyShip;
 
 public class Turret extends Station{
     private float damage;
     public Turret() {
         super();
         this.damage = 10;
-        this.maxCrew = 5;
+        this.maxCrew = 2;
     }
 
     public float getdamage(){
@@ -26,6 +28,14 @@ public class Turret extends Station{
             return;
         }
         ship.loseHealth((int) (this.damage));
+    }
+
+    public void setMaxCrew() {
+        if (Statistics.getInstance().getShipKills() >= 3) {
+            this.maxCrew = 3;
+        } else {
+            this.maxCrew = 2;
+        }
     }
 
     @Override

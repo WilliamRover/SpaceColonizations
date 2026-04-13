@@ -22,8 +22,8 @@ public class Statistics {
     private Statistics() {
         this.shipKills = 0;
         this.numDeadCrews = 0;
-        this.numLivingCrews = 5;
-        this.numTotalCrews = 5;
+        this.numLivingCrews = 4;
+        this.numTotalCrews = 4;
         this.numSuccessfulMissions = 0;
         this.numFailedMissions = 0;
     }

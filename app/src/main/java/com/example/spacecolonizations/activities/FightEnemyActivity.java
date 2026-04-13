@@ -1,6 +1,7 @@
 package com.example.spacecolonizations.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -27,10 +28,12 @@ import com.example.spacecolonizations.model.mission.FightEnemy;
 import com.example.spacecolonizations.model.mission.Mission;
 import com.example.spacecolonizations.model.ship.EnemyShip;
 import com.example.spacecolonizations.model.ship.FriendlyShip;
+import com.example.spacecolonizations.model.shop.Wallet;
 import com.example.spacecolonizations.model.station.Barracks;
 import com.example.spacecolonizations.model.station.Station;
 import com.example.spacecolonizations.model.station.Turret;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Executors;
@@ -42,6 +45,7 @@ public class FightEnemyActivity extends AppCompatActivity {
     // Ship attributes from Fragment
     private FriendlyShip friendlyShip;
     private ShipFragment shipFragment;
+    private View friendlyModel;
     private View attackOverlay;
     // Enemy attributes
     private EnemyShip enemyShip;
@@ -49,7 +53,6 @@ public class FightEnemyActivity extends AppCompatActivity {
     private ProgressBar enemyHpBar;
     private TextView enemyExplode;
     private TextView enemyHpTxt;
-
     private TextView friendlyExplode;
 
     @SuppressLint("MissingInflatedId")
@@ -93,60 +96,64 @@ public class FightEnemyActivity extends AppCompatActivity {
                 }
 
                 // Damage the singleton instance to ensure consistency
-                FriendlyShip.getShip().loseHealth(20 + progessiveDamage);
-                Log.e("Enemy Health", String.valueOf(enemyShip.getHullStrength()));
+                if (enemyShip.getHullStrength() > 0){
+                    FriendlyShip.getShip().loseHealth(20 + progessiveDamage);
+                    Log.e("Enemy Health", String.valueOf(enemyShip.getHullStrength()));
 
 
-                // UI updates must happen on the Main Thread
-                runOnUiThread(() -> {
-                    if (shipFragment != null) {
-                        shipFragment.updateUI();
-                    }
-                });
 
-                if (Math.random() < 0.5) {
-                    while (true) {
-
-                        List<Station> station = CrewManager.getStations();
-
-                        boolean i = true;
-                        for (Station s : station) {
-                            if (s.getisUsable()) {
-                                i = false;
-                            }
+                    // UI updates must happen on the Main Thread
+                    runOnUiThread(() -> {
+                        if (shipFragment != null) {
+                            shipFragment.updateUI();
                         }
-                        if (i) {
-                            break;
-                        }
-                        station.remove(Barracks.getInstance());
-                        Station selectedStation = station.get((int) (Math.random() * station.size()));
-                        if (selectedStation.getisUsable()) {
-                            selectedStation.breakStation();
-                            List<Crew>crew = selectedStation.getCrewMembers();
-                            for (Crew c : crew){
-                                int progessiveHealthLost = (int) (Statistics.getInstance().getShipKills() / 2);
-                                if (progessiveDamage > 4) {
-                                    progessiveDamage = 4;
+                    });
+
+                    if (Math.random() < 0.5) {
+                        while (true) {
+
+                            List<Station> station = new ArrayList<>(CrewManager.getStations());
+
+                            boolean i = true;
+                            for (Station s : station) {
+                                if (s.getisUsable()) {
+                                    i = false;
                                 }
-                                c.loseHealth(8 + progessiveHealthLost);
                             }
-                            station.add(Barracks.getInstance());
-                            break;
-                        } else{
-                            station.add(Barracks.getInstance());
+                            if (i) {
+                                break;
+                            }
+                            station.remove(Barracks.getInstance());
+                            Station selectedStation = station.get((int) (Math.random() * station.size()));
+                            if (selectedStation.getisUsable()) {
+                                //selectedStation.breakStation();
+                                List<Crew>crew = selectedStation.getCrewMembers();
+                                for (Crew c : crew){
+                                    int progessiveHealthLost = (int) (Statistics.getInstance().getShipKills() / 2);
+                                    if (progessiveDamage > 4) {
+                                        progessiveDamage = 4;
+                                    }
+                                    c.loseHealth(8 + progessiveHealthLost);
+                                }
+                                station.add(Barracks.getInstance());
+                                break;
+                            } else{
+                                station.add(Barracks.getInstance());
+                            }
+
                         }
 
                     }
-
                 }
             }
             if (FriendlyShip.getShip().getHullStrength() <= 0) {
-//                FriendlyShip.getShip().explode();
+                //FriendlyShip.getShip().explode(friendlyShip, friendlyExplode);
                 fightEnemy.setComplete(false);
                 scheduler.shutdown();
             }
             if (enemyShip.getHullStrength() <= 0) {
                 fightEnemy.setComplete(true);
+                Wallet.getInstance().addBalance(90+(int)(Math.random()*21));
                 for (Station s : CrewManager.getStations()){
                     if (s instanceof Turret){
                         for (Crew c : s.getCrewMembers()){
@@ -154,6 +161,14 @@ public class FightEnemyActivity extends AppCompatActivity {
                         }
                     }
                 }
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                Intent intent = new Intent(this, MapActivity.class);
+                startActivity(intent);
                 // Statistics.getInstance().setShipKills(Statistics.getInstance().getShipKills() + 1); // Handled in updateEnemyUI
                 scheduler.shutdown();
             }
