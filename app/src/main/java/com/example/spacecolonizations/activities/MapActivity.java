@@ -1,10 +1,10 @@
 package com.example.spacecolonizations.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,9 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.spacecolonizations.R;
-import com.example.spacecolonizations.adapter.StationAdapter;
 import com.example.spacecolonizations.fragments.PauseFragment;
 import com.example.spacecolonizations.fragments.PauseOverlayFragment;
+import com.example.spacecolonizations.fragments.ShipFragment;
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.crewmate.Navigator;
@@ -23,14 +23,11 @@ import com.example.spacecolonizations.model.mission.FightEnemy;
 import com.example.spacecolonizations.model.mission.Mission;
 import com.example.spacecolonizations.model.mission.PassObstacle;
 import com.example.spacecolonizations.model.mission.Rescue;
-import com.example.spacecolonizations.model.mission.obstacle.Asteroid;
 import com.example.spacecolonizations.model.station.CommandCenter;
-import com.example.spacecolonizations.model.station.Station;
 import com.example.spacecolonizations.model.mission.PathGeneration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class MapActivity extends AppCompatActivity {
     private PathGeneration path;
@@ -225,5 +222,22 @@ public class MapActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        View overlayScreenShip = findViewById(R.id.simple_square);
+        View friendlyModel = findViewById(R.id.shipFragment);;
+        ImageButton shipModelSketch = findViewById(R.id.shipModelSketch);
+        Button exitOverlay = findViewById(R.id.buttonExitOverlay);
+        shipModelSketch.setOnClickListener(v -> {
+            overlayScreenShip.setVisibility(View.VISIBLE);
+            friendlyModel.setVisibility(View.VISIBLE);
+            exitOverlay.setVisibility(View.VISIBLE);
+        });
+
+        exitOverlay.setOnClickListener(v -> {
+            overlayScreenShip.setVisibility(View.GONE);
+            friendlyModel.setVisibility(View.GONE);
+            exitOverlay.setVisibility(View.GONE);
+        });
+
     }
 }

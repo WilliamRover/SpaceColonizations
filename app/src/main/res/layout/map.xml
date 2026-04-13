@@ -54,12 +54,15 @@
         app:layout_constraintStart_toStartOf="@+id/btnEnemy2"
         app:layout_constraintTop_toBottomOf="@+id/txtEnemyLabel2" />
 
-    <ImageView
-        android:id="@+id/crewImg"
+    
+    <ImageButton
+        android:id="@+id/shipModelSketch"
         android:layout_width="224dp"
         android:layout_height="93dp"
         android:layout_marginStart="132dp"
         android:layout_marginTop="156dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:scaleType="fitCenter"
         android:rotation="160"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -167,9 +170,9 @@
         android:layout_marginBottom="40dp"
         android:background="@android:color/darker_gray"
         android:rotation="160"
-        app:layout_constraintBottom_toTopOf="@+id/crewImg"
+        app:layout_constraintBottom_toTopOf="@+id/shipModelSketch"
         app:layout_constraintEnd_toStartOf="@+id/btnEnemy1"
-        app:layout_constraintStart_toEndOf="@+id/crewImg" />
+        app:layout_constraintStart_toEndOf="@+id/shipModelSketch" />
 
     <View
         android:id="@+id/arrow"
@@ -178,10 +181,10 @@
         android:layout_marginEnd="30dp"
         android:background="@android:color/darker_gray"
         android:rotation="5"
-        app:layout_constraintBottom_toBottomOf="@+id/crewImg"
+        app:layout_constraintBottom_toBottomOf="@+id/shipModelSketch"
         app:layout_constraintEnd_toStartOf="@+id/btnEnemy2"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/crewImg" />
+        app:layout_constraintStart_toEndOf="@+id/shipModelSketch" />
 
     <View
         android:id="@+id/arrow2"
@@ -193,8 +196,8 @@
         android:rotation="10"
         app:layout_constraintEnd_toEndOf="@+id/btnShop"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/crewImg"
-        app:layout_constraintTop_toBottomOf="@+id/crewImg" />
+        app:layout_constraintStart_toEndOf="@+id/shipModelSketch"
+        app:layout_constraintTop_toBottomOf="@+id/shipModelSketch" />
 
     <TextView
         android:id="@+id/txtViewRescueProb1"
@@ -215,6 +218,40 @@
         app:layout_constraintEnd_toEndOf="@+id/btnEnemy2"
         app:layout_constraintStart_toStartOf="@+id/btnEnemy2"
         app:layout_constraintTop_toBottomOf="@+id/txtViewObstacleProb2" />
+
+    <View
+        android:id="@+id/simple_square"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.75"
+        android:background="@android:color/darker_gray"
+        android:backgroundTint="#2C3A54"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/shipFragment"
+        android:name="com.example.spacecolonizations.fragments.ShipFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        tools:layout="@layout/fragment_ship" />
+
+    <Button
+        android:id="@+id/buttonExitOverlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
+        android:text="Exit to map"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/pauseFragment2"
