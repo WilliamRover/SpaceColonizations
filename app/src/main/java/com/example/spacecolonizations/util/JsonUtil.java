@@ -73,6 +73,8 @@ public class JsonUtil {
             for (Rescue rescue : rescueMissions) {
                 JSONObject r = new JSONObject();
                 r.put("missionName", rescue.getMissionName());
+                r.put("startTime", rescue.getStartTime());
+                r.put("numCrew", rescue.getNumCrew());
                 
                 JSONArray missionCrew = new JSONArray();
                 for (Crew c : rescue.getCrewMembers()) {
@@ -194,17 +196,35 @@ public class JsonUtil {
             for (int i = 0; i < rescueArray.length(); i++) {
                 JSONObject rObj = rescueArray.getJSONObject(i);
                 Rescue rescue = new Rescue(rObj.getString("missionName"));
+                rescue.setStartTime(rObj.optLong("startTime", 0));
+                
+                // Set numCrew from save if available
+                if (rObj.has("numCrew")) {
+                    try {
+                        java.lang.reflect.Field field = rescue.getClass().getSuperclass().getDeclaredField("numCrew");
+                        field.setAccessible(true);
+                        field.set(rescue, rObj.getInt("numCrew"));
+                    } catch (Exception e) {
+                        // fallback or ignore
+                    }
+                }
                 
                 JSONArray crewNames = rObj.optJSONArray("crewNames");
                 if (crewNames != null) {
                     for (int j = 0; j < crewNames.length(); j++) {
-                        Crew c = crewNameMap.get(crewNames.getString(j));
+                        String name = crewNames.getString(j);
+                        Crew c = crewNameMap.get(name);
                         if (c != null) {
+                            boolean originalCanWork = c.getCanWork();
+                            c.setCanWork(true); // Temporarily allow adding to mission during load
                             rescue.addCrew(c);
+                            // addCrew sets canWork to false, which is what we want
                         }
                     }
                 }
                 rescueMissions.add(rescue);
+                // Automatically restart the timer when loading
+                rescue.start();
             }
         }
         data.put("rescueMissionList", rescueMissions);

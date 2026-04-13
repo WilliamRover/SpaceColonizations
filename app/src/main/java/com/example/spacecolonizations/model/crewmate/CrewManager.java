@@ -38,6 +38,7 @@ public class CrewManager {
     private static final String saveFileName = "crew_data.json";
     private static final List<Station> stations = new ArrayList<>();
     private static final List<Rescue> rescueMissions = new ArrayList<>();
+    private static Context appContext;
 
 
     /**
@@ -45,6 +46,10 @@ public class CrewManager {
      * @param context
      */
     public static void loadFromFile(Context context) {
+        if (context != null) {
+            appContext = context.getApplicationContext();
+        }
+        
         File file = new File(context.getFilesDir(), saveFileName);
         Log.d(TAG, "Attempting to load from: " + file.getAbsolutePath());
         int loadedBalance = -1;
@@ -112,9 +117,13 @@ public class CrewManager {
      * @param context
      */
     public static void saveTOFile(Context context) {
-        File file = new File(context.getFilesDir(), saveFileName);
-        Log.d(TAG, "Attempting to save to: " + file.getAbsolutePath());
-        try (FileOutputStream fos = context.openFileOutput(saveFileName, Context.MODE_PRIVATE);
+        Context ctx = context != null ? context : appContext;
+        if (ctx == null) {
+            Log.e(TAG, "Cannot save to file: No context provided");
+            return;
+        }
+        
+        try (FileOutputStream fos = ctx.openFileOutput(saveFileName, Context.MODE_PRIVATE);
              PrintWriter writer = new PrintWriter(fos)) {
 
             String json = JsonUtil.toJsonResponse(
@@ -133,7 +142,11 @@ public class CrewManager {
     }
 
     public static void deleteSave(Context context) {
-        context.deleteFile(saveFileName);
+        Context ctx = context != null ? context : appContext;
+        if (ctx != null) {
+            ctx.deleteFile(saveFileName);
+        }
+        
         Statistics.getInstance().resetStatistics();
         Wallet.getInstance().restoreBalance(100);
 
@@ -222,7 +235,9 @@ public class CrewManager {
      * @param mission
      */
     public static void addRescueMission(Rescue mission){
-        rescueMissions.add(mission);
+        if (!rescueMissions.contains(mission)) {
+            rescueMissions.add(mission);
+        }
     }
 
 

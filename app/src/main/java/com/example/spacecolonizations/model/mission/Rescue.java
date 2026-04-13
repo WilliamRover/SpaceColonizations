@@ -14,8 +14,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Rescue extends Mission {
     private ArrayList<Crew> crewMembers;
-
     private int timeRequire;
+    private long startTime;
+    private transient boolean isStarted = false;
 
     public Rescue(String missionName){
         super(missionName);
@@ -26,9 +27,11 @@ public class Rescue extends Mission {
         }
 
         this.crewMembers = new ArrayList<>();
-        this.timeRequire = 180;
-        CrewManager.addRescueMission(this);
+        this.timeRequire = 30;
+        // Mission is NOT added to CrewManager here anymore to avoid duplication during load.
+        // It should be added explicitly by the creator (e.g., RescueActivity).
     }
+    
     @Override
     public String getMissionType(){
         return "Rescue";
@@ -38,6 +41,13 @@ public class Rescue extends Mission {
         return timeRequire;
     }
 
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
 
     public void damageCrew(){
         for (Crew c : crewMembers){
@@ -50,60 +60,72 @@ public class Rescue extends Mission {
             }
         }
     }
-    /**
-     * this is the main function with the timer foe the rescue mission
-     */
+    
     public void start(){
+        if (isStarted) return;
+        isStarted = true;
+        if (startTime == 0) {
+            startTime = System.currentTimeMillis();
+        }
+        
+        long elapsed = (System.currentTimeMillis() - startTime) / 1000;
+        long remaining = Math.max(0, timeRequire - elapsed);
+
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.schedule(() -> {
             returnCrew();
-        }, timeRequire, TimeUnit.SECONDS);
+        }, remaining, TimeUnit.SECONDS);
         scheduler.shutdown();
     }
 
-    /**
-     * To be called when mission is complete
-     * Also hands out rewards exp if mission is omplete
-     * @return The list of crew members that were assigned to the mission
-     */
     public ArrayList<Crew> returnCrew(){
         damageCrew();
         ArrayList<Crew> tempCrew = new ArrayList<>(crewMembers);
-        boolean back = true;
-        for (Crew crew: crewMembers){
-            if (crew.getHealthPoints()>0){
-                setComplete(true);
-                back = false;
+        boolean anyAlive = false;
+        for (Crew crew : crewMembers){
+            if (crew.getHealthPoints() > 0){
+                anyAlive = true;
                 break;
             }
         }
-        if (back){
-            setComplete(false);
-            Statistics.getInstance().setNumLivingCrews(Statistics.getInstance().getNumLivingCrews()-2);
-            Statistics.getInstance().setNumDeadCrews(Statistics.getInstance().getNumDeadCrews()+2);
-
+        
+        // Use field directly to avoid base Mission class side effects if we want custom reward logic
+        this.Complete = anyAlive;
+        Statistics stats = Statistics.getInstance();
+        if (anyAlive) {
+            stats.setNumSuccessfulMissions(stats.getNumSuccessfulMissions() + 1);
+            Wallet.getInstance().addBalance(150); // Rescue specific reward
+        } else {
+            stats.setNumFailedMissions(stats.getNumFailedMissions() + 1);
         }
-        //exp
 
-        if (this.getComplete()) {
-            for (int i = crewMembers.size() - 1; i >= 0; i--) {
-                Crew crew = crewMembers.get(i);
-                if (crew.getHealthPoints() > 0) {
-                    crew.receiveExp(200F);
+        // Return living crew to Barracks and reset canWork status
+        for (int i = crewMembers.size() - 1; i >= 0; i--) {
+            Crew crew = crewMembers.get(i);
+            if (crew.getHealthPoints() > 0) {
+                crew.receiveExp(200F);
+                crew.setCanWork(true);
+                Barracks.getInstance().assignCrew(crew);
+            } else {
+                crew.setCanWork(false);
+                // If they died on mission, they stay out of crewList?
+                // Actually removeCrew should have been called if they die.
+                // But damageCrew just reduces HP.
+                if (crew.getHealthPoints() <= 0) {
+                    CrewManager.removeCrew(crew);
                 }
-                removeCrew(crew);
             }
         }
-
-        //reward
-        if (getComplete()){
-            Wallet.getInstance().addBalance(150);
-        }
+        
+        crewMembers.clear();
         CrewManager.removeRescueMission(this);
+        
+        // Auto-save the state so the JSON file reflects the return
+        CrewManager.saveTOFile(null); 
 
         return tempCrew;
     }
-//
+
     public void addCrew(Crew crew){
         if (crewMembers.size() >= numCrew || !crew.getCanWork()){
             return;
@@ -116,14 +138,14 @@ public class Rescue extends Mission {
 
         crewMembers.add(crew);
         crew.setCanWork(false);
-
     }
 
     public void removeCrew(Crew crew){
         crewMembers.remove(crew);
-        crew.setCanWork(crew.getHealthPoints() != 0);
-        Barracks.getInstance().assignCrew(crew);
-
+        crew.setCanWork(crew.getHealthPoints() > 0);
+        if (crew.getHealthPoints() > 0) {
+            Barracks.getInstance().assignCrew(crew);
+        }
     }
 
     public List<Crew> getCrewMembers(){

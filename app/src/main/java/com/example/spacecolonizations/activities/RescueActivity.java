@@ -32,6 +32,9 @@ public class RescueActivity extends AppCompatActivity {
         ArrayList<String> crewName = new ArrayList<>();
 
         Rescue rescue = new Rescue(NameGen.nGen((int) ((Math.random()*5) + 3)));
+        // Manually add to manager since we removed it from constructor to prevent load-time duplicates
+        CrewManager.addRescueMission(rescue);
+        
         for (int i = 0; i<2; i++){
             Crew c = CrewManager.getCrew().get((int) (Math.random()*CrewManager.getCrew().size()));
             rescue.addCrew(c);
@@ -41,5 +44,8 @@ public class RescueActivity extends AppCompatActivity {
         textView5.setText(outRescueTxt);
 
         rescue.start();
+        
+        // Save immediately so the new mission and crew status are recorded
+        CrewManager.saveTOFile(this);
     }
 }

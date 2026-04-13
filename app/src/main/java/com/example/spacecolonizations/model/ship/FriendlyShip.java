@@ -88,12 +88,15 @@ public class FriendlyShip extends Ship {
         Context context = shipModel.getContext();
 
         CrewManager.deleteSave(context);
-
-        Toast.makeText(context, "Game Over! Your ship was destroyed.", Toast.LENGTH_LONG).show();
-
         //force the player to the main menu
-        Intent intent = new Intent(context, MenuActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        context.startActivity(intent);
+        new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() -> {
+            CrewManager.deleteSave(context);
+
+            Toast.makeText(context, "Ship kaboom. Game over noob!", Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(context, MenuActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            context.startActivity(intent);
+        }, 2000);
     }
 }

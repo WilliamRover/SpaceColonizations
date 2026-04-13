@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,7 +69,7 @@ public class FightEnemyActivity extends AppCompatActivity {
         if (shipFragment != null) {
             friendlyShip = shipFragment.getShip();
         }
-
+        friendlyModel = findViewById(R.id.shipFragment);
         innitEnemyView();
         attackOverlay = findViewById(R.id.attackOverlay);
 
@@ -147,9 +148,14 @@ public class FightEnemyActivity extends AppCompatActivity {
                 }
             }
             if (FriendlyShip.getShip().getHullStrength() <= 0) {
-                //FriendlyShip.getShip().explode(friendlyShip, friendlyExplode);
+                runOnUiThread(() -> {
+                    FriendlyShip.getShip().explode(friendlyModel, friendlyExplode);
+                });
+                
                 fightEnemy.setComplete(false);
                 scheduler.shutdown();
+                CrewManager.deleteSave(this);
+                return;
             }
             if (enemyShip.getHullStrength() <= 0) {
                 fightEnemy.setComplete(true);
