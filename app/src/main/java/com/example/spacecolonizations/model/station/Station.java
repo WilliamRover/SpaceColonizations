@@ -53,6 +53,12 @@ public abstract class Station implements Serializable {
             crew.setCurrentStation(this);
             return;
         }
+        
+        // Prevent moving to collapsed station
+        if (!this.isUsable && this.breakTimeRemaining <= 0) {
+            return;
+        }
+
         if (crew.getCurrentStation() == this) {
             return;
         } else if (!crew.getCanWork()) {
@@ -100,6 +106,12 @@ public abstract class Station implements Serializable {
         } else if (!crew.getCanWork()) {
             return;
         }
+        
+        // Prevent assigning repairmen to collapsed station
+        if (this.breakTimeRemaining <= 0) {
+            return;
+        }
+
         if (this.repairMan.size() < this.maxRepairmen) {
 
             if (crew.getCurrentStation() != null) {
@@ -121,11 +133,8 @@ public abstract class Station implements Serializable {
      */
     private void removeRepairMan(@NonNull Crew crew) {
         if (this.repairMan.remove(crew)) {
-
-            if (crew.getCurrentStation() == this) {
-                crew.setCurrentStation(Barracks.getInstance());
-                crew.setCanWork(true);
-            }
+            crew.setCanWork(true);
+            Barracks.getInstance().assignCrew(crew);
             this.setRepairEfficiency();
         }
     }
@@ -134,7 +143,7 @@ public abstract class Station implements Serializable {
     /**
      *Try to repair the Station
      */
-    private void repairStation(){
+    public void repairStation(){
         if (this.isUsable) {
             this.repairTimeRemaining = 0;
             return;
@@ -154,7 +163,7 @@ public abstract class Station implements Serializable {
     /**
      * Calculate the repair efficiency of the station.
      */
-    private void setRepairEfficiency() {
+    public void setRepairEfficiency() {
         float increment = 1;
         float totalEfficiency =  0;
 
@@ -186,12 +195,40 @@ public abstract class Station implements Serializable {
         return this.crewMembers;
     }
 
+    public List<Crew> getRepairMan() {
+        return this.repairMan;
+    }
+
     /**
      * Get the current repair men of the station.
      * @return efficiency as a float
      */
     protected float getEfficiency() {
         return this.efficiency;
+    }
+
+    public float getRepairEfficiency() {
+        return this.repairEfficiency;
+    }
+
+    public int getBreakTimeRemaining() {
+        return this.breakTimeRemaining;
+    }
+
+    public double getRepairTimeRemaining() {
+        return this.repairTimeRemaining;
+    }
+
+    public void setisUsable(boolean usable) {
+        isUsable = usable;
+    }
+
+    public void setRepairTimeRemaining(double repairTimeRemaining) {
+        this.repairTimeRemaining = repairTimeRemaining;
+    }
+
+    public void setBreakTimeRemaining(int breakTimeRemaining) {
+        this.breakTimeRemaining = breakTimeRemaining;
     }
 
     /**
@@ -282,6 +319,8 @@ public abstract class Station implements Serializable {
                 breakTimeRemaining -= 1000;
 
                 if (breakTimeRemaining <= 0) {
+                    breakTimeRemaining = 0; // Collapsed
+                    
                     //stop repair handler
                     if (repairHandler != null){
                         repairHandler.removeCallbacks(repairRunnable);
@@ -306,9 +345,6 @@ public abstract class Station implements Serializable {
                     repairMan.clear();
 
                     clearPatients();
-
-                    breakTimeRemaining = 60000;
-                    repairTimeRemaining = 30000;
                     return;
 
                 } else {
@@ -325,6 +361,20 @@ public abstract class Station implements Serializable {
 
     protected boolean isSingleton() {
         return false;
+    }
+
+//    this thing will resume handler from the json
+    public void resumeHandlers() {
+        if (!isUsable) {
+            if (!repairMan.isEmpty()) {
+                this.setRepairEfficiency();
+                this.repairStation();
+            }
+            if (this.breakTimeRemaining > 0) {
+                breakHandler.removeCallbacks(this.breakRunnable);
+                breakHandler.postDelayed(this.breakRunnable, 1000);
+            }
+        }
     }
 
     // Add this special method to re-initialize transient fields after loading
@@ -366,4 +416,6 @@ public abstract class Station implements Serializable {
         this.initRepairHandler();
         this.initBreakHandler();
     }
+
+
 }

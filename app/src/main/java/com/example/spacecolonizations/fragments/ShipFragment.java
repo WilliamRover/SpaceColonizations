@@ -14,11 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.spacecolonizations.R;
-import com.example.spacecolonizations.model.crewmate.Commander;
-import com.example.spacecolonizations.model.crewmate.Gunner;
-import com.example.spacecolonizations.model.crewmate.Medic;
-import com.example.spacecolonizations.model.crewmate.Navigator;
-import com.example.spacecolonizations.model.crewmate.Technician;
+import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.ship.FriendlyShip;
 import com.example.spacecolonizations.model.shop.Wallet;
 import com.example.spacecolonizations.model.station.Barracks;
@@ -39,6 +35,7 @@ public class ShipFragment extends Fragment {
     private TextView moneyTxt;
     private View fragmentStationContainer;
     private View statisticsContainer;
+    private View brokenStationContainer;
 
     private final Handler refreshHandler = new Handler(Looper.getMainLooper());
     private final Runnable refreshRunnable = new Runnable() {
@@ -62,6 +59,21 @@ public class ShipFragment extends Fragment {
         moneyTxt = view.findViewById(R.id.txtViewMoneyNum);
         fragmentStationContainer = view.findViewById(R.id.stationDetailContainer);
         statisticsContainer = view.findViewById(R.id.statisticsContainer);
+        brokenStationContainer = view.findViewById(R.id.brokenStationContainer);
+
+        // FOR TESTING:
+        Station turret = friendlyShip.getStation(Turret.class);
+        if (turret != null && turret.getisUsable()) {
+            turret.breakStation();
+        }
+        Station commander = friendlyShip.getStation(CommandCenter.class);
+        if (commander != null && commander.getisUsable()) {
+            commander.breakStation();
+        }
+        Station medbay = friendlyShip.getStation(MedBay.class);
+        if (medbay != null && medbay.getisUsable()) {
+            medbay.breakStation();
+        }
 
         updateUI();
         setupButtons(view);
@@ -88,6 +100,26 @@ public class ShipFragment extends Fragment {
         shipHpBar.setProgress(friendlyShip.getHullStrength());
         friendlyHpTxt.setText(String.format(Locale.US, "%d/%d", friendlyShip.getHullStrength(), friendlyShip.getInnitHullStrength()));
         moneyTxt.setText(String.format(Locale.US, "%d $", wallet.getBalance()));
+
+        View view = getView();
+        if (view != null) {
+            updateStationButton(view, R.id.trainingCenterBtn, TrainingCenter.class);
+            updateStationButton(view, R.id.commandBtn, CommandCenter.class);
+            updateStationButton(view, R.id.turretBtn, Turret.class);
+            updateStationButton(view, R.id.medBayBtn, MedBay.class);
+            updateStationButton(view, R.id.barracksBtn, Barracks.class);
+        }
+    }
+
+    private void updateStationButton(View view, int btnId, Class<? extends Station> stationClass) {
+        Station station = friendlyShip.getStation(stationClass);
+        if (station != null) {
+            if (!station.getisUsable() && station.getBreakTimeRemaining() <= 0) {
+                changetoBrokenStation(view, btnId);
+            } else {
+                restoreStation(view, btnId);
+            }
+        }
     }
 
     private void setupButtons(View view) {
@@ -97,13 +129,54 @@ public class ShipFragment extends Fragment {
         view.findViewById(R.id.turretBtn).setOnClickListener(v -> showStationDetail("Turret", Turret.class));
         view.findViewById(R.id.medBayBtn).setOnClickListener(v -> showStationDetail("Med Bay", MedBay.class));
 
+        // Setup "Show broken stations" button
+        View btnShowBroken = view.findViewById(R.id.button);
+        if (btnShowBroken != null) {
+            btnShowBroken.setOnClickListener(v -> {
+                if (brokenStationContainer.getVisibility() == View.VISIBLE) {
+                    hideBrokenStationList();
+                } else {
+                    showBrokenStationList(null);
+                }
+            });
+        }
+
         view.setOnClickListener(v -> {
             hideStationDetail();
             hideStatistics();
+            hideBrokenStationList();
         });
     }
 
-    private void showStationDetail(String name, Class<? extends Station> stationClass) {
+    private void changetoBrokenStation(View view, int ViewId) {
+        View v = view.findViewById(ViewId);
+        if (v != null) {
+            v.setEnabled(false);
+            v.setAlpha(0.1F);
+            try {
+                String labelName = getResources().getResourceEntryName(ViewId) + "Label";
+                int labelId = getResources().getIdentifier(labelName, "id", getContext().getPackageName());
+                View label = view.findViewById(labelId);
+                if (label != null) label.setAlpha(0.1F);
+            } catch (Exception ignored) {}
+        }
+    }
+
+    private void restoreStation(View view, int ViewId) {
+        View v = view.findViewById(ViewId);
+        if (v != null) {
+            v.setEnabled(true);
+            v.setAlpha(0.3F);
+            try {
+                String labelName = getResources().getResourceEntryName(ViewId) + "Label";
+                int labelId = getResources().getIdentifier(labelName, "id", getContext().getPackageName());
+                View label = view.findViewById(labelId);
+                if (label != null) label.setAlpha(1.0F);
+            } catch (Exception ignored) {}
+        }
+    }
+
+    public void showStationDetail(String name, Class<? extends Station> stationClass) {
         fragmentStationContainer.setVisibility(View.VISIBLE);
         StationDetailFragment fragment = StationDetailFragment.newInstance(name, stationClass);
         fragment.setOnStationNavigationListener(new StationDetailFragment.OnStationNavigationListener() {
@@ -120,6 +193,11 @@ public class ShipFragment extends Fragment {
             @Override
             public void onShowStatistics() {
                 showStatistics();
+            }
+
+            @Override
+            public void onAssignToRepairRequested(Crew crew) {
+                showBrokenStationList(crew);
             }
         });
         getChildFragmentManager().beginTransaction()
@@ -149,6 +227,22 @@ public class ShipFragment extends Fragment {
         if (fragment != null) {
             getChildFragmentManager().beginTransaction().remove(fragment).commit();
             statisticsContainer.setVisibility(View.GONE);
+        }
+    }
+
+    public void showBrokenStationList(Crew crew) {
+        brokenStationContainer.setVisibility(View.VISIBLE);
+        BrokenStationListFragment fragment = BrokenStationListFragment.newInstance(crew);
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.brokenStationContainer, fragment)
+                .commit();
+    }
+
+    public void hideBrokenStationList() {
+        Fragment fragment = getChildFragmentManager().findFragmentById(R.id.brokenStationContainer);
+        if (fragment != null) {
+            getChildFragmentManager().beginTransaction().remove(fragment).commit();
+            brokenStationContainer.setVisibility(View.GONE);
         }
     }
 

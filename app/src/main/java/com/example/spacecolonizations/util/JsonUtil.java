@@ -54,6 +54,18 @@ public class JsonUtil {
         for (Station station : stations) {
             JSONObject s = new JSONObject();
             s.put("type", station.getClass().getSimpleName());
+            s.put("isUsable", station.getisUsable());
+            s.put("repairTimeRemaining", station.getRepairTimeRemaining());
+            s.put("breakTimeRemaining", station.getBreakTimeRemaining());
+            
+            // Repair Men names
+            JSONArray repairMenArray = new JSONArray();
+            if (station.getRepairMan() != null) {
+                for (Crew rm : station.getRepairMan()) {
+                    repairMenArray.put(rm.getName());
+                }
+            }
+            s.put("repairMen", repairMenArray);
             
             if (station instanceof MedBay) {
                 MedBay medBay = (MedBay) station;
@@ -121,10 +133,12 @@ public class JsonUtil {
 
         // Stations
         List<Station> stations = new ArrayList<>();
-        JSONArray stationArray = root.optJSONArray("stationList");
         Map<String, Station> stationMap = new HashMap<>();
         Map<String, JSONArray> patientDataMap = new HashMap<>();
+        Map<String, JSONArray> repairMenDataMap = new HashMap<>();
+        Map<String, JSONObject> stationAttrMap = new HashMap<>();
 
+        JSONArray stationArray = root.optJSONArray("stationList");
         if (stationArray != null) {
             for (int i = 0; i < stationArray.length(); i++) {
                 JSONObject sObj = stationArray.getJSONObject(i);
@@ -133,8 +147,13 @@ public class JsonUtil {
                 if (station != null) {
                     stations.add(station);
                     stationMap.put(type, station);
+                    stationAttrMap.put(type, sObj);
+                    
                     if (sObj.has("patients")) {
                         patientDataMap.put(type, sObj.getJSONArray("patients"));
+                    }
+                    if (sObj.has("repairMen")) {
+                        repairMenDataMap.put(type, sObj.getJSONArray("repairMen"));
                     }
                 }
             }
@@ -173,6 +192,34 @@ public class JsonUtil {
             }
         }
         data.put("crewList", crewList);
+
+        // Restore Station Attributes and Repair Men
+        for (Station station : stations) {
+            String type = station.getClass().getSimpleName();
+            JSONObject sObj = stationAttrMap.get(type);
+            if (sObj != null) {
+                station.setisUsable(sObj.optBoolean("isUsable", true));
+                station.setRepairTimeRemaining(sObj.optDouble("repairTimeRemaining", 0.0));
+                station.setBreakTimeRemaining(sObj.optInt("breakTimeRemaining", 0));
+                
+                JSONArray repairMenNames = repairMenDataMap.get(type);
+                if (repairMenNames != null) {
+                    for (int j = 0; j < repairMenNames.length(); j++) {
+                        String name = repairMenNames.getString(j);
+                        Crew rm = crewNameMap.get(name);
+                        if (rm != null) {
+                            // addRepairMan handles setting currentStation and canWork
+                            // It only works if isUsable is false, which we just restored above
+                            rm.setCanWork(true); // Temporarily allow to bypass canWork check in addRepairMan
+                            station.addRepairMan(rm);
+                        }
+                    }
+                }
+                
+                // Restart handlers if necessary
+                station.resumeHandlers();
+            }
+        }
 
         // Restore MedBay Patients
         for (Map.Entry<String, JSONArray> entry : patientDataMap.entrySet()) {
@@ -215,15 +262,12 @@ public class JsonUtil {
                         String name = crewNames.getString(j);
                         Crew c = crewNameMap.get(name);
                         if (c != null) {
-                            boolean originalCanWork = c.getCanWork();
                             c.setCanWork(true); // Temporarily allow adding to mission during load
                             rescue.addCrew(c);
-                            // addCrew sets canWork to false, which is what we want
                         }
                     }
                 }
                 rescueMissions.add(rescue);
-                // Automatically restart the timer when loading
                 rescue.start();
             }
         }

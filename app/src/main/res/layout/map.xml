@@ -200,6 +200,18 @@
         app:layout_constraintTop_toBottomOf="@+id/shipModelSketch" />
 
     <TextView
+        android:id="@+id/textView10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="*press to show ship stat"
+        android:textColor="#DDF4FF"
+        android:textSize="8sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/shipModelSketch"
+        app:layout_constraintStart_toStartOf="@+id/shipModelSketch"
+        app:layout_constraintTop_toBottomOf="@+id/shipModelSketch" />
+
+    <TextView
         android:id="@+id/txtViewRescueProb1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -246,10 +258,13 @@
         android:id="@+id/buttonExitOverlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="25dp"
+        android:backgroundTint="#2A4987"
         android:text="Exit to map"
+        android:textColor="#8FB2FA"
         android:visibility="gone"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

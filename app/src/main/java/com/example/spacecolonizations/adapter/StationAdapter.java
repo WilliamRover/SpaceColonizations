@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.spacecolonizations.R;
 import com.example.spacecolonizations.activities.FightEnemyActivity;
+import com.example.spacecolonizations.activities.MapActivity;
 import com.example.spacecolonizations.model.crewmate.Commander;
 import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.crewmate.Gunner;
@@ -44,6 +45,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
     public interface OnActionRequests {
         void onCrewMoved();
         void onShowStatisticsRequested();
+        void onAssignToRepairRequested(Crew crew);
     }
 
     public StationAdapter(List<Crew> crewList, String currentStationName, OnActionRequests movedListener) {
@@ -179,6 +181,14 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
             }
             return false;
         }
+        if ("Assign to repair station".equals(actionName)) {
+            if (movedListener != null) {
+                Toast.makeText(view.getContext(), "Choose a station card to assign repairing", Toast.LENGTH_SHORT).show();
+                movedListener.onAssignToRepairRequested(crew);
+                return true;
+            }
+            return false;
+        }
         if ("Assign to be patient".equals(actionName)) {
             MedBay medBay = (MedBay) ship.getStation(MedBay.class);
             if (medBay != null) {
@@ -232,38 +242,15 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
 
         if (targetStation != null) {
             Station oldStation = crew.getCurrentStation();
+            if (targetStation.getisUsable() == false) {
+                Toast.makeText(view.getContext(), "Station is broken", Toast.LENGTH_SHORT).show();
+            }
             targetStation.assignCrew(crew);
             return crew.getCurrentStation() != oldStation || crew.getCurrentStation() == targetStation;
         }
         
         return false;
     }
-//  Useless af
-//    public boolean attack(View view){
-//        FriendlyShip ship = FriendlyShip.getShip();
-//        if (view.getContext() instanceof FightEnemyActivity) {
-//            FightEnemyActivity activity = (FightEnemyActivity) view.getContext();
-//            Turret turret = (Turret) ship.getStation(Turret.class);
-//            if (turret != null) {
-//                if (!turret.getCrewMembers().isEmpty()) {
-//                    EnemyShip enemyShip = activity.getEnemyShip();
-//                    if (enemyShip != null) {
-//                        turret.dealDamage(enemyShip);
-//                        Toast.makeText(view.getContext(), "Dealt " + round(turret.getdamage()) + " damages", Toast.LENGTH_SHORT).show();
-//                        activity.updateEnemyUI();
-//                        activity.enemyAttack();
-//                        return true;
-//
-//                    }
-//                } else {
-//                    Toast.makeText(view.getContext(), "No one in Turret", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        } else {
-//            Toast.makeText(view.getContext(), "Can only deal damage during combat", Toast.LENGTH_SHORT).show();
-//        }
-//        return false;
-//    }
 
     @Override
     public int getItemCount() {

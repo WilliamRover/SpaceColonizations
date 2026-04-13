@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.spacecolonizations.R;
 import com.example.spacecolonizations.adapter.FunctionListAdapter;
 import com.example.spacecolonizations.adapter.StationAdapter;
+import com.example.spacecolonizations.model.crewmate.Crew;
 import com.example.spacecolonizations.model.ship.FriendlyShip;
 import com.example.spacecolonizations.model.station.Barracks;
 import com.example.spacecolonizations.model.station.CommandCenter;
@@ -31,6 +32,7 @@ public class StationDetailFragment extends Fragment {
         void onStationSelected(String name, Class<? extends Station> stationClass);
         void onDataChanged();
         void onShowStatistics();
+        void onAssignToRepairRequested(Crew crew);
     }
 
     private static final String ARG_STATION_NAME = "station_name";
@@ -98,7 +100,6 @@ public class StationDetailFragment extends Fragment {
         }
         
         refreshCrewList();
-        setupNavigation();
 
         return view;
     }
@@ -113,17 +114,6 @@ public class StationDetailFragment extends Fragment {
     public void onPause() {
         super.onPause();
         updateHandler.removeCallbacks(updateRunnable); // Stop updates to save resources
-    }
-
-    private void setupNavigation() {
-        if (navRecyclerView != null) {
-            navRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-            navRecyclerView.setAdapter(new FunctionListAdapter(stationName, selectedStationName -> {
-                if (navigationListener != null) {
-                    navigationListener.onStationSelected(selectedStationName, getStationClass(selectedStationName));
-                }
-            }));
-        }
     }
 
     private Class<? extends Station> getStationClass(String name) {
@@ -156,6 +146,13 @@ public class StationDetailFragment extends Fragment {
                             navigationListener.onShowStatistics();
                         }
                     }
+
+                    @Override
+                    public void onAssignToRepairRequested(Crew crew) {
+                        if (navigationListener != null) {
+                            navigationListener.onAssignToRepairRequested(crew);
+                        }
+                    }
                 }));
 
                 if (station instanceof MedBay) {
@@ -176,6 +173,13 @@ public class StationDetailFragment extends Fragment {
                             public void onShowStatisticsRequested() {
                                 if (navigationListener != null) {
                                     navigationListener.onShowStatistics();
+                                }
+                            }
+
+                            @Override
+                            public void onAssignToRepairRequested(Crew crew) {
+                                if (navigationListener != null) {
+                                    navigationListener.onAssignToRepairRequested(crew);
                                 }
                             }
                         }));

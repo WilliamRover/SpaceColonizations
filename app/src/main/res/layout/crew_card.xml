@@ -94,7 +94,7 @@
             android:layout_marginStart="2dp"
             android:layout_marginTop="2dp"
             android:text="CrewJob"
-            android:textColor="#8AA8DBFF"
+            android:textColor="#BDFFFCFF"
             android:textSize="8sp"
             app:layout_constraintStart_toEndOf="@+id/txtViewJob"
             app:layout_constraintTop_toBottomOf="@+id/crewHpBar" />
@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
             android:text="Yes"
-            android:textColor="#8AA8DBFF"
+            android:textColor="#BDFFFCFF"
             android:textSize="8sp"
             app:layout_constraintEnd_toEndOf="@+id/crewHpBar"
             app:layout_constraintTop_toTopOf="@+id/txtViewJob2" />
@@ -160,6 +160,19 @@
             app:layout_constraintEnd_toEndOf="@+id/crewLevelBar"
             app:layout_constraintStart_toStartOf="@+id/crewLevelBar"
             app:layout_constraintTop_toBottomOf="@+id/crewLevelBar" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="*press to expand"
+            android:textColor="#BDFFFCFF"
+            android:textSize="6sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/crewImg"
+            app:layout_constraintTop_toBottomOf="@+id/txtViewLevelNum" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recViewStationList"

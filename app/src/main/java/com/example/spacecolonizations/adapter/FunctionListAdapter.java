@@ -35,6 +35,7 @@ public class FunctionListAdapter extends RecyclerView.Adapter<FunctionListAdapte
             }
         }
         availableFunctions.add("Assign to be patient");
+        availableFunctions.add("Assign to repair station");
         if ("Turret".equalsIgnoreCase(currentStation)) {
             availableFunctions.add("Deal damage to enemy");
         }
