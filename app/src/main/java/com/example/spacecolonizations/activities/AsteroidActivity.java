@@ -31,15 +31,15 @@ public class AsteroidActivity extends AppCompatActivity {
         passObstacle.finallisePassObstacle();
         if(passObstacle.getComplete()){
             Wallet.getInstance().addBalance(40+(int)(Math.random()*11));
-            textView3.setText("There's a technicien on command station and able to resolve the situation");
+            textView3.setText("There's a navigator on command station and able to resolve the situation");
 
         } else{
-            textView3.setText("There is no technicien on command station and situation spirals out of control");
+            textView3.setText("There is no navigator on command station and situation spirals out of control");
         }
 
         buttonContinueAsteroid.setOnClickListener(v -> {
             Intent intent = new Intent(this, MapActivity.class);
-            FriendlyShip.getShip().resetShip();
+            FriendlyShip.getShip().resetHp();
             startActivity(intent);
         });
 

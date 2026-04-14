@@ -40,7 +40,7 @@ public class EngineFailureActivity extends AppCompatActivity {
 
         buttonContinueEngine.setOnClickListener(v -> {
             Intent intent = new Intent(this, MapActivity.class);
-            FriendlyShip.getShip().resetShip();
+            FriendlyShip.getShip().resetHp();
             startActivity(intent);
         });
 
