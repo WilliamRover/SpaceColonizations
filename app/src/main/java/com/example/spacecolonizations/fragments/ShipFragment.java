@@ -61,19 +61,7 @@ public class ShipFragment extends Fragment {
         statisticsContainer = view.findViewById(R.id.statisticsContainer);
         brokenStationContainer = view.findViewById(R.id.brokenStationContainer);
 
-        // FOR TESTING:
-        Station turret = friendlyShip.getStation(Turret.class);
-        if (turret != null && turret.getisUsable()) {
-            turret.breakStation();
-        }
-        Station commander = friendlyShip.getStation(CommandCenter.class);
-        if (commander != null && commander.getisUsable()) {
-            commander.breakStation();
-        }
-        Station medbay = friendlyShip.getStation(MedBay.class);
-        if (medbay != null && medbay.getisUsable()) {
-            medbay.breakStation();
-        }
+
 
         updateUI();
         setupButtons(view);

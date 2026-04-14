@@ -41,6 +41,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
     private int expandedPosition = -1;
     private final OnActionRequests movedListener;
     private final String currentStationName;
+    private boolean isRepairingMode = false;
 
     public interface OnActionRequests {
         void onCrewMoved();
@@ -52,6 +53,9 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
         this.crewList = crewList;
         this.currentStationName = currentStationName;
         this.movedListener = movedListener;
+        if (currentStationName != null && currentStationName.contains("(Repair)")) {
+            this.isRepairingMode = true;
+        }
     }
 
     @NonNull
@@ -83,7 +87,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
         holder.levelTxt.setText(String.valueOf(crew.getLevel()));
         
         int currentExp = round(crew.getExp());
-        int requiredExp = (int) (1000 * Math.exp(crew.getLevel()));
+        int requiredExp = (int) (1000 * Math.exp(crew.getLevel()))/10;
         
         holder.xpTxt.setText(String.format(Locale.US, "%d/%d", currentExp, requiredExp));
         holder.levelBar.setMax(requiredExp);
@@ -103,7 +107,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
             holder.crewImg.setImageResource(android.R.drawable.sym_def_app_icon);
         }
 
-        final boolean isExpanded = position == expandedPosition;
+        final boolean isExpanded = position == expandedPosition && !isRepairingMode;
         holder.recViewStationList.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         holder.itemView.setActivated(isExpanded);
 
@@ -131,7 +135,6 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
                 } else {
                     expandedPosition = -1;
                     notifyItemChanged(currentPos);
-                    // performCrewAction already shows Toast on failure for specific reasons
                 }
             });
             holder.recViewStationList.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.VERTICAL, false));
@@ -139,6 +142,8 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
         }
 
         holder.itemView.setOnClickListener(v -> {
+            if (isRepairingMode) return;
+
             int currentPos = holder.getAdapterPosition();
             if (currentPos == RecyclerView.NO_POSITION) return;
 
