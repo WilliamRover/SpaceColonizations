@@ -173,6 +173,7 @@ public class FightEnemyActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
                 Intent intent = new Intent(this, MapActivity.class);
+                friendlyShip.setHullStrength((int) Math.round(friendlyShip.getHullStrength() + friendlyShip.getHullStrength()*0.25));
                 startActivity(intent);
                 // Statistics.getInstance().setShipKills(Statistics.getInstance().getShipKills() + 1); // Handled in updateEnemyUI
                 scheduler.shutdown();
