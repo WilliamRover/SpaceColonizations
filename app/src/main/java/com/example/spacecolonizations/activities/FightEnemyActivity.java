@@ -159,7 +159,6 @@ public class FightEnemyActivity extends AppCompatActivity {
             }
             if (enemyShip.getHullStrength() <= 0) {
                 fightEnemy.setComplete(true);
-                Wallet.getInstance().addBalance(90+(int)(Math.random()*21));
                 for (Station s : CrewManager.getStations()){
                     if (s instanceof Turret){
                         for (Crew c : s.getCrewMembers()){
