@@ -1,6 +1,8 @@
 package com.example.spacecolonizations.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,12 +20,29 @@ public class EngineFailureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.engine_failure);
 
+        TextView textView3 = findViewById(R.id.textView3);
+        String starterText = "Engine Failure Happen however";
+
         PassObstacle passObstacle = new PassObstacle(NameGen.nGen((int) ((Math.random()*5) + 3)));
         EngineFailure ef = new EngineFailure();
         passObstacle.setObstaclesType(ef);
         passObstacle.finallisePassObstacle();
         if(passObstacle.getComplete()){
             Wallet.getInstance().addBalance(40+(int)(Math.random()*11));
+            textView3.setText(starterText + "\n" +
+                    "there a technicien on command station and able to resolve the situation");
+
+        } else{
+            textView3.setText(starterText + "\n" +
+                    "there is no technicien on command station and situation spirals out of control");
         }
+
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        Intent intent = new Intent(this, MapActivity.class);
+        startActivity(intent);
     }
 }
