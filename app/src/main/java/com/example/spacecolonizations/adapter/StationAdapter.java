@@ -68,14 +68,8 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
     @Override
     public void onBindViewHolder(@NonNull StationViewHolder holder, int position) {
         Crew crew = crewList.get(position);
-        FriendlyShip friendlyShip = FriendlyShip.getShip();
-        MedBay medBay = (MedBay) friendlyShip.getStation(MedBay.class);
-
-        if (medBay != null && medBay.getPatients() != null && medBay.getPatients().contains(crew)) {
-            holder.isPatient.setText("Yes");
-        } else {
-            holder.isPatient.setText("No");
-        }
+        
+        holder.isWorkable.setText(crew.getCanWork() ? "Yes" : "No");
 
         holder.nameTxt.setText(crew.getName());
         holder.jobTxt.setText(crew.getClass().getSimpleName());
@@ -263,7 +257,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
     }
 
     public static class StationViewHolder extends RecyclerView.ViewHolder {
-        private TextView nameTxt, hpTxt, jobTxt, levelTxt, xpTxt, isPatient;
+        private TextView nameTxt, hpTxt, jobTxt, levelTxt, xpTxt, isWorkable;
         private LinearProgressIndicator hpBar, levelBar;
         private ImageView crewImg;
         private RecyclerView recViewStationList;
@@ -273,7 +267,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
             nameTxt = itemView.findViewById(R.id.txtViewName);
             hpTxt = itemView.findViewById(R.id.crewHpTxt);
             jobTxt = itemView.findViewById(R.id.txtViewCrewJob);
-            isPatient = itemView.findViewById(R.id.txtViewIsPatient);
+            isWorkable = itemView.findViewById(R.id.txtViewIsWorkable);
             levelTxt = itemView.findViewById(R.id.txtViewLevelNum);
             xpTxt = itemView.findViewById(R.id.txtViewXpNum);
             hpBar = itemView.findViewById(R.id.crewHpBar);

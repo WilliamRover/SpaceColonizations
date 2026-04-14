@@ -79,7 +79,7 @@ public class TotalCrewAdapter extends RecyclerView.Adapter<TotalCrewAdapter.Tota
     }
 
     public static class TotalCrewViewHolder extends RecyclerView.ViewHolder {
-        private TextView nameTxt, hpTxt, jobTxt, levelTxt, xpTxt, isPatient, expandTxt;
+        private TextView nameTxt, hpTxt, jobTxt, levelTxt, xpTxt, isWorkable, expandTxt;
         private LinearProgressIndicator hpBar, levelBar;
         private ImageView crewImg;
         private RecyclerView recViewStationList;
@@ -89,7 +89,7 @@ public class TotalCrewAdapter extends RecyclerView.Adapter<TotalCrewAdapter.Tota
             nameTxt = itemView.findViewById(R.id.txtViewName);
             hpTxt = itemView.findViewById(R.id.crewHpTxt);
             jobTxt = itemView.findViewById(R.id.txtViewCrewJob);
-            isPatient = itemView.findViewById(R.id.txtViewIsPatient);
+            isWorkable = itemView.findViewById(R.id.txtViewIsWorkable);
             levelTxt = itemView.findViewById(R.id.txtViewLevelNum);
             xpTxt = itemView.findViewById(R.id.txtViewXpNum);
             hpBar = itemView.findViewById(R.id.crewHpBar);
@@ -110,11 +110,11 @@ public class TotalCrewAdapter extends RecyclerView.Adapter<TotalCrewAdapter.Tota
             levelTxt.setText(String.valueOf(crew.getLevel()));
 
             int currentExp = round(crew.getExp());
-            int requiredExp = (int) (1000 * Math.exp(crew.getLevel()));
+            int requiredExp = (int) (1000 * Math.exp(crew.getLevel()))/10;
             xpTxt.setText(String.format(Locale.US, "%d/%d", currentExp, requiredExp));
             levelBar.setMax(requiredExp);
             levelBar.setProgress(currentExp);
-            isPatient.setText(crew.isPatient() ? "Yes" : "No");
+            isWorkable.setText(crew.getCanWork() ? "Yes" : "No");
 
             if (crew instanceof Medic) crewImg.setImageResource(R.drawable.medic);
             else if (crew instanceof Gunner) crewImg.setImageResource(R.drawable.gunner);
