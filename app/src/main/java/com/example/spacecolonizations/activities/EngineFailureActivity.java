@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.spacecolonizations.NameGen;
 import com.example.spacecolonizations.R;
+import com.example.spacecolonizations.model.Statistics;
 import com.example.spacecolonizations.model.mission.Mission;
 import com.example.spacecolonizations.model.mission.PassObstacle;
 import com.example.spacecolonizations.model.mission.obstacle.EngineFailure;
+import com.example.spacecolonizations.model.shop.Wallet;
 
 public class EngineFailureActivity extends AppCompatActivity {
     @Override
@@ -20,5 +22,8 @@ public class EngineFailureActivity extends AppCompatActivity {
         EngineFailure ef = new EngineFailure();
         passObstacle.setObstaclesType(ef);
         passObstacle.finallisePassObstacle();
+        if(passObstacle.getComplete()){
+            Wallet.getInstance().addBalance(40+(int)(Math.random()*11));
+        }
     }
 }
