@@ -13,6 +13,7 @@ import com.example.spacecolonizations.model.Statistics;
 import com.example.spacecolonizations.model.mission.Mission;
 import com.example.spacecolonizations.model.mission.PassObstacle;
 import com.example.spacecolonizations.model.mission.obstacle.EngineFailure;
+import com.example.spacecolonizations.model.ship.FriendlyShip;
 import com.example.spacecolonizations.model.shop.Wallet;
 
 public class EngineFailureActivity extends AppCompatActivity {
@@ -39,6 +40,7 @@ public class EngineFailureActivity extends AppCompatActivity {
 
         buttonContinueEngine.setOnClickListener(v -> {
             Intent intent = new Intent(this, MapActivity.class);
+            FriendlyShip.getShip().resetShip();
             startActivity(intent);
         });
 

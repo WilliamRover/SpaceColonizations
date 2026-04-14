@@ -13,6 +13,7 @@ import com.example.spacecolonizations.model.Statistics;
 import com.example.spacecolonizations.model.mission.PassObstacle;
 import com.example.spacecolonizations.model.mission.obstacle.Asteroid;
 import com.example.spacecolonizations.model.mission.obstacle.EngineFailure;
+import com.example.spacecolonizations.model.ship.FriendlyShip;
 import com.example.spacecolonizations.model.shop.Wallet;
 
 public class AsteroidActivity extends AppCompatActivity {
@@ -38,6 +39,7 @@ public class AsteroidActivity extends AppCompatActivity {
 
         buttonContinueAsteroid.setOnClickListener(v -> {
             Intent intent = new Intent(this, MapActivity.class);
+            FriendlyShip.getShip().resetShip();
             startActivity(intent);
         });
 

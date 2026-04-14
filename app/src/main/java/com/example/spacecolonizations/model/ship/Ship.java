@@ -33,6 +33,15 @@ public abstract class Ship implements Damagable {
         if (this.hullStrength <= 0) {
             this.hullStrength = 0;
         }
+        if (this instanceof FriendlyShip && this.hullStrength > 100) {
+            this.hullStrength = 100;
+        }
+    }
+
+    public void resetHp() {
+        if (this instanceof FriendlyShip) {
+            this.setHullStrength((int) Math.round(this.getHullStrength() + this.getHullStrength()*0.25));
+        }
     }
     public void attackShip(Ship ship, View shipModel, View kaboom, ProgressBar hpProgress, TextView hpTxt, int shipDps) {
 
