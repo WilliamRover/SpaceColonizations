@@ -28,7 +28,6 @@ public class EngineFailureActivity extends AppCompatActivity {
         passObstacle.setObstaclesType(ef);
         passObstacle.finallisePassObstacle();
         if(passObstacle.getComplete()){
-            Wallet.getInstance().addBalance(40+(int)(Math.random()*11));
             textView3.setText(starterText + "\n" +
                     "there a technicien on command station and able to resolve the situation");
 
