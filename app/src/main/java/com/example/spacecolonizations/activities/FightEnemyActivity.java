@@ -52,9 +52,9 @@ public class FightEnemyActivity extends AppCompatActivity {
     private EnemyShip enemyShip;
     private ImageView enemyShipImage;
     private ProgressBar enemyHpBar;
-    private TextView enemyExplode;
+    private ImageView enemyExplode;
     private TextView enemyHpTxt;
-    private TextView friendlyExplode;
+    private ImageView friendlyExplode;
 
     @SuppressLint("MissingInflatedId")
     @Override

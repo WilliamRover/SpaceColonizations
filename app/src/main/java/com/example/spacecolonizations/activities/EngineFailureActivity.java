@@ -3,6 +3,7 @@ package com.example.spacecolonizations.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class EngineFailureActivity extends AppCompatActivity {
 
         TextView textView3 = findViewById(R.id.textView3);
         buttonContinueEngine = findViewById(R.id.btnContinueEngine);
+        ImageView imgEngineStatus = findViewById(R.id.imgEngineStatus);
 
         PassObstacle passObstacle = new PassObstacle(NameGen.nGen((int) ((Math.random()*5) + 3)));
         EngineFailure ef = new EngineFailure();
@@ -32,10 +34,11 @@ public class EngineFailureActivity extends AppCompatActivity {
         passObstacle.finallisePassObstacle();
         if(passObstacle.getComplete()){
             Wallet.getInstance().addBalance(40+(int)(Math.random()*11));
-            textView3.setText("There's a technicien on command station and able to resolve the situation");
-
+            textView3.setText("Technician performed engineer magics");
+            imgEngineStatus.setImageResource(R.drawable.engine_fixed);
         } else{
-            textView3.setText("There is no technicien on command station and situation spirals out of control");
+            textView3.setText("Technician was not summoned (technician missing from command center)");
+            imgEngineStatus.setImageResource(R.drawable.engine_not_fixed);
         }
 
         buttonContinueEngine.setOnClickListener(v -> {

@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ship_model_friendly_v2" />
+        app:srcCompat="@drawable/friendlymodel" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/shipHpBar"

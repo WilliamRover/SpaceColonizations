@@ -58,6 +58,17 @@
         app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:id="@+id/imgAsteroidStatus"
+        android:layout_width="238dp"
+        android:layout_height="153dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintEnd_toEndOf="@+id/backgroundImage5"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="@+id/backgroundImage5"
+        app:srcCompat="@drawable/asteroid_pass" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/pauseFragment3"
         android:name="com.example.spacecolonizations.fragments.PauseFragment"
