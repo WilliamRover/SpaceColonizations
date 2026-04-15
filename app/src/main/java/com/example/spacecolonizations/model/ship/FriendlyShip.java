@@ -99,4 +99,6 @@ public class FriendlyShip extends Ship {
             context.startActivity(intent);
         }, 2000);
     }
+
+
 }

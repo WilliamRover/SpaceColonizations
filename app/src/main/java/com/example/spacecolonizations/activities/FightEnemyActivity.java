@@ -173,6 +173,7 @@ public class FightEnemyActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
                 Intent intent = new Intent(this, MapActivity.class);
+                FriendlyShip.getShip().resetHp();
                 startActivity(intent);
                 // Statistics.getInstance().setShipKills(Statistics.getInstance().getShipKills() + 1); // Handled in updateEnemyUI
                 scheduler.shutdown();
@@ -185,7 +186,7 @@ public class FightEnemyActivity extends AppCompatActivity {
 
     }
     private void innitEnemyView() {
-        enemyShip = new EnemyShip((int) (100 + 100 * Math.random()));
+        enemyShip = new EnemyShip((int) (40 + 100 * Math.random()));
 
         enemyHpBar = findViewById(R.id.enemyShipHp);
         enemyShipImage = findViewById(R.id.enemyShipModel);

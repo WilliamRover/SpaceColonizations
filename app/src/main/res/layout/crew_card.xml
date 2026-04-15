@@ -77,14 +77,14 @@
             app:layout_constraintTop_toBottomOf="@+id/crewHpBar" />
 
         <TextView
-            android:id="@+id/txtViewJob2"
+            android:id="@+id/txtViewWorkableLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="1dp"
-            android:text="Patient:"
+            android:text="Workable:"
             android:textColor="#8AA8DBFF"
             android:textSize="8sp"
-            app:layout_constraintEnd_toStartOf="@+id/txtViewIsPatient"
+            app:layout_constraintEnd_toStartOf="@+id/txtViewIsWorkable"
             app:layout_constraintTop_toTopOf="@+id/txtViewJob" />
 
         <TextView
@@ -100,7 +100,7 @@
             app:layout_constraintTop_toBottomOf="@+id/crewHpBar" />
 
         <TextView
-            android:id="@+id/txtViewIsPatient"
+            android:id="@+id/txtViewIsWorkable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
@@ -108,7 +108,7 @@
             android:textColor="#BDFFFCFF"
             android:textSize="8sp"
             app:layout_constraintEnd_toEndOf="@+id/crewHpBar"
-            app:layout_constraintTop_toTopOf="@+id/txtViewJob2" />
+            app:layout_constraintTop_toTopOf="@+id/txtViewWorkableLabel" />
 
         <TextView
             android:id="@+id/txtViewLevel"
@@ -162,7 +162,7 @@
             app:layout_constraintTop_toBottomOf="@+id/crewLevelBar" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/txtViewExpand"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"

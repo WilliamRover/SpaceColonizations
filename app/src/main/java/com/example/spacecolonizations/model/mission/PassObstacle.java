@@ -70,15 +70,17 @@ public class PassObstacle extends Mission {
      */
     public boolean checkPassObstacle() {
         m = e;
-        List<Station> stations = new ArrayList<>(CrewManager.getStations());
-        stations.remove(Barracks.getInstance());
+        List<Station> stations = CrewManager.getStations();
+//        stations.remove(Barracks.getInstance());
         if (m == null || stations == null) {
             return true;
         }
 
         for (Station station : stations) {
             ArrayList<Crew> requiredCrew = m.getLocationJob().get(station);
-
+            if (station instanceof Barracks) {
+                continue;
+            }
             if (requiredCrew != null) {
                 boolean allCrewFound = true;
 

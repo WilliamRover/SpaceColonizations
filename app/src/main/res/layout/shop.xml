@@ -20,11 +20,15 @@
         android:id="@+id/btnOpenShop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#415C7E"
         android:text="Open shop"
+        android:textColor="#8AA8DB"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.774" />
 
     <Button
         android:id="@+id/btnExitToMap"
@@ -32,7 +36,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="132dp"
         android:layout_marginBottom="52dp"
+        android:backgroundTint="#415C7E"
         android:text="Exit to map"
+        android:textColor="#8AA8DB"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

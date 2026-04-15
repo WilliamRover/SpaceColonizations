@@ -2,6 +2,7 @@ package com.example.spacecolonizations.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,36 +13,36 @@ import com.example.spacecolonizations.model.Statistics;
 import com.example.spacecolonizations.model.mission.Mission;
 import com.example.spacecolonizations.model.mission.PassObstacle;
 import com.example.spacecolonizations.model.mission.obstacle.EngineFailure;
+import com.example.spacecolonizations.model.ship.FriendlyShip;
 import com.example.spacecolonizations.model.shop.Wallet;
 
 public class EngineFailureActivity extends AppCompatActivity {
+    private Button buttonContinueEngine;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.engine_failure);
 
         TextView textView3 = findViewById(R.id.textView3);
-        String starterText = "Engine Failure Happen however";
+        buttonContinueEngine = findViewById(R.id.btnContinueEngine);
 
         PassObstacle passObstacle = new PassObstacle(NameGen.nGen((int) ((Math.random()*5) + 3)));
         EngineFailure ef = new EngineFailure();
         passObstacle.setObstaclesType(ef);
         passObstacle.finallisePassObstacle();
         if(passObstacle.getComplete()){
-            textView3.setText(starterText + "\n" +
-                    "there a technicien on command station and able to resolve the situation");
+            Wallet.getInstance().addBalance(40+(int)(Math.random()*11));
+            textView3.setText("There's a technicien on command station and able to resolve the situation");
 
         } else{
-            textView3.setText(starterText + "\n" +
-                    "there is no technicien on command station and situation spirals out of control");
+            textView3.setText("There is no technicien on command station and situation spirals out of control");
         }
 
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        Intent intent = new Intent(this, MapActivity.class);
-        startActivity(intent);
+        buttonContinueEngine.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MapActivity.class);
+            FriendlyShip.getShip().resetHp();
+            startActivity(intent);
+        });
+
     }
 }
