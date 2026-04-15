@@ -53,6 +53,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:id="@+id/imgEngineStatus"
+        android:layout_width="238dp"
+        android:layout_height="153dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView12"
+        app:layout_constraintEnd_toEndOf="@+id/backgroundImage7"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="@+id/backgroundImage7"
+        app:srcCompat="@drawable/engine_fixed" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/pauseFragment4"
         android:name="com.example.spacecolonizations.fragments.PauseFragment"

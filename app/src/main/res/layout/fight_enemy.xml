@@ -34,29 +34,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/enemyshipmodel" />
+        app:srcCompat="@drawable/enemyodel" />
 
-    <TextView
+    <ImageView
         android:id="@+id/friendlyExplode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="184dp"
-        android:layout_marginEnd="348dp"
+        android:layout_width="241dp"
+        android:layout_height="288dp"
+        android:layout_marginEnd="192dp"
+        android:layout_marginBottom="60dp"
         android:alpha="0"
-        android:text="BOOM"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/enemyExplode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginBottom="196dp"
-        android:alpha="0"
-        android:text="BOOM"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/boom" />
+
+    <ImageView
+        android:id="@+id/enemyExplode"
+        android:layout_width="241dp"
+        android:layout_height="288dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="76dp"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/boom" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/enemyShipHp"

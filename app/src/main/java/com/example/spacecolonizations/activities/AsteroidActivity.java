@@ -3,6 +3,7 @@ package com.example.spacecolonizations.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ public class AsteroidActivity extends AppCompatActivity {
 
         TextView textView3 = findViewById(R.id.textView5);
         Button buttonContinueAsteroid = findViewById(R.id.btnContinueAsteroid);
+        ImageView imgAsteroidStatus = findViewById(R.id.imgAsteroidStatus);
 
         PassObstacle passObstacle = new PassObstacle(NameGen.nGen((int) ((Math.random()*5) + 3)));
         Asteroid as = new Asteroid();
@@ -31,10 +33,12 @@ public class AsteroidActivity extends AppCompatActivity {
         passObstacle.finallisePassObstacle();
         if(passObstacle.getComplete()){
             Wallet.getInstance().addBalance(40+(int)(Math.random()*11));
-            textView3.setText("There's a navigator on command station and able to resolve the situation");
+            textView3.setText("A happy navigator keeps the ship safe");
+            imgAsteroidStatus.setImageResource(R.drawable.asteroid_pass);
 
         } else{
-            textView3.setText("There is no navigator on command station and situation spirals out of control");
+            textView3.setText("A missing navigator brings disaster (navigator missing from command center)");
+            imgAsteroidStatus.setImageResource(R.drawable.asteroid_fail);
         }
 
         buttonContinueAsteroid.setOnClickListener(v -> {
