@@ -3,12 +3,16 @@ package com.example.spacecolonizations.model.mission;
 
 import static com.example.spacecolonizations.NameGen.nGen;
 import com.example.spacecolonizations.NameGen;
+import com.example.spacecolonizations.model.crewmate.CrewManager;
 import com.example.spacecolonizations.model.mission.FightEnemy;
 import com.example.spacecolonizations.model.mission.PassObstacle;
 import com.example.spacecolonizations.model.mission.Rescue;
+import com.example.spacecolonizations.model.station.CommandCenter;
+import com.example.spacecolonizations.model.station.Station;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class PathGeneration {
 
@@ -44,15 +48,36 @@ public class PathGeneration {
     public HashMap<String,Integer> randomMissionPercent(){
         HashMap<String,Integer> hm = new HashMap<>();
         int fullper = 100;
+        boolean commandBreak = true;
+
+        List<Station> station = new ArrayList<>(CrewManager.getStations());
+        for (Station s: station){
+            if (s instanceof CommandCenter){
+                commandBreak = s.getisUsable();
+                break;
+            }
+        }
+
         int FightEnemyChance = (int) (Math.random()*100);
         int PassObstacleRescueChance = 100 - FightEnemyChance;
         int PassObstacleChance = (int) (Math.random()*PassObstacleRescueChance);
         int RescueChance = PassObstacleRescueChance-PassObstacleChance;
 
-        hm.put("FightEnemy",FightEnemyChance);
-        hm.put("PassObstacle",PassObstacleChance);
-        hm.put("Rescue",RescueChance);
-        return hm;
+        if (commandBreak) {
+            hm.put("FightEnemy",FightEnemyChance);
+            hm.put("PassObstacle",PassObstacleChance);
+            hm.put("Rescue",RescueChance);
+            return hm;
+        } else{
+            hm.put("FightEnemy",FightEnemyChance);
+            hm.put("PassObstacle",0);
+            hm.put("Rescue",RescueChance);
+            return hm;
+        }
+
+
+
+
 
     }
 
@@ -65,7 +90,9 @@ public class PathGeneration {
     }
     public Mission properRandomGeneration(){
         missionPercent = randomMissionPercent();
-        return GenerateControlPath(missionPercent.get("PassObstacle"),missionPercent.get("Rescue"),missionPercent.get("FightEnemy")).get(0);
+
+
+            return GenerateControlPath(missionPercent.get("PassObstacle"),missionPercent.get("Rescue"),missionPercent.get("FightEnemy")).get(0);
 
     }
 
