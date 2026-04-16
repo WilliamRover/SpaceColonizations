@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,6 +40,7 @@ public class AsteroidActivity extends AppCompatActivity {
         } else{
             textView3.setText("A missing navigator brings disaster (navigator missing from command center)");
             imgAsteroidStatus.setImageResource(R.drawable.asteroid_fail);
+            Toast.makeText(this, "Check broken station lists", Toast.LENGTH_SHORT).show();
         }
 
         buttonContinueAsteroid.setOnClickListener(v -> {
