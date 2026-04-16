@@ -36,7 +36,10 @@ public class PassObstacle extends Mission {
 
         obstacles.add(asteroid);
         obstacles.add(engineFailure);
-        this.e = randomObstacle(obstacles);
+
+        if (!obstacles.isEmpty()) {
+            this.e = randomObstacle(obstacles);
+        }
 
     }
 
@@ -69,36 +72,40 @@ public class PassObstacle extends Mission {
      *
      */
     public boolean checkPassObstacle() {
-        m = e;
         List<Station> stations = CrewManager.getStations();
-        if (m == null || stations == null) {
+
+        if (e == null || stations == null) {
             return true;
         }
 
-        for (Station station : stations) {
-            if (station instanceof Barracks) {
-                continue;
-            }
+        HashMap<Station, ArrayList<Crew>> reqMap = e.getLocationJob();
 
-            // Match required crew by station class type (obstacle setUp uses new instances, not singletons)
+        for (Station station : stations) {
+
+            if (station instanceof Barracks) continue;
+
             ArrayList<Crew> requiredCrew = null;
-            for (Station reqStation : m.getLocationJob().keySet()) {
+
+            // Match by CLASS instead of instance
+            for (Station reqStation : reqMap.keySet()) {
                 if (reqStation.getClass().equals(station.getClass())) {
-                    requiredCrew = m.getLocationJob().get(reqStation);
+                    requiredCrew = reqMap.get(reqStation);
                     break;
                 }
             }
 
             if (requiredCrew != null) {
+
                 for (Crew required : requiredCrew) {
-                    // Match by crew class type (obstacle setUp uses dummy crew objects, not real ones)
                     boolean found = false;
+
                     for (Crew actual : station.getCrewMembers()) {
                         if (actual.getClass().equals(required.getClass())) {
                             found = true;
                             break;
                         }
                     }
+
                     if (!found) {
                         return false;
                     }
@@ -110,10 +117,13 @@ public class PassObstacle extends Mission {
     }
 
     public void damageStation(){
-        List<Station> stations = CrewManager.getStations();
+        List<Station> stations = new ArrayList<>(CrewManager.getStations());
+
         stations.remove(Barracks.getInstance());
-        stations.get((int) (Math.random()*stations.size())).breakStation();
-        stations.add(Barracks.getInstance());
+
+        if (stations.isEmpty()) return; // prevent crash
+
+        stations.get((int) (Math.random() * stations.size())).breakStation();
     }
 
     public void finallisePassObstacle(){

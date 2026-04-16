@@ -37,17 +37,16 @@ public class Obstacle {
 
 
     public void addLocationJob(Station location, Crew job){
-        HashMap<Station, ArrayList<Crew>> e = getLocationJob();
-        ArrayList<Crew> c = e.get(location);
-        if (c == null) {
-            c = new ArrayList<>();
+        ArrayList<Crew> crewList = locationJob.get(location);
+
+        if (crewList == null) {
+            crewList = new ArrayList<>();
+            locationJob.put(location, crewList);
         }
 
-        if (!c.contains(job)) {
-            c.add(job);
+        if (!crewList.contains(job)) {
+            crewList.add(job);
         }
-
-        e.put(location, c);
     }
     public void removeLocationJob(Station location){
         locationJob.remove(location);
