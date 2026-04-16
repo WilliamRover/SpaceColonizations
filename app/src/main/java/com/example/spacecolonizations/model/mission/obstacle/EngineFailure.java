@@ -7,14 +7,11 @@ import com.example.spacecolonizations.model.station.CommandCenter;
 public class EngineFailure extends Obstacle{
     public EngineFailure(){
         super(1,1);
-    }
-
-    @Override
-    public void setUp(){
         CommandCenter c = new CommandCenter();
         Technician s = new Technician("a",1,1);
         addLocationJob(c,s);
     }
+
 
     @Override
     public String returnType(){

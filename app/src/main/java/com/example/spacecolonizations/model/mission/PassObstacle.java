@@ -28,10 +28,8 @@ public class PassObstacle extends Mission {
         this.obstacles = new ArrayList<Obstacle>();
 
         this.asteroid = new Asteroid();
-        this.asteroid.setUp();
 
         this.engineFailure = new EngineFailure();
-        this.engineFailure.setUp();
 
 
         obstacles.add(asteroid);

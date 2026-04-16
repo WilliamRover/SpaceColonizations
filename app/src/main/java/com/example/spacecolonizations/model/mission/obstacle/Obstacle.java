@@ -61,9 +61,6 @@ public class Obstacle {
         return "Obstacle";
     }
 
-    public void setUp(){
-
-    }
 
 
 
