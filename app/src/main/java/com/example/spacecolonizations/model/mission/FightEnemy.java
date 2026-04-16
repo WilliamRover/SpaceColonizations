@@ -20,10 +20,6 @@ public class FightEnemy extends Mission {
         return "Fight enemy";
     }
 
-    public void setUp(){
 
-    }
-
-    // TODO remember to pick a random crew from a random station and damage them a bit
 
 }
