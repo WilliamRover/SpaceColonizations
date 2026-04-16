@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,6 +40,7 @@ public class EngineFailureActivity extends AppCompatActivity {
         } else{
             textView3.setText("Technician was not summoned (technician missing from command center)");
             imgEngineStatus.setImageResource(R.drawable.engine_not_fixed);
+            Toast.makeText(this, "Check broken station lists", Toast.LENGTH_SHORT).show();
         }
 
         buttonContinueEngine.setOnClickListener(v -> {

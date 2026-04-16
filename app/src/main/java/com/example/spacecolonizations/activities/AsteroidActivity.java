@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,12 +34,13 @@ public class AsteroidActivity extends AppCompatActivity {
         passObstacle.finallisePassObstacle();
         if(passObstacle.getComplete()){
             Wallet.getInstance().addBalance(40+(int)(Math.random()*11));
-            textView3.setText("A happy navigator keeps the ship safe");
+            textView3.setText("A happy navigator and commandant keeps the ship safe");
             imgAsteroidStatus.setImageResource(R.drawable.asteroid_pass);
 
         } else{
-            textView3.setText("A missing navigator brings disaster (navigator missing from command center)");
+            textView3.setText("A missing navigator and commandant brings disaster (navigator and commander missing from command center)");
             imgAsteroidStatus.setImageResource(R.drawable.asteroid_fail);
+            Toast.makeText(this, "Check broken station lists", Toast.LENGTH_SHORT).show();
         }
 
         buttonContinueAsteroid.setOnClickListener(v -> {
