@@ -71,28 +71,37 @@ public class PassObstacle extends Mission {
     public boolean checkPassObstacle() {
         m = e;
         List<Station> stations = CrewManager.getStations();
-//        stations.remove(Barracks.getInstance());
         if (m == null || stations == null) {
             return true;
         }
 
         for (Station station : stations) {
-            ArrayList<Crew> requiredCrew = m.getLocationJob().get(station);
             if (station instanceof Barracks) {
                 continue;
             }
-            if (requiredCrew != null) {
-                boolean allCrewFound = true;
 
-                for (Crew crew : requiredCrew) {
-                    if (!station.getCrewMembers().contains(crew)) {
-                        allCrewFound = false;
-                        break;
-                    }
+            // Match required crew by station class type (obstacle setUp uses new instances, not singletons)
+            ArrayList<Crew> requiredCrew = null;
+            for (Station reqStation : m.getLocationJob().keySet()) {
+                if (reqStation.getClass().equals(station.getClass())) {
+                    requiredCrew = m.getLocationJob().get(reqStation);
+                    break;
                 }
+            }
 
-                if (!allCrewFound) {
-                    return false;
+            if (requiredCrew != null) {
+                for (Crew required : requiredCrew) {
+                    // Match by crew class type (obstacle setUp uses dummy crew objects, not real ones)
+                    boolean found = false;
+                    for (Crew actual : station.getCrewMembers()) {
+                        if (actual.getClass().equals(required.getClass())) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        return false;
+                    }
                 }
             }
         }
