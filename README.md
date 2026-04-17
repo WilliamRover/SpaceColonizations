@@ -1,6 +1,6 @@
 # SPACE COLONIZATION
 We are the 3 idiotic students who are studying in Lappeenranta right now. We see project, we do it with a lot of back pain but also with tears of joy.
-![asteroid_fail.png](jb-image:img_1776447081064_50a7f0b59dbba)
+![asteroid_fail.png](asteroid_fail.png)
 *in-game image*
 
 ## **CORE CONCEPT**
@@ -15,7 +15,7 @@ The game is turn-based, meaning if the player performs an action, the next turn 
 [A demonstration video. Definitely not a rick roll link](https://www.youtube.com/watch?v=X25ZJ84NOMo&t=1032s)
 
 ## **UML DIAGRAM**
-![SpaceColony.drawio-(1).png](jb-image:img_1776446833301_c38aaa30afca18)
+![uml.png](uml.png)
 
 ## **ACTIVITIES**
 For every screen you see in the game is an Activity class. It mainly consist of initialization of View objects, and connect the button with the back end logic using the on click listener. Also implement core logic if the Activity is activated (for example enemy attack friendly in FightEnemyActivity)
