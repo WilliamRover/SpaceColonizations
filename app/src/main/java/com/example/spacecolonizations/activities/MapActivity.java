@@ -23,8 +23,11 @@ import com.example.spacecolonizations.model.mission.FightEnemy;
 import com.example.spacecolonizations.model.mission.Mission;
 import com.example.spacecolonizations.model.mission.PassObstacle;
 import com.example.spacecolonizations.model.mission.Rescue;
+import com.example.spacecolonizations.model.ship.FriendlyShip;
 import com.example.spacecolonizations.model.station.CommandCenter;
 import com.example.spacecolonizations.model.mission.PathGeneration;
+import com.example.spacecolonizations.model.station.Station;
+import com.example.spacecolonizations.model.station.Turret;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +38,10 @@ public class MapActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Station turret = FriendlyShip.getShip().getStation(Turret.class);
+        if (turret instanceof Turret) {
+            ((Turret) turret).setMaxCrew();
+        }
         this.path = new PathGeneration();
         setContentView(R.layout.map);
         setupButton();
