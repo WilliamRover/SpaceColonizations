@@ -3,6 +3,11 @@ We are the 3 idiotic students who are studying in Lappeenranta right now. We see
 ![asteroid_fail.png](asteroid_fail.png)
 *in-game image*
 
+## **TEAM**
+- Nguyen Minh Thuan Bui: Design, JsonUtil, Activity, Fragment and Adapter
+- Umesh Handuge: Old CrewManager, Station, Crew and Statistics
+- Atiwit Noodat: NameGen, Ship, Mission and Shop
+
 ## **CORE CONCEPT**
 
 The player is put on a ship and their job is to manage it.
