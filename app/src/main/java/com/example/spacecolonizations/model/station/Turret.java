@@ -12,7 +12,7 @@ public class Turret extends Station{
     public Turret() {
         super();
         this.damage = 10;
-        this.maxCrew = 2;
+        setMaxCrew();
     }
 
     public float getdamage(){
