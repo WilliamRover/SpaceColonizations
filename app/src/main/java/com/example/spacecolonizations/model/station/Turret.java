@@ -31,6 +31,9 @@ public class Turret extends Station{
     }
 
     public void setMaxCrew() {
+        if (this.maxCrew == 3){
+            return;
+        }
         if (Statistics.getInstance().getShipKills() >= 3) {
             this.maxCrew = 3;
         } else {
