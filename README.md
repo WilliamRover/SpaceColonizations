@@ -100,6 +100,21 @@ canWork - useful when assigning tasks
 
 Keeps track of various things like number of living crew and number of successful missions. It is a singleton class for ease of use across the project. Contains getters and setters for all tracked statistics and some supporting functions for file saving.
 
+## **BONUS POINTS**
+
+- Multiple RecyclerView (each Adapter in the code is a recycler view)
+- Crew Images
+- Mission Visualization
+- Statistics
+- No Death: any damaged crew (either from fight enemy or rescue mission) can be healed in medbay. But if a station breaks and is not repaired in time, they die.
+- Randomness in missions
+- Specialization Bonuses: Medbay and Turret efficiency can be further improved by assigning Medic and Gunner respectively. Technician also fix station faster if assigned.
+- Larger Squads: can be seen in Turret and Rescue Mission. Maximum crew is increased from 2 to 3 if we have 3 or more enemy ship kills
+- Used a lot of fragments
+- Data Storage & Loading
+- Statistics Visualization: text based
+- Custom feature: multiple station that function different things and the map jump system
+
 
 ## **AI USAGE**
 ### Umesh
