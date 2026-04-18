@@ -52,6 +52,12 @@ The game is turn-based, meaning if the player performs an action, the next turn 
 
 ## **VIDEO DEMONSTRATION**
 [A demonstration video. Definitely not a rick roll link](https://www.youtube.com/watch?v=X25ZJ84NOMo&t=1032s)
+- 0:05 - Station, Crew, Statistics, Old Crew Manager
+- 16:29 - Shop and Wallet
+- 19:04 - Mission
+- 24:53 - JSON Utility
+- 30:55 - Activities, Adapter, Fragment, .xml files
+- 55:04 - Game demonstration
 
 ## **UML DIAGRAM**
 ![UMLDIAGRAM.png](UMLDIAGRAM.png)
