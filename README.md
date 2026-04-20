@@ -50,7 +50,7 @@ In the main menu, there is a load game option, but in reality it is only one gam
 If the ship explodes or all crew are down, the game is over and all the data is wiped. Players can still load previous checkpoints.
 The game is turn-based, meaning if the player performs an action, the next turn will be only the threat’s turn to move. Transferring crews between stations will not count as performing an action.
 
-### **IMPORTANT: the game has to be in landscape mode.**
+### **IMPORTANT: the game has to be in landscape mode, especially if you are testing on emulator. Even though it will be automatically rotated, some devices may refuse to rotate**
 
 ## **VIDEO DEMONSTRATION**
 [A demonstration video. Definitely not a rick roll link](https://www.youtube.com/watch?v=X25ZJ84NOMo&t=1032s)
